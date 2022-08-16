@@ -1,51 +1,38 @@
-import { Button, StyleSheet, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import CheckBox from 'expo-checkbox';
+import {
+	Button, StyleSheet, Image, Text, TextInput, TouchableOpacity, View
+} from 'react-native';
 
 export default function () {
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity style={{ alignSelf: 'flex-start' }}>
-				<Image
-					source={require('../assets/arrow-left.png')}
-					style={styles.image}
-				/>
-			</TouchableOpacity>
-			<Text style={styles.title}>Daftar</Text>
-			<TextInput placeholder="Nama Lengkap" style={styles.input}	/>
+			<Image
+				source={require('assets/logo.png')}
+				style={styles.image}
+			/>
 			<TextInput placeholder="Email" style={styles.input}	/>
-			<TextInput placeholder="Tanggal Lahir" style={styles.input}	/>
 			<View style={styles.passwordContainer}>
 				<TextInput
 					placeholder="Kata Sandi"
 					style={styles.input}
 				/>
 				<Image
-					source={require('../assets/eye-slash.png')}
+					source={require('assets/eye-slash.png')}
 					style={styles.passwordIcon}
 				/>
 			</View>
-			<View style={styles.confirmContainer}>
-				<CheckBox style={styles.confirmCheck} />
-				<Text style={{ fontSize: 16 }}>
-					Dengan ini menyatakan Anda setuju, Anda menerima segala isi
-					<Text style={styles.confirmBold}> Syarat Penggunaan </Text>
-					dan
-					<Text style={styles.confirmBold}> Kebijakan Privasi </Text>
-					Jalan Rahmat
-				</Text>
-			</View>
+			<Text style={styles.text}>Lupa Kata Sandi?</Text>
 			<TouchableOpacity style={styles.button}>
 				<Text style={styles.buttonText}>
-					Daftar Sekarang
+					Masuk
 				</Text>
 			</TouchableOpacity>
 			<View style={{ flexDirection: 'row' }}>
 				<Text style={{ fontSize: 18, marginEnd: 8 }}>
-					Sudah punya akun?
+					Belum punya akun?
 				</Text>
 				<TouchableOpacity>
 					<Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-						Silakan Masuk
+						Daftar Sekarang
 					</Text>
 				</TouchableOpacity>
 			</View>
@@ -56,18 +43,15 @@ export default function () {
 const styles = StyleSheet.create({
 	container: {
 		width: '100%',
+		height: '100%',
+		justifyContent: 'center',
 		alignItems: 'center',
 	},
 	image: {
-		height: 16,
-		width: 38,
-	},
-	title: {
-		marginVertical: 32,
-		color: 'orange',
-		fontWeight: 'bold',
-		fontSize: 26,
-		alignSelf: 'flex-start',
+		height: 200,
+		width: 200,
+		marginTop: 50,
+		marginBottom: 50,
 	},
 	passwordContainer: {
 		flexDirection: 'row',
@@ -87,24 +71,15 @@ const styles = StyleSheet.create({
 	input: {
 		marginVertical: 12,
 		paddingVertical: 12,
-		paddingStart: 32,
+		paddingHorizontal: 32,
 		backgroundColor: '#ddd',
 		borderRadius: 32,
 		width: '100%',
 		fontSize: 16,
 	},
-	confirmContainer: {
-		marginTop: 16,
-		marginHorizontal: 18,
-		flexDirection: 'row',
-	},
-	confirmCheck: {
-		marginTop: 8,
-		marginEnd: 16,
-	},
-	confirmBold: {
-		marginHorizontal: 8,
-		fontWeight: 'bold',
+	text: {
+		alignSelf: 'flex-end',
+		fontSize: 16,
 	},
 	button: {
 		marginTop: 32,
@@ -119,5 +94,5 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		textAlign: 'center',
 		color: 'white',
-	},
+	}
 });
