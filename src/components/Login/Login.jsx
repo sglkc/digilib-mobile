@@ -1,10 +1,12 @@
 import {
 	Button, StyleSheet, Image, Text, TextInput, TouchableOpacity, View
 } from 'react-native';
+import Modal from '@/components/Login/Modal';
 
 export default function () {
 	return (
 		<View style={styles.container}>
+			<Modal />
 			<Image
 				source={require('assets/logo.png')}
 				style={styles.image}
