@@ -19,20 +19,9 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>       
-        {/* <View>
-          <StatusBar style="auto" />
-      { splash && <SplashScreen /> }
-      { !splash &&
-        <View style={container}>
-              <Login />
-        </View>
-      }
-        </View> */}
+      <NavigationContainer>
         { splash && <SplashScreen /> }
-        { !splash &&
-         <StackNavigator />
-      }
+        { !splash && <StackNavigator /> }
       </NavigationContainer>
     </SafeAreaProvider>
   );

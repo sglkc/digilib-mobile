@@ -2,16 +2,17 @@ import { useState } from 'react';
 import {
   Image, StyleSheet, Text, View
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Button from '@/components/Button';
 import TextButton from '@/components/TextButton';
 import TextInput from '@/components/TextInput';
 import PasswordInput from '@/components/PasswordInput';
 import Modal from '@/components/Login/Modal';
-import { useNavigation } from '@react-navigation/native';
 
 export default function () {
   const [modal, showModal] = useState(false);
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Modal visible={modal} onClose={() => showModal(false)} />
@@ -28,12 +29,18 @@ export default function () {
       >
         Lupa Kata Sandi?
       </TextButton>
-      <Button style={styles.button} onPress={() => navigation.navigate('Etalase')}>Masuk</Button>
+      <Button
+        style={styles.button}
+        onPress={() => navigation.navigate('Etalase')}
+      >Masuk</Button>
       <View style={{ flexDirection: 'row' }}>
         <Text style={{ fontSize: 16, marginEnd: 6 }}>
           Belum punya akun?
         </Text>
-        <TextButton styleText={{ fontWeight: 'bold' }}>
+        <TextButton
+          styleText={{ fontWeight: 'bold' }}
+          onPress={() => navigation.navigate('Register')}
+        >
           Daftar Sekarang
         </TextButton>
       </View>
