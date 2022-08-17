@@ -1,55 +1,52 @@
 import React, { useRef, useState } from "react";
 import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, ScrollView, StyleSheet, Text, TouchableHighlight, View, DrawerLayoutAndroid, Button } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableHighlight, View, DrawerLayoutAndroid, Button } from 'react-native';
 import BottomNavbar from '@/components/BottomNavbar';
 import Icon from 'react-native-vector-icons/Feather';
 import ScrollViewItems from '@/components/ScrollViewItems';
+import DrawerNavigationView from '@/components/DrawerNavigationView'
+
 export default function Etalase() {
   const drawer = useRef(null);
   const [drawerPosition, setDrawerPosition] = useState("left");
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
-      <Text style={styles.paragraph}>I'm in the Drawer!</Text>
-      <Button
-        title="Close drawer"
-        onPress={() => drawer.current.closeDrawer()}
-      />
+      <DrawerNavigationView Keluar={()=>console.log('it work')}/>
     </View>
   );
   return (
-
-    <ImageBackground source={require('@/assets/BG_ORANGE.png')} style={{width: '100%', height: '100%'}}>
-          <DrawerLayoutAndroid
+    <DrawerLayoutAndroid
       ref={drawer}
-      drawerWidth={300}
+      drawerWidth={280}
       drawerPosition={drawerPosition}
       renderNavigationView={navigationView}
     >
-      <View style={{position: 'absolute', left: 10, top: 25, borderRadius: 9, padding: 5, width:5}}>
-        <TouchableHighlight
-          activeOpacity={0.6}
-          underlayColor="#DDDDDD"
-          onPress={() => drawer.current.openDrawer()}>
-          <Icon name="menu" size={35} color="#FFFF" style={styles.IconContainer}/>
-        </TouchableHighlight>
-      </View>
+      <View style={styles.container}>
+        <View style={{position: 'absolute', left: 10, top: 25, borderRadius: 9, padding: 5, width:5}}>
+          <TouchableHighlight
+            activeOpacity={0.6}
+            underlayColor="#DDDDDD"
+            onPress={() => drawer.current.openDrawer()}>
+            <Icon name="menu" size={35} color="#FFFF" style={styles.IconContainer}/>
+          </TouchableHighlight>
+        </View>
 
-      <View style={{position: 'absolute', right: 15, top: 30,}}>
-        <Icon name="search" size={25} color="#FFFF" />
-      </View>
+        <View style={{position: 'absolute', right: 15, top: 30,}}>
+          <Icon name="search" size={25} color="#FFFF" />
+        </View>
 
-      <View style={{
-        flex: 1,
-        marginBottom: 0,
-        alignItems: 'center'
-      }}>
-        <ScrollViewItems />
-        <View style={{backgroundColor:'white', width:'100%', alignItems: 'center',}}>
-        <BottomNavbar />
+        <View style={{
+          flex: 1,
+          marginBottom: 0,
+          alignItems: 'center'
+        }}>
+          <ScrollViewItems />
+          <View style={{backgroundColor:'white', width:'100%', alignItems: 'center',}}>
+          <BottomNavbar />
+          </View>
         </View>
       </View>
-      </DrawerLayoutAndroid>
-    </ImageBackground>
+    </DrawerLayoutAndroid>
   );
 }
 const styles = StyleSheet.create({

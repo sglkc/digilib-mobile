@@ -17,12 +17,12 @@ export default function BottomNavbar(){
             </View>
             <View style={styleSheet.ItemContainer}>
                 <Icon name="folder-open-o" size={25} color="#FFFF" style={styleSheet.IconContainer}/>
-                <Text style={styleSheet.textMenu}>aaaaa</Text>
+                <Text style={styleSheet.textMenu}>Jelajahi</Text>
             </View>
             
             <View style={styleSheet.ItemContainer}>
                 <Icon name="bookmark-o" size={25} color="#FFFF" style={styleSheet.IconContainer}/>
-                <Text style={styleSheet.textMenu}>aaaaa</Text>
+                <Text style={styleSheet.textMenu}>Tandai</Text>
             </View>
         </View>
     )

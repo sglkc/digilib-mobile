@@ -18,8 +18,9 @@ export default function () {
       <Image
         source={require('assets/logo.png')}
         style={styles.image}
+        resizeMode="contain"
       />
-      <TextInput placeholder="Email" style={styles.input}	/>
+      <TextInput placeholder="Email" style={styles.input} />
       <PasswordInput style={styles.input} />
       <TextButton
         style={{ alignSelf: 'flex-end' }}
@@ -46,7 +47,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 12
   },
   image: {
     height: 200,

@@ -4,19 +4,17 @@ export default function ({ hide, placeholder, style }) {
   return (
     <TextInput
       placeholder={placeholder}
-      style={[ styles.input, style ]}
+      style={[ defaultStyle, style ]}
       secureTextEntry={hide}
     />
   );
 }
 
-const styles = StyleSheet.create({
-  input: {
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    backgroundColor: '#ddd',
-    borderRadius: 32,
-    width: '100%',
-    fontSize: 16,
-  },
+const defaultStyle = StyleSheet.create({
+  paddingVertical: 12,
+  paddingHorizontal: 32,
+  backgroundColor: '#ddd',
+  borderRadius: 32,
+  width: '100%',
+  fontSize: 16,
 });
