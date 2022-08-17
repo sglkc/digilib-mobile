@@ -1,7 +1,11 @@
 import {
-  Button, StyleSheet, Image, Pressable, Text, TextInput, View
+  StyleSheet, Image, Pressable, Text, View
 } from 'react-native';
+import Button from '@/components/Button';
 import CheckBox from 'expo-checkbox';
+import PasswordInput from '@/components/PasswordInput';
+import TextButton from '@/components/TextButton';
+import TextInput from '@/components/TextInput';
 
 export default function () {
   return (
@@ -16,16 +20,7 @@ export default function () {
       <TextInput placeholder="Nama Lengkap" style={styles.input} />
       <TextInput placeholder="Email" style={styles.input} />
       <TextInput placeholder="Tanggal Lahir" style={styles.input} />
-      <View style={styles.passwordContainer}>
-        <TextInput
-          placeholder="Kata Sandi"
-          style={styles.input}
-        />
-        <Image
-          source={require('assets/eye-slash.png')}
-          style={styles.passwordIcon}
-        />
-      </View>
+      <PasswordInput style={styles.input} />
       <View style={styles.confirmContainer}>
         <CheckBox style={styles.confirmCheck} />
         <Text style={{ fontSize: 16 }}>
@@ -36,20 +31,18 @@ export default function () {
           Jalan Rahmat
         </Text>
       </View>
-      <Pressable style={styles.button}>
+      <Button style={styles.button}>
         <Text style={styles.buttonText}>
           Daftar Sekarang
         </Text>
-      </Pressable>
+      </Button>
       <View style={{ flexDirection: 'row' }}>
-        <Text style={{ fontSize: 18, marginEnd: 8 }}>
+        <Text style={{ fontSize: 16, marginEnd: 8 }}>
           Sudah punya akun?
         </Text>
-        <Pressable>
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-            Silakan Masuk
-          </Text>
-        </Pressable>
+        <TextButton styleText={{ fontWeight: 'bold' }}>
+          Silakan Masuk
+        </TextButton>
       </View>
     </View>
   );
@@ -71,29 +64,8 @@ const styles = StyleSheet.create({
     fontSize: 26,
     alignSelf: 'flex-start',
   },
-  passwordContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    position: 'relative',
-  },
-  passwordIcon: {
-    marginEnd: 16,
-    width: 28,
-    height: 28,
-    color: '#000000',
-    position: 'absolute',
-    right: 0,
-  },
   input: {
     marginVertical: 12,
-    paddingVertical: 12,
-    paddingStart: 32,
-    backgroundColor: '#ddd',
-    borderRadius: 32,
-    width: '100%',
-    fontSize: 16,
   },
   confirmContainer: {
     marginTop: 16,
@@ -111,15 +83,5 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 32,
     marginBottom: 24,
-    paddingVertical: 16,
-    borderRadius: 32,
-    width: '100%',
-    backgroundColor: 'orange',
-  },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'white',
   },
 });
