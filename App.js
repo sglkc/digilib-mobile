@@ -1,21 +1,34 @@
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
+import SplashScreen from '@/views/SplashScreen';
 
 export default function App() {
+  const [splash, setSplash] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSplash(false);
+    }, 5000);
+  });
+
   return (
-    <View style={styles.container}>
+    <View>
       <StatusBar style="auto" />
-      <Login />
+      { splash && <SplashScreen /> }
+      { !splash &&
+        <View style={container}>
+          <Login />
+        </View>
+      }
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 32,
-    paddingVertical: 64,
-    backgroundColor: '#fff',
-  },
+const container = StyleSheet.create({
+  paddingHorizontal: 32,
+  paddingVertical: 64,
+  backgroundColor: '#fff',
 });
