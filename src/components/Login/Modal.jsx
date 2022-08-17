@@ -2,6 +2,7 @@ import {
   StyleSheet, Pressable, Text, TextInput, View
 } from 'react-native';
 import Modal from 'react-native-modal';
+import Button from '@/components/Button';
 
 export default function (props) {
   return (
@@ -21,11 +22,7 @@ export default function (props) {
             tautan untuk membuat Kata Sandi baru
           </Text>
           <TextInput placeholder="Email" style={styles.input} />
-          <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>
-              Kirim Sekarang
-            </Text>
-          </Pressable>
+          <Button>Kirim Sekarang</Button>
         </View>
       </Modal>
     </View>
