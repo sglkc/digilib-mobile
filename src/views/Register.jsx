@@ -1,6 +1,7 @@
 import {
   StyleSheet, Image, Pressable, Text, View
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Button from '@/components/Button';
 import CheckBox from 'expo-checkbox';
 import PasswordInput from '@/components/PasswordInput';
@@ -8,9 +9,14 @@ import TextButton from '@/components/TextButton';
 import TextInput from '@/components/TextInput';
 
 export default function () {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <Pressable style={{ alignSelf: 'flex-start' }}>
+      <Pressable
+        style={{ alignSelf: 'flex-start' }}
+        onPress={() => navigation.goBack()}
+      >
         <Image
           source={require('assets/arrow-left.png')}
           style={styles.image}
@@ -40,7 +46,10 @@ export default function () {
         <Text style={{ fontSize: 16, marginEnd: 8 }}>
           Sudah punya akun?
         </Text>
-        <TextButton styleText={{ fontWeight: 'bold' }}>
+        <TextButton
+          styleText={{ fontWeight: 'bold' }}
+          onPress={() => navigation.goBack()}
+        >
           Silakan Masuk
         </TextButton>
       </View>

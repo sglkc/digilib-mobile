@@ -6,7 +6,7 @@ import EyeSlash from 'assets/eye-slash.png';
 
 export default function ({ style }) {
   const [hide, setHide] = useState(true);
-  const [icon, setIcon] = useState(Eye);
+  const [icon, setIcon] = useState(EyeSlash);
   const toggleHide = () => {
     setHide(!hide);
     setIcon(hide ? Eye : EyeSlash);
