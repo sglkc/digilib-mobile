@@ -1,99 +1,142 @@
-import { Image, Text, View, StyleSheet, Button, TouchableHighlight } from "react-native";
+import {
+  Image, Text, View, StyleSheet, Button, TouchableHighlight
+} from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 
-const thisfumc = [
-    {
-        icon: "person-outline",
-        text: "Informasi Akun",
-        function: ()=>console.log('nicee')
-    },
-    {
-        icon: "notifications-outline",
-        text: "Notifikasi",
-        function: ()=>console.log('nicee')
-    },
-    {
-        icon: "history",
-        text: "Riwayat",
-        octicons: true,
-        function: ()=>console.log('nicee')
-    },
-    {
-        icon:"DIVIDER"
-    },
-    {
-        icon: "chatbubble-ellipses-outline",
-        text: "Umpan Balik",
-        function: ()=>console.log('nicee')
-    },
-    {
-        icon: "information-circle-outline",
-        text: "Tentang Aplikasi",
-        function: ()=>console.log('nicee')
-    },
+const items = [
+  {
+    icon: "person-outline",
+    text: "Informasi Akun",
+    function: ()=>console.log('nicee')
+  },
+  {
+    icon: "notifications-outline",
+    text: "Notifikasi",
+    function: ()=>console.log('nicee')
+  },
+  {
+    icon: "history",
+    text: "Riwayat",
+    octicons: true,
+    function: ()=>console.log('nicee')
+  },
+  {
+    icon:"DIVIDER"
+  },
+  {
+    icon: "chatbubble-ellipses-outline",
+    text: "Umpan Balik",
+    function: ()=>console.log('nicee')
+  },
+  {
+    icon: "information-circle-outline",
+    text: "Tentang Aplikasi",
+    function: ()=>console.log('nicee')
+  },
 ]
 
-export default function DrawerContent({Keluar}){
-    return(
-    <View style={{paddingTop: 30, flex:1}}>
-        <View>
-            <Image 
-                style={{width:150, height:150, resizeMode:'contain', alignSelf:'center'}}
-                source={require('@/assets/logo.png')}/>
-            <View style={{paddingLeft:8}}>
-                <Text style={{fontWeight:'800'}}>ANUU</Text>
-                <Text style={{fontSize:10}}>ANUU</Text>
-            </View>
-            <View
-                style={style.LineDivider}
-            />
-            <View style={{paddingLeft:10}}>
-            {thisfumc.map((e, index)=>{
-                if (e.icon=='DIVIDER') {
-                    return(
-                        <View
-                            style={style.LineDivider}
-                        />
-                    )
-                }else{
-                    return(
-                        <TouchableHighlight underlayColor="#DDDDDD" style={{borderRadius:9}} onPress={e.function}>
-                            <View style={{flexDirection:"row", margin:5 }}>
-                                {e.octicons ?  <Octicons style={style.IconContainer} name={e.icon} size={20} color="black"></Octicons> 
-                                    :<Icon name={e.icon} size={25} color="black"></Icon>}
-                                <Text style={style.fontMedBold} >{e.text}</Text>
-                            </View>
-                        </TouchableHighlight>
-                    )
-                }
-               })}
-            </View>
-            
-            <View style={{alignItems:'center', marginTop:25}}>
-                <TouchableHighlight underlayColor="#DDDDDD" style={{borderRadius:9, width:'100%', height:40,alignItems:'center', flex:1}} onPress={Keluar}>
-                    <View style={{width:'70%', height:25, backgroundColor:'#3cd70d', borderRadius:15, justifyContent:'center'}}>
-                        <Text style={{textAlign:'center',color:'white', alignSelf:'center'}}>Keluar</Text>
-                    </View>
-                </TouchableHighlight>
-            </View>
+export default function DrawerContent() {
+  const navigation = useNavigation();
+
+  return (
+    <View style={{ paddingTop: 64, flex: 1 }}>
+      <View>
+        <Image
+          style={styles.logo}
+          source={require('assets/logo.png')}/>
+        <View style={{ paddingLeft: 16, marginVertical: 8 }}>
+          <Text style={{ fontSize: 16, fontWeight: '800' }}>Nama</Text>
+          <Text>nama@email.com</Text>
         </View>
-    </View>)
+        <View style={styles.LineDivider} />
+        <View style={{ paddingLeft: 8 }}>
+          {
+            items.map((item, index) => {
+              if (item.icon === 'DIVIDER') {
+                return <View key={index} style={styles.LineDivider} />;
+              }
+
+              return (
+                <TouchableHighlight
+                  key={index}
+                  underlayColor="#DDDDDD"
+                  style={styles.menuItem}
+                  onPress={item.function}
+                >
+                  <View style={{ flexDirection: 'row' }}>
+                    { item.octicons ?
+                      <Octicons
+                        style={{ alignSelf: 'center', marginHorizontal: 12 }}
+                        name={item.icon}
+                        size={20}
+                        color="black"
+                      ></Octicons>
+                      :
+                      <Icon
+                        style={{ alignSelf: 'center', marginHorizontal: 8 }}
+                        name={item.icon}
+                        size={25}
+                        color="black"
+                      />
+                    }
+                    <Text style={styles.menuItemText}>{item.text}</Text>
+                  </View>
+                </TouchableHighlight>
+              );
+            })
+          }
+        </View>
+        <View style={{ alignItems: 'center' }}>
+          <TouchableHighlight
+            underlayColor="#DDDDDD"
+            style={styles.button}
+            onPress={() => navigation.navigate('Login')}
+          >
+            <Text style={styles.buttonText}>Keluar</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    </View>
+  );
 }
 
-const style = StyleSheet.create({
-    IconContainer:{
-        marginLeft:2
-    },
-    fontMedBold:{
-        fontWeight:'700',
-        marginLeft:5
-    },
-    LineDivider:{
-        marginTop:9,
-        marginBottom:9,
-        borderBottomColor: 'grey',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        marginLeft:-10
-    }
+const styles = StyleSheet.create({
+  logo: {
+    marginBottom: 8,
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+  },
+  menuItem: {
+    borderRadius: 16,
+    paddingVertical: 14,
+  },
+  menuItemText: {
+    fontWeight: '700',
+    marginLeft: 5,
+    alignSelf: 'center',
+    fontSize: 16,
+  },
+  LineDivider:{
+    marginLeft: -8,
+    marginVertical: 8,
+    borderBottomColor: 'grey',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  button: {
+    marginTop: 24,
+    width: '90%',
+    height: 38,
+    backgroundColor: '#39CA0D',
+    borderRadius: 32,
+    justifyContent: 'center',
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+  },
 })
