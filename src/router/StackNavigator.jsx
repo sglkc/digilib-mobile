@@ -12,6 +12,7 @@ import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Etalase from '@/views/Etalase';
 import Notifikasi from '@/views/Notifikasi';
+import Tentang from '@/views/Tentang';
 
 const style = StyleSheet.create({
   container: {
@@ -60,6 +61,19 @@ const NotifikasiScreen = () => {
   );
 }
 
+const TentangScreen = () => {
+  return (
+    <SafeAreaView>
+      <ImageBackground
+        source={require('assets/BG_ORANGE.png')}
+        style={{width: '100%', height: '100%'}}
+      >
+        <Tentang />
+      </ImageBackground>
+    </SafeAreaView>
+  );
+}
+
 const Stack = createNativeStackNavigator();
 
 export const StackNavigator = ()=>{
@@ -85,6 +99,11 @@ export const StackNavigator = ()=>{
       <Stack.Screen
         name='Notifikasi'
         component={NotifikasiScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='Tentang'
+        component={TentangScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

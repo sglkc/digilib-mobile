@@ -34,7 +34,7 @@ export default function DrawerContent() {
     {
       icon: "information-circle-outline",
       text: "Tentang Aplikasi",
-      function: ()=>console.log('nicee')
+      function: () => navigation.navigate('Tentang')
     },
   ];
 
