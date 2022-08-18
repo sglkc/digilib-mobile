@@ -1,10 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-export default function ({ children, style, styleText, onPress }) {
+export default function ({ children, style, styleButton, styleText, onPress }) {
   return (
     <View style={[ styles.container, style ]}>
       <Pressable
-        style={[ styles.container, style, styles.button ]}
+        style={[ styles.container, styleButton, styles.button ]}
         onPress={onPress}
         android_ripple={{ color: 'grey', borderless: true }}
       >
