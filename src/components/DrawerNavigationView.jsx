@@ -1,5 +1,5 @@
 import {
-  Image, Text, View, StyleSheet, Button, TouchableHighlight
+  Image, Text, View, StyleSheet, Button, TouchableHighlight, StatusBar
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -41,7 +41,7 @@ export default function DrawerContent() {
   const navigation = useNavigation();
 
   return (
-    <View style={{ paddingTop: 64, flex: 1 }}>
+    <View style={{ paddingTop: StatusBar.currentHeight, flex: 1 }}>
       <View>
         <Image
           style={styles.logo}
