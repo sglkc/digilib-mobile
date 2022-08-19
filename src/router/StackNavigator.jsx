@@ -15,6 +15,7 @@ import InformasiAkun from '@/views/InformasiAkun';
 import UbahInformasiAkun from '@/views/UbahInformasiAkun';
 import UbahPassword from '@/views/UbahPassword';
 import Notifikasi from '@/views/Notifikasi';
+import UmpanBalik from '@/views/UmpanBalik';
 import Tentang from '@/views/Tentang';
 
 const style = StyleSheet.create({
@@ -103,6 +104,19 @@ const NotifikasiScreen = () => {
   );
 }
 
+const UmpanBalikScreen = () => {
+  return (
+    <SafeAreaView>
+      <ImageBackground
+        source={require('assets/BG_ORANGE.png')}
+        style={{width: '100%', height: '100%'}}
+      >
+        <UmpanBalik />
+      </ImageBackground>
+    </SafeAreaView>
+  );
+}
+
 const TentangScreen = () => {
   return (
     <SafeAreaView>
@@ -156,6 +170,11 @@ export const StackNavigator = ()=>{
       <Stack.Screen
         name='Notifikasi'
         component={NotifikasiScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='UmpanBalik'
+        component={UmpanBalikScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen

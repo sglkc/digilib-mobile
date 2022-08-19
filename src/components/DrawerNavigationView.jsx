@@ -29,7 +29,7 @@ export default function DrawerContent() {
     {
       icon: "chatbubble-ellipses-outline",
       text: "Umpan Balik",
-      function: ()=>console.log('nicee')
+      function: () => navigation.navigate('UmpanBalik')
     },
     {
       icon: "information-circle-outline",
@@ -69,7 +69,7 @@ export default function DrawerContent() {
                       name={item.icon}
                       size={20}
                       color="black"
-                    ></Octicons>
+                    />
                     :
                     <Icon
                       style={{ alignSelf: 'center', marginHorizontal: 8 }}
