@@ -13,6 +13,7 @@ import Register from '@/views/Register';
 import Etalase from '@/views/Etalase';
 import InformasiAkun from '@/views/InformasiAkun';
 import Notifikasi from '@/views/Notifikasi';
+import UbahPassword from '@/views/UbahPassword';
 import Tentang from '@/views/Tentang';
 
 const style = StyleSheet.create({
@@ -75,6 +76,19 @@ const NotifikasiScreen = () => {
   );
 }
 
+const UbahPasswordScreen = () => {
+  return (
+    <SafeAreaView>
+      <ImageBackground
+        source={require('assets/BG_ORANGE.png')}
+        style={{width: '100%', height: '100%'}}
+      >
+        <UbahPassword />
+      </ImageBackground>
+    </SafeAreaView>
+  );
+}
+
 const TentangScreen = () => {
   return (
     <SafeAreaView>
@@ -113,6 +127,11 @@ export const StackNavigator = ()=>{
       <Stack.Screen
         name='InformasiAkun'
         component={InformasiAkunScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='UbahPassword'
+        component={UbahPasswordScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
