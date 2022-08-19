@@ -12,7 +12,7 @@ export default function DrawerContent() {
     {
       icon: "person-outline",
       text: "Informasi Akun",
-      function: ()=>console.log('nicee')
+      function: () => navigation.navigate('InformasiAkun')
     },
     {
       icon: "notifications-outline",
@@ -86,8 +86,8 @@ export default function DrawerContent() {
         }
         <View style={{ alignItems: 'center' }}>
           <Button
-            style={styles.button}
-            styleButton={{ paddingTop: 8, paddingBottom: 8 }}
+            style={styles.buttonContainer}
+            styleButton={styles.button}
             styleText={styles.buttonText}
             onPress={() => navigation.navigate('Login')}
           >
@@ -124,12 +124,16 @@ const styles = StyleSheet.create({
     borderBottomColor: 'grey',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  button: {
+  buttonContainer: {
     marginTop: 24,
     width: '90%',
-    backgroundColor: '#39CA0D',
     borderRadius: 32,
     justifyContent: 'center',
+  },
+  button: {
+    paddingTop: 8,
+    paddingBottom: 8,
+    backgroundColor: 'green'
   },
   buttonText: {
     textAlign: 'center',

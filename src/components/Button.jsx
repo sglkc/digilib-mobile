@@ -4,7 +4,7 @@ export default function ({ children, style, styleButton, styleText, onPress }) {
   return (
     <View style={[ styles.container, style ]}>
       <Pressable
-        style={[ styles.container, styleButton, styles.button ]}
+        style={[ styles.container, styles.button, styleButton ]}
         onPress={onPress}
         android_ripple={{ color: 'grey', borderless: true }}
       >

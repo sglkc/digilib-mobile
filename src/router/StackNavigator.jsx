@@ -11,6 +11,7 @@ import {
 import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Etalase from '@/views/Etalase';
+import InformasiAkun from '@/views/InformasiAkun';
 import Notifikasi from '@/views/Notifikasi';
 import Tentang from '@/views/Tentang';
 
@@ -43,6 +44,19 @@ const EtalaseScreen = () => {
         style={{width: '100%', height: '100%'}}
       >
         <Etalase></Etalase>
+      </ImageBackground>
+    </SafeAreaView>
+  );
+}
+
+const InformasiAkunScreen = () => {
+  return (
+    <SafeAreaView>
+      <ImageBackground
+        source={require('assets/BG_ORANGE.png')}
+        style={{width: '100%', height: '100%'}}
+      >
+        <InformasiAkun />
       </ImageBackground>
     </SafeAreaView>
   );
@@ -94,6 +108,11 @@ export const StackNavigator = ()=>{
       <Stack.Screen
         name='Etalase'
         component={EtalaseScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='InformasiAkun'
+        component={InformasiAkunScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
