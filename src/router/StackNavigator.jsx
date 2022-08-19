@@ -12,8 +12,9 @@ import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Etalase from '@/views/Etalase';
 import InformasiAkun from '@/views/InformasiAkun';
-import Notifikasi from '@/views/Notifikasi';
+import UbahInformasiAkun from '@/views/UbahInformasiAkun';
 import UbahPassword from '@/views/UbahPassword';
+import Notifikasi from '@/views/Notifikasi';
 import Tentang from '@/views/Tentang';
 
 const style = StyleSheet.create({
@@ -63,14 +64,14 @@ const InformasiAkunScreen = () => {
   );
 }
 
-const NotifikasiScreen = () => {
+const UbahInformasiAkunScreen = () => {
   return (
     <SafeAreaView>
       <ImageBackground
         source={require('assets/BG_ORANGE.png')}
         style={{width: '100%', height: '100%'}}
       >
-        <Notifikasi />
+        <UbahInformasiAkun />
       </ImageBackground>
     </SafeAreaView>
   );
@@ -84,6 +85,19 @@ const UbahPasswordScreen = () => {
         style={{width: '100%', height: '100%'}}
       >
         <UbahPassword />
+      </ImageBackground>
+    </SafeAreaView>
+  );
+}
+
+const NotifikasiScreen = () => {
+  return (
+    <SafeAreaView>
+      <ImageBackground
+        source={require('assets/BG_ORANGE.png')}
+        style={{width: '100%', height: '100%'}}
+      >
+        <Notifikasi />
       </ImageBackground>
     </SafeAreaView>
   );
@@ -127,6 +141,11 @@ export const StackNavigator = ()=>{
       <Stack.Screen
         name='InformasiAkun'
         component={InformasiAkunScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='UbahInformasiAkun'
+        component={UbahInformasiAkunScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
