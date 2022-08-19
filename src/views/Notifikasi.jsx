@@ -25,15 +25,15 @@ export default function () {
       }
       { notifications.map((notification, index) => {
         return (
-          <>
-            <View key={index} style={styles.listItem}>
+          <View key={index}>
+            <View style={styles.listItem}>
               <Text style={styles.listDate}>{ notification.date }</Text>
               <Text style={styles.listTitle}>{ notification.title }</Text>
             </View>
             { index + 1 < notifications.length &&
             <View style={styles.divider}></View>
             }
-          </>
+          </View>
         );
       })
       }
@@ -64,12 +64,11 @@ const styles = StyleSheet.create({
   },
   listDate: {
     color: '#333',
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: '700',
   },
   listTitle: {
     marginVertical: 8,
-    fontWeight: 'bold',
+    fontWeight: '700',
     fontSize: 16,
   },
 });
