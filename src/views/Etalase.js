@@ -5,6 +5,7 @@ import BottomNavbar from '@/components/BottomNavbar';
 import Icon from 'react-native-vector-icons/Feather';
 import ScrollViewItems from '@/components/ScrollViewItems';
 import DrawerNavigationView from '@/components/DrawerNavigationView'
+import EtalaseCategory from "../components/EtalaseCategory";
 
 export default function Etalase() {
   const drawer = useRef(null);
@@ -40,6 +41,7 @@ export default function Etalase() {
           marginBottom: 0,
           alignItems: 'center'
         }}>
+          <EtalaseCategory />
           <ScrollViewItems />
           <View style={{backgroundColor:'white', width:'100%', alignItems: 'center',}}>
           <BottomNavbar />
