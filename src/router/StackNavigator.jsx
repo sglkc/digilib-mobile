@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
+import ViewContainer from '@/components/ViewContainer';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Etalase from '@/views/Etalase';
@@ -39,6 +40,10 @@ const FullscreenView = (children) => {
   );
 }
 
+const TitleView = (title, component) => (
+  <ViewContainer title={title} component={component} />
+);
+
 const EtalaseScreen = () => {
   return (
     <SafeAreaView>
@@ -52,136 +57,63 @@ const EtalaseScreen = () => {
   );
 }
 
-const InformasiAkunScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <InformasiAkun />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const UbahInformasiAkunScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <UbahInformasiAkun />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const UbahPasswordScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <UbahPassword />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const NotifikasiScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <Notifikasi />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const UmpanBalikScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <UmpanBalik />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const TentangScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <Tentang />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
 const Stack = createNativeStackNavigator();
 
-export const StackNavigator = ()=>{
+const views = [
+  {
+    name: 'Login',
+    children: () => FullscreenView(<Login />)
+  },
+  {
+    name: 'Register',
+    children: () => FullscreenView(<Register />)
+  },
+  {
+    name: 'Etalase',
+    component: EtalaseScreen,
+  },
+  {
+    name: 'InformasiAkun',
+    children: () => TitleView('Informasi Akun', <InformasiAkun />)
+  },
+  {
+    name: 'UbahInformasiAkun',
+    children: () => TitleView('Ubah Informasi Akun', <UbahInformasiAkun />)
+  },
+  {
+    name: 'UbahPassword',
+    children: () => TitleView('Ubah Kata Sandi', <UbahPassword />)
+  },
+  {
+    name: 'Notifikasi',
+    children: () => TitleView('Notifikasi', <Notifikasi />)
+  },
+  {
+    name: 'UmpanBalik',
+    children: () => TitleView('Umpan Balik', <UmpanBalik />)
+  },
+  {
+    name: 'Tentang',
+    children: () => TitleView('Tentang Aplikasi', <Tentang />)
+  },
+];
+
+export const StackNavigator = () => {
   return (
     <Stack.Navigator initialRouteName='Login'>
-      <Stack.Screen
-        name='Login'
-        options={{ headerShown: false }}
-      >
-        { () => FullscreenView(<Login />) }
-      </Stack.Screen>
-      <Stack.Screen
-        name='Register'
-        options={{ headerShown: false }}
-      >
-        { () => FullscreenView(<Register />) }
-      </Stack.Screen>
-      <Stack.Screen
-        name='Etalase'
-        component={EtalaseScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='InformasiAkun'
-        component={InformasiAkunScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='UbahInformasiAkun'
-        component={UbahInformasiAkunScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='UbahPassword'
-        component={UbahPasswordScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='Notifikasi'
-        component={NotifikasiScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='UmpanBalik'
-        component={UmpanBalikScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='Tentang'
-        component={TentangScreen}
-        options={{ headerShown: false }}
-      />
+      { views.map((view, index) => {
+        return (
+          <Stack.Screen
+            name={view.name}
+            component={view.component}
+            key={index}
+            options={{ headerShown: false }}
+          >
+            { view.children }
+          </Stack.Screen>
+        );
+      })
+      }
     </Stack.Navigator>
   );
 }

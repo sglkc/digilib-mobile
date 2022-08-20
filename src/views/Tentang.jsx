@@ -1,8 +1,8 @@
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function () {
   return (
-    <ScrollView style={styles.container}>
+    <View>
       <Text style={styles.text}>
         Aplikasi untuk koleksi karya dan pemikiran Allahyarham KH. Jalaluddin
         Rakhmat beserta penulis dan tokoh lain yang menelaah, menyebarkan, dan
@@ -26,17 +26,11 @@ export default function () {
         - Do'a
         `.replace(/^[ ]+/gm, '')}
       </Text>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 200, // TODO: header component
-    padding: 32,
-    backgroundColor: '#fff',
-    height: '100%',
-  },
   text: {
     fontSize: 16,
     lineHeight: 28,

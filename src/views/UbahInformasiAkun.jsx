@@ -1,25 +1,21 @@
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Button from '@/components/Button';
 import TextInput from '@/components/TextInput';
 
 export default function () {
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <TextInput style={styles.input} placeholder="Nama Lengkap" />
       <TextInput style={styles.input} placeholder="Email" />
       <TextInput style={styles.input} placeholder="Tanggal Lahir" />
       <Button styleButton={styles.button}>Ganti Sekarang</Button>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 200, // TODO: header component
-    padding: 32,
-    paddingTop: 64,
-    backgroundColor: '#fff',
-    height: '100%',
+    paddingTop: 16,
   },
   text: {
     fontSize: 16,
@@ -30,7 +26,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   button: {
-    marginTop: 32,
+    marginTop: 16,
     paddingVertical: 14,
   },
 });

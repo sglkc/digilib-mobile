@@ -39,7 +39,7 @@ export default function DrawerContent() {
   ];
 
   return (
-    <View style={{ paddingTop: StatusBar.currentHeight, flex: 1 }}>
+    <View style={{ paddingTop: StatusBar.currentHeight + 16, flex: 1 }}>
       <View>
         <Image
           style={styles.logo}

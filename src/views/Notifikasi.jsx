@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import TextButton from '@/components/TextButton';
 
 export default function () {
@@ -11,7 +11,7 @@ export default function () {
   ]);
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <TextButton
         styleText={styles.clear}
         onPress={() => setNotifications([])}
@@ -37,19 +37,13 @@ export default function () {
         );
       })
       }
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 200, // TODO: header component
-    paddingHorizontal: 32,
-    backgroundColor: '#fff',
-    height: '100%',
-  },
   clear: {
-    marginVertical: 16,
+    marginBottom: 16,
     alignSelf: 'flex-end',
     color: '#333',
     fontWeight: 'bold',
