@@ -4,7 +4,7 @@ import TextInput from '@/components/TextInput';
 import Eye from 'assets/eye.png';
 import EyeSlash from 'assets/eye-slash.png';
 
-export default function ({ style }) {
+export default function ({ placeholder, style }) {
   const [hide, setHide] = useState(true);
   const [icon, setIcon] = useState(EyeSlash);
   const toggleHide = () => {
@@ -14,7 +14,10 @@ export default function ({ style }) {
 
   return (
     <View style={[ styles.container, style ]}>
-      <TextInput hide={hide} placeholder="Kata Sandi" />
+      <TextInput
+        hide={hide}
+        placeholder={placeholder || 'Kata Sandi'}
+      />
       <Pressable style={styles.button} onPress={toggleHide}>
         <Image style={styles.icon} source={icon} />
       </Pressable>

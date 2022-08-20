@@ -1,47 +1,45 @@
 import {
-  Image, Text, View, StyleSheet, Button, TouchableHighlight
+  Image, Text, View, StyleSheet, TouchableHighlight, StatusBar
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
-
-const items = [
-  {
-    icon: "person-outline",
-    text: "Informasi Akun",
-    function: ()=>console.log('nicee')
-  },
-  {
-    icon: "notifications-outline",
-    text: "Notifikasi",
-    function: ()=>console.log('nicee')
-  },
-  {
-    icon: "history",
-    text: "Riwayat",
-    octicons: true,
-    function: ()=>console.log('nicee')
-  },
-  {
-    icon:"DIVIDER"
-  },
-  {
-    icon: "chatbubble-ellipses-outline",
-    text: "Umpan Balik",
-    function: ()=>console.log('nicee')
-  },
-  {
-    icon: "information-circle-outline",
-    text: "Tentang Aplikasi",
-    function: ()=>console.log('nicee')
-  },
-]
+import Button from '@/components/Button';
 
 export default function DrawerContent() {
   const navigation = useNavigation();
+  const items = [
+    {
+      icon: "person-outline",
+      text: "Informasi Akun",
+      function: () => navigation.navigate('InformasiAkun')
+    },
+    {
+      icon: "notifications-outline",
+      text: "Notifikasi",
+      function: () => navigation.navigate('Notifikasi')
+    },
+    {
+      icon: "history",
+      text: "Riwayat",
+      octicons: true,
+      function: ()=>console.log('nicee')
+    },
+    { icon:"DIVIDER" },
+    {
+      icon: "chatbubble-ellipses-outline",
+      text: "Umpan Balik",
+      function: () => navigation.navigate('UmpanBalik')
+    },
+    {
+      icon: "information-circle-outline",
+      text: "Tentang Aplikasi",
+      function: () => navigation.navigate('Tentang')
+    },
+  ];
 
   return (
-    <View style={{ paddingTop: 64, flex: 1 }}>
+    <View style={{ paddingTop: StatusBar.currentHeight, flex: 1 }}>
       <View>
         <Image
           style={styles.logo}
@@ -51,51 +49,50 @@ export default function DrawerContent() {
           <Text>nama@email.com</Text>
         </View>
         <View style={styles.LineDivider} />
-        <View style={{ paddingLeft: 8 }}>
-          {
-            items.map((item, index) => {
-              if (item.icon === 'DIVIDER') {
-                return <View key={index} style={styles.LineDivider} />;
-              }
+        {
+          items.map((item, index) => {
+            if (item.icon === 'DIVIDER') {
+              return <View key={index} style={styles.LineDivider} />;
+            }
 
-              return (
-                <TouchableHighlight
-                  key={index}
-                  underlayColor="#DDDDDD"
-                  style={styles.menuItem}
-                  onPress={item.function}
-                >
-                  <View style={{ flexDirection: 'row' }}>
-                    { item.octicons ?
-                      <Octicons
-                        style={{ alignSelf: 'center', marginHorizontal: 12 }}
-                        name={item.icon}
-                        size={20}
-                        color="black"
-                      ></Octicons>
-                      :
-                      <Icon
-                        style={{ alignSelf: 'center', marginHorizontal: 8 }}
-                        name={item.icon}
-                        size={25}
-                        color="black"
-                      />
-                    }
-                    <Text style={styles.menuItemText}>{item.text}</Text>
-                  </View>
-                </TouchableHighlight>
-              );
-            })
-          }
-        </View>
+            return (
+              <TouchableHighlight
+                key={index}
+                underlayColor="#DDDDDD"
+                style={styles.menuItem}
+                onPress={item.function}
+              >
+                <View style={{ flexDirection: 'row' }}>
+                  { item.octicons ?
+                    <Octicons
+                      style={{ alignSelf: 'center', marginHorizontal: 12 }}
+                      name={item.icon}
+                      size={20}
+                      color="black"
+                    />
+                    :
+                    <Icon
+                      style={{ alignSelf: 'center', marginHorizontal: 8 }}
+                      name={item.icon}
+                      size={25}
+                      color="black"
+                    />
+                  }
+                  <Text style={styles.menuItemText}>{item.text}</Text>
+                </View>
+              </TouchableHighlight>
+            );
+          })
+        }
         <View style={{ alignItems: 'center' }}>
-          <TouchableHighlight
-            underlayColor="#DDDDDD"
-            style={styles.button}
+          <Button
+            style={styles.buttonContainer}
+            styleButton={styles.button}
+            styleText={styles.buttonText}
             onPress={() => navigation.navigate('Login')}
           >
-            <Text style={styles.buttonText}>Keluar</Text>
-          </TouchableHighlight>
+            Keluar
+          </Button>
         </View>
       </View>
     </View>
@@ -111,12 +108,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   menuItem: {
-    borderRadius: 16,
     paddingVertical: 14,
+    marginHorizontal: 8,
+    borderRadius: 16,
   },
   menuItemText: {
     fontWeight: '700',
-    marginLeft: 5,
+    marginLeft: 6,
     alignSelf: 'center',
     fontSize: 16,
   },
@@ -126,17 +124,21 @@ const styles = StyleSheet.create({
     borderBottomColor: 'grey',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  button: {
+  buttonContainer: {
     marginTop: 24,
     width: '90%',
-    height: 38,
-    backgroundColor: '#39CA0D',
     borderRadius: 32,
     justifyContent: 'center',
+  },
+  button: {
+    paddingTop: 8,
+    paddingBottom: 8,
+    backgroundColor: 'green'
   },
   buttonText: {
     textAlign: 'center',
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 16,
   },
 })
