@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function ({ component, title }) {
+export default function ({ component, title, style }) {
   const navigation = useNavigation();
 
   return (
@@ -31,7 +31,7 @@ export default function ({ component, title }) {
           <Text style={styles.titleText}>{ title }</Text>
         </View>
         <ScrollView style={styles.container}>
-          <View style={styles.containerView}>
+          <View style={[styles.containerView, style]}>
             { component }
           </View>
         </ScrollView>

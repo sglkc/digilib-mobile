@@ -16,6 +16,7 @@ import InformasiAkun from '@/views/InformasiAkun';
 import UbahInformasiAkun from '@/views/UbahInformasiAkun';
 import UbahPassword from '@/views/UbahPassword';
 import Notifikasi from '@/views/Notifikasi';
+import Riwayat from '@/views/Riwayat';
 import UmpanBalik from '@/views/UmpanBalik';
 import Tentang from '@/views/Tentang';
 
@@ -40,8 +41,8 @@ const FullscreenView = (children) => {
   );
 }
 
-const TitleView = (title, component) => (
-  <ViewContainer title={title} component={component} />
+const TitleView = (title, component, style) => (
+  <ViewContainer title={title} component={component} style={style} />
 );
 
 const EtalaseScreen = () => {
@@ -87,6 +88,10 @@ const views = [
   {
     name: 'Notifikasi',
     children: () => TitleView('Notifikasi', <Notifikasi />)
+  },
+  {
+    name: 'Riwayat',
+    children: () => TitleView('Riwayat', <Riwayat />, { paddingHorizontal: 16 })
   },
   {
     name: 'UmpanBalik',

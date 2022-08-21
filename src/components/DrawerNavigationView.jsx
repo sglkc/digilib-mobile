@@ -23,7 +23,7 @@ export default function DrawerContent() {
       icon: "history",
       text: "Riwayat",
       octicons: true,
-      function: ()=>console.log('nicee')
+      function: () => navigation.navigate('Riwayat')
     },
     { icon:"DIVIDER" },
     {
