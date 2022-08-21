@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   containerView: {
-    padding: 32,
+    paddingHorizontal: 32,
+    paddingVertical: 16,
     height: '100%',
   },
 });

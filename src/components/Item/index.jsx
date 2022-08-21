@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Image,
   Pressable,
@@ -10,11 +10,16 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Chip from '@/components/Item/Chip';
 
-export default function ({ author, bookmark, category, cover, title }) {
+export default function ({
+  author, bookmark, category, cover, title, onBookmark
+}) {
   const [bookmarked, setBookmark] = useState(bookmark);
-  const addBookmark = () => {
-    setBookmark(!bookmarked);
+  const toggleBookmark = () => {
+    setBookmark(!bookmarked || bookmark);
+    onBookmark && onBookmark();
   }
+
+
   return (
     <View style={styles.container}>
       <Pressable
@@ -31,7 +36,7 @@ export default function ({ author, bookmark, category, cover, title }) {
               <Pressable
                 style={styles.icon}
                 android_ripple={{ color: 'lightgrey' }}
-                onPress={addBookmark}
+                onPress={toggleBookmark}
               >
                 <Icon
                   name={bookmarked ? 'bookmark' : 'bookmark-outline'}

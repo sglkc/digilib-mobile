@@ -12,6 +12,7 @@ import ViewContainer from '@/components/ViewContainer';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Etalase from '@/views/Etalase';
+import Tandai from '@/views/Tandai';
 import InformasiAkun from '@/views/InformasiAkun';
 import UbahInformasiAkun from '@/views/UbahInformasiAkun';
 import UbahPassword from '@/views/UbahPassword';
@@ -72,6 +73,10 @@ const views = [
   {
     name: 'Etalase',
     component: EtalaseScreen,
+  },
+  {
+    name: 'Tandai',
+    children: () => TitleView('Tandai', <Tandai />, { paddingHorizontal: 16 })
   },
   {
     name: 'InformasiAkun',
