@@ -13,6 +13,7 @@ import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Etalase from '@/views/Etalase';
 import Tandai from '@/views/Tandai';
+import Pencarian from '@/views/Pencarian';
 import InformasiAkun from '@/views/InformasiAkun';
 import UbahInformasiAkun from '@/views/UbahInformasiAkun';
 import UbahPassword from '@/views/UbahPassword';
@@ -97,6 +98,10 @@ const views = [
   {
     name: 'Riwayat',
     children: () => TitleView('Riwayat', <Riwayat />, { paddingHorizontal: 16 })
+  },
+  {
+    name: 'Pencarian',
+    children: () => TitleView('Pencarian', <Pencarian />, { paddingHorizontal: 16 })
   },
   {
     name: 'UmpanBalik',
