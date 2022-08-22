@@ -19,7 +19,6 @@ export default function ({
     onBookmark && onBookmark();
   }
 
-
   return (
     <View style={styles.container}>
       <Pressable
