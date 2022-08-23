@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
-export default function ({ children, style, styleText, onPress }) {
+export default function ({ children, style, styleText, text, onPress }) {
   const [underline, setTextStyle] = useState({});
 
   return (
@@ -12,7 +12,7 @@ export default function ({ children, style, styleText, onPress }) {
       onPressOut={() => setTextStyle({})}
     >
       <Text style={[ { fontSize: 16 }, underline, styleText ]}>
-        { children }
+        { children || text }
       </Text>
     </Pressable>
   );

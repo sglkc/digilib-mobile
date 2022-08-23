@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function ({ component, title, style }) {
+export default function ({ button, collapsed, component, style, title }) {
   const navigation = useNavigation();
 
   return (
@@ -21,14 +21,19 @@ export default function ({ component, title, style }) {
         source={require('assets/BG_ORANGE.png')}
         style={{width: '100%', height: '100%'}}
       >
-        <View style={styles.title}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              source={require('assets/arrow-left.png')}
-              style={styles.titleImage}
-            />
-          </TouchableOpacity>
-          <Text style={styles.titleText}>{ title }</Text>
+        <View style={[styles.title, !collapsed && { paddingBottom: 8 }]}>
+          <View style={[{ flexGrow: 1 }, collapsed && styles.titleLeft]}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Image
+                source={require('assets/arrow-left.png')}
+                style={[styles.titleImage, !collapsed && { marginBottom: 16 }]}
+              />
+            </TouchableOpacity>
+            <Text style={styles.titleText}>{ title }</Text>
+          </View>
+          <View style={!collapsed && { alignSelf: 'flex-start' }}>
+          { button }
+          </View>
         </View>
         <ScrollView style={styles.container}>
           <View style={[styles.containerView, style]}>
@@ -43,17 +48,23 @@ export default function ({ component, title, style }) {
 const styles = StyleSheet.create({
   title: {
     paddingTop: StatusBar.currentHeight + 16,
+    paddingBottom: 16,
     paddingHorizontal: 32,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  titleLeft: {
+    flexDirection: 'row',
+    flexGrow: 1,
+    alignItems: 'center',
   },
   titleImage: {
-    marginTop: 8,
-    marginBottom: 16,
+    marginRight: 16,
     height: 16,
     width: 38,
     tintColor: 'white',
   },
   titleText: {
-    marginBottom: 8,
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
