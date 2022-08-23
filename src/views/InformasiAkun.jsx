@@ -13,19 +13,11 @@ export default function () {
       <Text style={styles.content}>irawan@gmail.com</Text>
       <Text style={styles.title}>Tanggal Lahir</Text>
       <Text style={styles.content}>06 Agustus 1971</Text>
-      {/* TODO: pindah tombol ubah ke atas */}
-      <TextButton
-        styleText={styles.button}
-        onPress={() => navigation.navigate('UbahInformasiAkun')}
-      >
-        Ubah
-      </TextButton>
       <TextButton
         styleText={styles.button}
         onPress={() => navigation.navigate('UbahPassword')}
-      >
-        Ganti Kata Sandi?
-      </TextButton>
+        text="Ganti Kata Sandi?"
+      />
     </View>
   );
 }
