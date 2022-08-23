@@ -1,33 +1,24 @@
 import { ScrollView, Text, StyleSheet, View } from "react-native";
+import ItemScroll from "@/components/scrollView/ItemScroll";
 
+const array = [1,2,3,4,5,6,7,9]
 
 export default function ScrollViewItems() {
-    return(
-
-            <ScrollView style={styles.scrollView} >
-                <Text style={styles.text}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Duis aute irure dolor in
-                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                culpa qui officia deserunt mollit anim id est laborum.
-                </Text>
-            </ScrollView>
-   
-    )
+  return (
+    <ScrollView style={styles.scrollView} >
+      { array.map((data, index) => <ItemScroll key={index} />)}
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-    scrollView: {
-        width: '100%',
-        height:'100%',
-        backgroundColor: 'white',
-        marginHorizontal: 20,
-        padding:9
-      },
-      text: {
-        fontSize: 12,
-      },
+  scrollView: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'white',
+    padding: 9
+  },
+  text: {
+    fontSize: 50,
+  },
 })

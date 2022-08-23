@@ -26,6 +26,7 @@ import UmpanBalik from '@/views/UmpanBalik';
 import Tentang from '@/views/Tentang';
 import TextButton from '@/components/TextButton';
 import ViewContainer from '@/components/ViewContainer';
+import GlobalStyles from '@/func/GlobalStyles';
 
 const style = StyleSheet.create({
   container: {
@@ -36,16 +37,18 @@ const style = StyleSheet.create({
   },
 });
 
-const EtalaseScreen = () => (
-  <SafeAreaView>
-    <ImageBackground
-      source={require('assets/BG_ORANGE.png')}
-      style={{width: '100%', height: '100%'}}
-    >
-      <Etalase></Etalase>
-    </ImageBackground>
-  </SafeAreaView>
-);
+const EtalaseScreen = () => {
+  return (
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
+      <ImageBackground
+        source={require('assets/BG_ORANGE.png')}
+        style={{width: '100%', height: '100%'}}
+      >
+        <Etalase />
+      </ImageBackground>
+    </SafeAreaView>
+  );
+}
 
 const Stack = createNativeStackNavigator();
 
