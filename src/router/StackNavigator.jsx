@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Etalase from '@/views/Etalase';
+import Jelajahi from '@/views/Jelajahi';
 import Tandai from '@/views/Tandai';
 import Kategori from '@/views/Kategori';
 import Pencarian from '@/views/Pencarian';
@@ -87,6 +88,14 @@ export const StackNavigator = () => {
     {
       route: 'Etalase',
       component: () => <Etalase />,
+    },
+    {
+      route: 'Jelajahi',
+      container: {
+        title: 'Jelajahi',
+        component: <Jelajahi />,
+        collapsed: true,
+      },
     },
     {
       route: 'Tandai',
