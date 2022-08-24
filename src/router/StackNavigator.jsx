@@ -5,18 +5,29 @@ import {
   View,
   StyleSheet,
   ImageBackground,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Feather';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Etalase from '@/views/Etalase';
+import Jelajahi from '@/views/Jelajahi';
+import Tandai from '@/views/Tandai';
+import Kategori from '@/views/Kategori';
+import Pencarian from '@/views/Pencarian';
 import InformasiAkun from '@/views/InformasiAkun';
 import UbahInformasiAkun from '@/views/UbahInformasiAkun';
 import UbahPassword from '@/views/UbahPassword';
 import Notifikasi from '@/views/Notifikasi';
+import Riwayat from '@/views/Riwayat';
 import UmpanBalik from '@/views/UmpanBalik';
 import Tentang from '@/views/Tentang';
+import TextButton from '@/components/TextButton';
+import ViewContainer from '@/components/ViewContainer';
+import GlobalStyles from '@/func/GlobalStyles';
 
 const style = StyleSheet.create({
   container: {
@@ -27,104 +38,14 @@ const style = StyleSheet.create({
   },
 });
 
-const FullscreenView = (children) => {
-  return (
-    <SafeAreaView>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={style.container}>
-          { children }
-        </View>
-      </TouchableWithoutFeedback>
-    </SafeAreaView>
-  );
-}
-
 const EtalaseScreen = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <ImageBackground
         source={require('assets/BG_ORANGE.png')}
         style={{width: '100%', height: '100%'}}
       >
-        <Etalase></Etalase>
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const InformasiAkunScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <InformasiAkun />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const UbahInformasiAkunScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <UbahInformasiAkun />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const UbahPasswordScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <UbahPassword />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const NotifikasiScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <Notifikasi />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const UmpanBalikScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <UmpanBalik />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const TentangScreen = () => {
-  return (
-    <SafeAreaView>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <Tentang />
+        <Etalase />
       </ImageBackground>
     </SafeAreaView>
   );
@@ -132,56 +53,162 @@ const TentangScreen = () => {
 
 const Stack = createNativeStackNavigator();
 
-export const StackNavigator = ()=>{
+export const StackNavigator = () => {
+  const navigation = useNavigation();
+  const SearchButton = (
+    <TouchableOpacity onPress={() => navigation.navigate('Pencarian')}>
+      <Icon name="search" size={25} color="white" />
+    </TouchableOpacity>
+  );
+  const views = [
+    {
+      route: 'Login',
+      component: () => (
+        <SafeAreaView>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <View style={style.container}>
+              <Login />
+            </View>
+          </TouchableWithoutFeedback>
+        </SafeAreaView>
+      )
+    },
+    {
+      route: 'Register',
+      component: () => (
+        <SafeAreaView>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <View style={style.container}>
+              <Register />
+            </View>
+          </TouchableWithoutFeedback>
+        </SafeAreaView>
+      )
+    },
+    {
+      route: 'Etalase',
+      component: () => <Etalase />,
+    },
+    {
+      route: 'Jelajahi',
+      container: {
+        title: 'Jelajahi',
+        component: <Jelajahi />,
+        collapsed: true,
+      },
+    },
+    {
+      route: 'Tandai',
+      container: {
+        title: 'Tandai',
+        component: <Tandai />,
+        collapsed: true,
+        button: SearchButton,
+        style: { paddingHorizontal: 24 },
+      },
+    },
+    {
+      route: 'Kategori',
+      container: {
+        title: 'Kategori',
+        component: <Kategori />,
+        collapsed: true,
+        button: SearchButton,
+      },
+    },
+    {
+      route: 'InformasiAkun',
+      container: {
+        title: 'Informasi Akun',
+        component: <InformasiAkun />,
+        button: (
+          <TextButton
+            styleText={{ color: 'white', fontWeight: '600' }}
+            text="Ubah"
+            onPress={() => navigation.navigate('UbahInformasiAkun')}
+          />
+        ),
+      },
+    },
+    {
+      route: 'UbahInformasiAkun',
+      container: {
+        title: 'Ubah Informasi Akun',
+        component: <UbahInformasiAkun />,
+      },
+    },
+    {
+      route: 'UbahPassword',
+      container: {
+        title: 'Ubah Password',
+        component: <UbahPassword />,
+      },
+    },
+    {
+      route: 'Notifikasi',
+      container: {
+        title: 'Notifikasi',
+        component: <Notifikasi />,
+      },
+    },
+    {
+      route: 'Riwayat',
+      container: {
+        title: 'Riwayat',
+        component: <Riwayat />,
+        collapsed: true,
+        button: SearchButton,
+      },
+    },
+    {
+      route: 'Pencarian',
+      container: {
+        title: 'Pencarian',
+        component: <Pencarian />,
+        collapsed: true,
+        style: { paddingHorizontal: 16 },
+      },
+    },
+    {
+      route: 'UmpanBalik',
+      container: {
+        title: 'Umpan Balik',
+        component: <UmpanBalik />,
+      },
+    },
+    {
+      route: 'Tentang',
+      container: {
+        title: 'Tentang',
+        component: <Tentang />,
+      },
+    },
+  ];
+
   return (
     <Stack.Navigator initialRouteName='Login'>
-      <Stack.Screen
-        name='Login'
-        options={{ headerShown: false }}
-      >
-        { () => FullscreenView(<Login />) }
-      </Stack.Screen>
-      <Stack.Screen
-        name='Register'
-        options={{ headerShown: false }}
-      >
-        { () => FullscreenView(<Register />) }
-      </Stack.Screen>
-      <Stack.Screen
-        name='Etalase'
-        component={EtalaseScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='InformasiAkun'
-        component={InformasiAkunScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='UbahInformasiAkun'
-        component={UbahInformasiAkunScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='UbahPassword'
-        component={UbahPasswordScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='Notifikasi'
-        component={NotifikasiScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='UmpanBalik'
-        component={UmpanBalikScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='Tentang'
-        component={TentangScreen}
-        options={{ headerShown: false }}
-      />
+      { views.map((view, index) => {
+        return (
+          <Stack.Screen
+            name={view.route}
+            key={index}
+            options={{ headerShown: false }}
+          >
+            { view.component || view.container && function () {
+              return (
+                <ViewContainer
+                  button={view.container.button}
+                  collapsed={view.container.collapsed}
+                  component={view.container.component}
+                  style={view.container.style}
+                  title={view.container.title}
+                />
+              )
+            }}
+          </Stack.Screen>
+        );
+      })
+      }
     </Stack.Navigator>
   );
 }

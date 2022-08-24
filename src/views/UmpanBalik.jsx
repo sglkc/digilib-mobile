@@ -1,9 +1,9 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Octicons from 'react-native-vector-icons/Octicons';
 
 export default function () {
   return (
-    <ScrollView style={styles.container}>
+    <View>
       <Text style={styles.text}>
         Jangan ragu untuk menghubungi kami untuk pertanyaan Anda. Hubungi kami
         di kontak dibawah ini.
@@ -12,24 +12,14 @@ export default function () {
         <Octicons style={styles.emailIcon} name="mail" size={32} color="black" />
         <View>
           <Text style={{ fontWeight: '600' }}>Email</Text>
-          <Text
-            style={{ fontSize: 16, fontWeight: '700', color: 'green' }}
-          >
-            info@jalanrahmat.com
-          </Text>
+          <Text style={styles.emailText}>info@jalanrahmat.com</Text>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 200, // TODO: header component
-    padding: 32,
-    backgroundColor: '#fff',
-    height: '100%',
-  },
   text: {
     fontSize: 16,
     fontWeight: '500',
@@ -42,5 +32,10 @@ const styles = StyleSheet.create({
   emailIcon: {
     marginRight: 16,
     alignSelf: 'center',
-  }
+  },
+  emailText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: 'green',
+  },
 });

@@ -1,11 +1,15 @@
 import { StyleSheet, TextInput } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux'
+import {setCurrentUser} from '@/state/reducers/UserReducer.js';
 
 export default function ({ hide, placeholder, style }) {
+  const dispatch = useDispatch() 
   return (
     <TextInput
       placeholder={placeholder}
       style={[ defaultStyle, style ]}
       secureTextEntry={hide}
+      onChangeText={text=>dispatch(setCurrentUser({key:'name', payload: text}))}
     />
   );
 }
