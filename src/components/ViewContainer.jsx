@@ -12,7 +12,9 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function ({ button, collapsed, component, style, title }) {
+export default function ({
+  button, collapsed, component, drawer, style, title
+}) {
   const navigation = useNavigation();
 
   return (
@@ -23,13 +25,17 @@ export default function ({ button, collapsed, component, style, title }) {
       >
         <View style={[styles.title, !collapsed && { paddingBottom: 8 }]}>
           <View style={[{ flexGrow: 1 }, collapsed && styles.titleLeft]}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Image
-                source={require('assets/arrow-left.png')}
-                style={[styles.titleImage, !collapsed && { marginBottom: 16 }]}
-              />
-            </TouchableOpacity>
-            <Text style={styles.titleText}>{ title }</Text>
+            { drawer ||
+            <>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image
+                  source={require('assets/arrow-left.png')}
+                  style={[styles.titleIcon, !collapsed && { marginBottom: 16 }]}
+                />
+              </TouchableOpacity>
+              <Text style={styles.titleText}>{ title }</Text>
+            </>
+            }
           </View>
           <View style={!collapsed && { alignSelf: 'flex-start' }}>
           { button }
@@ -58,7 +64,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
   },
-  titleImage: {
+  titleIcon: {
     marginRight: 16,
     height: 16,
     width: 38,

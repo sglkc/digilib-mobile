@@ -61,7 +61,7 @@ export const StackNavigator = () => {
   );
   const views = [
     {
-      name: 'Login',
+      route: 'Login',
       component: () => (
         <SafeAreaView>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -73,7 +73,7 @@ export const StackNavigator = () => {
       )
     },
     {
-      name: 'Register',
+      route: 'Register',
       component: () => (
         <SafeAreaView>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -85,11 +85,11 @@ export const StackNavigator = () => {
       )
     },
     {
-      name: 'Etalase',
-      component: EtalaseScreen,
+      route: 'Etalase',
+      component: () => <Etalase />,
     },
     {
-      name: 'Tandai',
+      route: 'Tandai',
       container: {
         title: 'Tandai',
         component: <Tandai />,
@@ -98,7 +98,7 @@ export const StackNavigator = () => {
       },
     },
     {
-      name: 'Kategori',
+      route: 'Kategori',
       container: {
         title: 'Kategori',
         component: <Kategori />,
@@ -107,7 +107,7 @@ export const StackNavigator = () => {
       },
     },
     {
-      name: 'InformasiAkun',
+      route: 'InformasiAkun',
       container: {
         title: 'Informasi Akun',
         component: <InformasiAkun />,
@@ -121,28 +121,28 @@ export const StackNavigator = () => {
       },
     },
     {
-      name: 'UbahInformasiAkun',
+      route: 'UbahInformasiAkun',
       container: {
         title: 'Ubah Informasi Akun',
         component: <UbahInformasiAkun />,
       },
     },
     {
-      name: 'UbahPassword',
+      route: 'UbahPassword',
       container: {
         title: 'Ubah Password',
         component: <UbahPassword />,
       },
     },
     {
-      name: 'Notifikasi',
+      route: 'Notifikasi',
       container: {
         title: 'Notifikasi',
         component: <Notifikasi />,
       },
     },
     {
-      name: 'Riwayat',
+      route: 'Riwayat',
       container: {
         title: 'Riwayat',
         component: <Riwayat />,
@@ -151,7 +151,7 @@ export const StackNavigator = () => {
       },
     },
     {
-      name: 'Pencarian',
+      route: 'Pencarian',
       container: {
         title: 'Pencarian',
         component: <Pencarian />,
@@ -160,14 +160,14 @@ export const StackNavigator = () => {
       },
     },
     {
-      name: 'UmpanBalik',
+      route: 'UmpanBalik',
       container: {
         title: 'Umpan Balik',
         component: <UmpanBalik />,
       },
     },
     {
-      name: 'Tentang',
+      route: 'Tentang',
       container: {
         title: 'Tentang',
         component: <Tentang />,
@@ -180,7 +180,7 @@ export const StackNavigator = () => {
       { views.map((view, index) => {
         return (
           <Stack.Screen
-            name={view.name}
+            name={view.route}
             key={index}
             options={{ headerShown: false }}
           >
