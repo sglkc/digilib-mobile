@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     container: {
       paddingTop: StatusBar.currentHeight + 16,
       paddingBottom: 16,
-      paddingHorizontal: 24,
+      paddingHorizontal: 32,
     },
     icons: {
       paddingBottom: 16,

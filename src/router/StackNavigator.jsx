@@ -104,6 +104,7 @@ export const StackNavigator = () => {
         component: <Tandai />,
         collapsed: true,
         button: SearchButton,
+        style: { paddingHorizontal: 24 },
       },
     },
     {
