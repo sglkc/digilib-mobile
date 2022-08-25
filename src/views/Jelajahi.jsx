@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from '@/components/Button';
 import Chip from '@/components/Item/Chip';
 import TextInput from '@/components/TextInput';
 
 export default function () {
+  const navigation = useNavigation();
   const initialCategories = [
     { name: 'Tafsir Al-Quran', selected: false },
     { name: 'Psikologi', selected: false },
@@ -17,27 +19,12 @@ export default function () {
     { name: 'Sains dan Pendidikan', selected: true },
     { name: 'Fikih', selected: false },
   ];
-
   const [categories, setCategories] = useState(initialCategories);
   const toggleCategory = (index) => {
     const temp = [...categories];
     temp[index].selected = !temp[index].selected;
     setCategories(temp);
   };
-
-  const chips = categories.map((category, index) => (
-    <Chip
-      key={index}
-      text={category.name}
-      style={[
-        styles.chip.button, category.selected && styles.chip.selected
-      ]}
-      styleText={[
-        styles.chip.text, category.selected && styles.chip.selectedText
-      ]}
-      onPress={() => toggleCategory(index)}
-    />
-  ));
 
   return (
     <View>
@@ -55,12 +42,25 @@ export default function () {
         </Pressable>
       </View>
       <View style={styles.chip.container}>
-        { chips }
+        { categories.map((category, index) => (
+          <Chip
+            key={index}
+            text={category.name}
+            style={[
+              styles.chip.button, category.selected && styles.chip.selected
+            ]}
+            styleText={[
+              styles.chip.text, category.selected && styles.chip.selectedText
+            ]}
+            onPress={() => toggleCategory(index)}
+          />
+        ))}
       </View>
       <Button
         style={styles.button.container}
         styleButton={styles.button.box}
         styleText={styles.button.text}
+        onPress={() => navigation.navigate('Detail')}
       >
         Cari Kategori
       </Button>
