@@ -15,6 +15,7 @@ import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Etalase from '@/views/Etalase';
 import Jelajahi from '@/views/Jelajahi';
+import Detail from '@/views/Detail';
 import Tandai from '@/views/Tandai';
 import Kategori from '@/views/Kategori';
 import Pencarian from '@/views/Pencarian';
@@ -37,19 +38,6 @@ const style = StyleSheet.create({
     height: '100%',
   },
 });
-
-const EtalaseScreen = () => {
-  return (
-    <SafeAreaView style={GlobalStyles.droidSafeArea}>
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <Etalase />
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
 
 const Stack = createNativeStackNavigator();
 
@@ -95,6 +83,16 @@ export const StackNavigator = () => {
         title: 'Jelajahi',
         component: <Jelajahi />,
         collapsed: true,
+      },
+    },
+    {
+      route: 'Detail',
+      container: {
+        title: 'Detail',
+        component: <Detail />,
+        collapsed: true,
+        button: SearchButton,
+        style: { paddingVertical: 0, paddingHorizontal: 0 },
       },
     },
     {
@@ -158,6 +156,7 @@ export const StackNavigator = () => {
         component: <Riwayat />,
         collapsed: true,
         button: SearchButton,
+        style: { paddingHorizontal: 16 },
       },
     },
     {

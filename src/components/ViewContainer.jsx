@@ -41,11 +41,11 @@ export default function ({
           { button }
           </View>
         </View>
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
           <View style={[styles.containerView, style]}>
             { component }
           </View>
-        </ScrollView>
+        </View>
       </ImageBackground>
     </SafeAreaView>
   );
@@ -77,11 +77,11 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: 'white',
-    height: '100%',
+    flex: 1,
   },
   containerView: {
     paddingHorizontal: 32,
     paddingVertical: 16,
-    height: '100%',
+    flex: 1,
   },
 });
