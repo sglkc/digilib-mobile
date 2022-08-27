@@ -7,12 +7,14 @@ import {
   Text,
   View
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Chip from '@/components/Item/Chip';
 
 export default function ({
   author, bookmark, category, cover, title, onBookmark
 }) {
+  const navigation = useNavigation();
   const [bookmarked, setBookmark] = useState(bookmark);
   const toggleBookmark = () => {
     setBookmark(!bookmarked || bookmark);
@@ -46,7 +48,11 @@ export default function ({
             </View>
             <ScrollView style={styles.category} horizontal={true}>
               { category.map((name, index) => <Chip key={index} text={name} />) }
-              <Chip style={styles.chipDetail} text="Lihat Detail" />
+              <Chip
+                style={styles.chipDetail}
+                text="Lihat Detail"
+                onPress={() => navigation.navigate('DetailItem')}
+              />
             </ScrollView>
           </View>
         </View>

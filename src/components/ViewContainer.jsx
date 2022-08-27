@@ -13,7 +13,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 export default function ({
-  button, collapsed, component, drawer, style, title
+  button, collapsed, component, drawer, style, title, transparent
 }) {
   const navigation = useNavigation();
 
@@ -41,8 +41,8 @@ export default function ({
           { button }
           </View>
         </View>
-        <View style={styles.container}>
-          <View style={[styles.containerView, style]}>
+        <View style={[{ flex: 1 }, !transparent && { backgroundColor: 'white' }]}>
+          <View style={[styles.container, style]}>
             { component }
           </View>
         </View>
@@ -76,10 +76,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   container: {
-    backgroundColor: 'white',
-    flex: 1,
-  },
-  containerView: {
     paddingHorizontal: 32,
     paddingVertical: 16,
     flex: 1,
