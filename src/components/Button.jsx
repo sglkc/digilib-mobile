@@ -8,7 +8,7 @@ export default function ({
       <Pressable
         style={[ styles.container, styles.button, styleButton ]}
         onPress={onPress}
-        android_ripple={{ color: 'grey', borderless: true }}
+        android_ripple={{ color: 'silver', borderless: true }}
       >
         <Text style={[ styles.text, styleText ]}>
           { text || children }

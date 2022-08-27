@@ -1,18 +1,17 @@
 import { useState } from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { StyleSheet, Text, View } from 'react-native';
 import Button from '@/components/Button';
-import DetailContainer from '@/components/DetailContainer';
-import Chip from '@/components/Item/Chip';
+import DetailItem from '@/components/DetailItem';
 
 export default function () {
   const initialItem = {
-    title: 'Neuro Psikologi',
+    title: 'Doa Bukan Lampu Aladin',
     author: 'Jalaludin Rakhmat',
     description:
-    'Ed ut perspiciatis unde omnis iste natus error sit voluptatem ' +
-    'accusantium doloremque laudantium.',
-    categories: ['Sains dan Pendidikan', 'Psikologi', 'Komunikasi', 'Neurosains'],
-    cover: 'http://cdn.medicalxpress.com/newman/gfx/news/2014/0318_cogsci-grades-orig.jpg',
+    'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut' +
+    'fugit, sed quia consequuntur magni dolored eos qui ratione voluptatem.',
+    categories: ['Doa', 'Agama'],
+    cover: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1332922051l/13563593.jpg',
     media: '',
     type: 'book',
     bookmark: false,
@@ -20,6 +19,6 @@ export default function () {
   const [item, setItem] = useState(initialItem);
 
   return (
-    <DetailContainer item={item} setItem={setItem} />
+    <DetailItem item={item} setItem={setItem} />
   );
 }

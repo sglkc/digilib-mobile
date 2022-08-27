@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Drawer from 'react-native-draggable-view';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Button from '@/components/Button';
+import Audio from '@/components/DetailItem/Audio';
+import Book from '@/components/DetailItem/Book';
 import Chip from '@/components/Item/Chip';
 
 export default function ({ item, setItem }) {
@@ -15,11 +16,18 @@ export default function ({ item, setItem }) {
   return (
     <>
       <View style={styles.thumbnailContainer}>
-        <Image style={styles.thumbnail} source={{ uri: item.cover }} />
+        <Image
+          style={[styles.thumbnail.default, styles.thumbnail[item.type]]}
+          source={{ uri: item.cover }}
+        />
       </View>
       <ScrollView overScrollMode="never" contentContainerStyle={{ minHeight: '100%' }}>
-        <View style={styles.container}>
-          <View style={styles.line} />
+        <View
+          style={[
+            styles.container, item.type === 'video' && styles.containerVideo
+          ]}
+        >
+          { item.type !== 'video' && <View style={styles.line} /> }
           <Text style={styles.title}>{ item.title }</Text>
           <Text style={styles.author}>{ item.author }</Text>
           <View style={styles.row}>
@@ -39,16 +47,8 @@ export default function ({ item, setItem }) {
               />
             </TouchableOpacity>
           </View>
-          { item.type === 'book' &&
-          <View style={styles.book.container}>
-            <Button
-              text="Baca"
-              style={styles.book.buttonContainer}
-              styleButton={styles.book.button}
-            />
-            <Button text="Beli Buku" />
-          </View>
-          }
+          { item.type === 'book' && <Book /> }
+          { item.type === 'audio' && <Audio /> }
           <Text style={styles.subtitle}>Deskripsi Singkat</Text>
           <Text style={styles.description}>{ item.description }</Text>
           <Text style={styles.subtitle}>Tagar</Text>
@@ -74,20 +74,26 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: 'center',
-    marginHorizontal: 64,
   },
   thumbnail: {
-    width: 256,
-    height: 256,
+    default: { resizeMode: 'contain', },
+    audio: { width: 370, height: 500 },
+    book: { width: 300, height: 500 },
+    video: { width: '100%', height: 256, resizeMode: 'cover' },
   },
   container: {
-    marginTop: 350,
+    marginTop: 512,
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderTopRightRadius: 32,
     borderTopLeftRadius: 32,
     height: '100%',
     backgroundColor: 'white',
+  },
+  containerVideo: {
+    marginTop: 256,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
   },
   line: {
     marginBottom: 8,
@@ -138,16 +144,5 @@ const styles = StyleSheet.create({
   },
   chipText: {
     fontSize: 16,
-  },
-  book: {
-    container: {
-      flexDirection: 'row',
-    },
-    buttonContainer: {
-      width: 'auto',
-    },
-    button: {
-
-    },
   },
 });
