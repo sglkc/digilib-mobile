@@ -26,6 +26,7 @@ import Notifikasi from '@/views/Notifikasi';
 import Riwayat from '@/views/Riwayat';
 import UmpanBalik from '@/views/UmpanBalik';
 import Tentang from '@/views/Tentang';
+import DetailItem from '@/views/DetailItem';
 import TextButton from '@/components/TextButton';
 import ViewContainer from '@/components/ViewContainer';
 import GlobalStyles from '@/func/GlobalStyles';
@@ -182,6 +183,16 @@ export const StackNavigator = () => {
         component: <Tentang />,
       },
     },
+    {
+      route: 'DetailItem',
+      container: {
+        title: '',
+        component: <DetailItem />,
+        collapsed: true,
+        style: { paddingVertical: 0, paddingHorizontal: 0 },
+        transparent: true,
+      },
+    },
   ];
 
   return (
@@ -201,6 +212,7 @@ export const StackNavigator = () => {
                   component={view.container.component}
                   style={view.container.style}
                   title={view.container.title}
+                  transparent={view.container.transparent}
                 />
               )
             }}
