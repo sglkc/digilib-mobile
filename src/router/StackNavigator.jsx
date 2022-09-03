@@ -210,10 +210,10 @@ export const StackNavigator = () => {
   useEffect(() => {
     if (Clicked == true) {
       drawer.current.closeDrawer()
+      setTimeout(() => {
+        setClicked(false)
+      }, 50);
     }
-    setTimeout(() => {
-      setClicked(false)
-    }, 100);
   }, [Clicked])
   
   return (
