@@ -7,7 +7,8 @@ import {
   ImageBackground,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  DrawerLayoutAndroid
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
@@ -30,6 +31,8 @@ import DetailItem from '@/views/DetailItem';
 import TextButton from '@/components/TextButton';
 import ViewContainer from '@/components/ViewContainer';
 import GlobalStyles from '@/func/GlobalStyles';
+import { useRef } from 'react';
+import DrawerNavigationView from '@/components/DrawerNavigationView'
 
 const style = StyleSheet.create({
   container: {
@@ -40,9 +43,17 @@ const style = StyleSheet.create({
   },
 });
 
+
+
 const Stack = createNativeStackNavigator();
 
+
 export const StackNavigator = () => {
+  const drawer = useRef(null);
+  const click = ()=>{
+    drawer.current.openDrawer()
+    console.log(drawer)
+  }
   const navigation = useNavigation();
   const SearchButton = (
     <TouchableOpacity onPress={() => navigation.navigate('Pencarian')}>
@@ -76,7 +87,7 @@ export const StackNavigator = () => {
     },
     {
       route: 'Etalase',
-      component: () => <Etalase />,
+      component: () => <Etalase onClickDrawer={click} />,
     },
     {
       route: 'Jelajahi',
@@ -194,8 +205,15 @@ export const StackNavigator = () => {
       },
     },
   ];
-
   return (
+      <DrawerLayoutAndroid
+        ref={drawer}
+        drawerWidth={280}
+        drawerPosition="left"
+        renderNavigationView={() => (
+          <DrawerNavigationView />
+        )}
+      >
     <Stack.Navigator initialRouteName='Login'>
       { views.map((view, index) => {
         return (
@@ -219,7 +237,8 @@ export const StackNavigator = () => {
           </Stack.Screen>
         );
       })
-      }
+    }
     </Stack.Navigator>
+    </DrawerLayoutAndroid>
   );
 }

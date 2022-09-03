@@ -21,9 +21,9 @@ import CategoryScroller from "@/components/CategoryScroller";
 import SortByComponent from "@/components/SortByComponent";
 import Item from '@/components/Item';
 
-export default function Etalase() {
+export default function Etalase({onClickDrawer}) {
   const navigation = useNavigation();
-  const drawer = useRef(null);
+  // const drawer = useRef(null);
   const quote = {
     text: 'Banyak jalan untuk mendekati Tuhan, sebanyak bilangan nafas' +
     ' para pencari Tuhan. Tapi jalan yang paling dekat pada Allah adalah' +
@@ -62,14 +62,14 @@ export default function Etalase() {
   ];
 
   return (
-    <DrawerLayoutAndroid
-      ref={drawer}
-      drawerWidth={280}
-      drawerPosition="left"
-      renderNavigationView={() => (
-        <DrawerNavigationView />
-      )}
-    >
+    // <DrawerLayoutAndroid
+    //   ref={drawer}
+    //   drawerWidth={280}
+    //   drawerPosition="left"
+    //   renderNavigationView={() => (
+    //     <DrawerNavigationView />
+    //   )}
+    // >
       <ImageBackground
         source={require('assets/BG_ORANGE.png')}
         style={{width: '100%', height: '100%'}}
@@ -78,7 +78,7 @@ export default function Etalase() {
           <View style={styles.title.icons}>
             <TouchableOpacity
               style={{ paddingRight: 32 }}
-              onPress={() => drawer.current.openDrawer()}
+              onPress={onClickDrawer}
             >
               <Icon name="menu" size={32} color="white" />
             </TouchableOpacity>
@@ -123,7 +123,7 @@ export default function Etalase() {
           </View>
         </View>
       </ImageBackground>
-    </DrawerLayoutAndroid>
+    // </DrawerLayoutAndroid>
   );
 }
 const styles = StyleSheet.create({

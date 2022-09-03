@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Drawer from 'react-native-draggable-view';
+// import Drawer from 'react-native-draggable-view';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Audio from '@/components/DetailItem/Audio';
 import Book from '@/components/DetailItem/Book';
