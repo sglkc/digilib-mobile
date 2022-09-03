@@ -4,21 +4,81 @@ import Button from '@/components/Button';
 import DetailItem from '@/components/DetailItem';
 
 export default function () {
-  const initialItem = {
-    title: 'Doa Bukan Lampu Aladin',
-    author: 'Jalaludin Rakhmat',
-    description:
-    'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut' +
-    'fugit, sed quia consequuntur magni dolored eos qui ratione voluptatem.',
-    categories: ['Doa', 'Agama'],
-    cover: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1332922051l/13563593.jpg',
-    media: '',
-    type: 'book',
-    bookmark: false,
+  const placeholder = {
+    audio: {
+      title: 'Neuro Psikologi',
+      author: 'Jalaludin Rakhmat',
+      description:
+      'Ed ut perspiciatis unde omnis iste natus error sit voluptatem ' +
+      'accusantium doloremque laudantium.',
+      categories: ['Sains dan Pendidikan', 'Psikologi', 'Komunikasi', 'Neurosains'],
+      cover: 'http://cdn.medicalxpress.com/newman/gfx/news/2014/0318_cogsci-grades-orig.jpg',
+      media: '',
+      type: 'audio',
+      bookmark: false,
+    },
+    book: {
+      title: 'Doa Bukan Lampu Aladin',
+      author: 'Jalaludin Rakhmat',
+      description:
+      'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut' +
+      'fugit, sed quia consequuntur magni dolored eos qui ratione voluptatem.',
+      categories: ['Doa', 'Agama'],
+      cover: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1332922051l/13563593.jpg',
+      media: '',
+      type: 'book',
+      bookmark: false,
+    },
+    video: {
+      title: 'Neuro Psikologi',
+      author: 'Jalaludin Rakhmat',
+      description:
+      'Ed ut perspiciatis unde omnis iste natus error sit voluptatem ' +
+      'accusantium doloremque laudantium.',
+      categories: ['Sains dan Pendidikan', 'Psikologi', 'Komunikasi', 'Neurosains'],
+      cover: 'https://i.ytimg.com/vi/zxFWIa9mDIo/maxresdefault.jpg',
+      media: '',
+      type: 'video',
+      bookmark: false,
+    }
   };
-  const [item, setItem] = useState(initialItem);
+  const [item, setItem] = useState(placeholder.book);
 
   return (
-    <DetailItem item={item} setItem={setItem} />
+    <>
+      <DetailItem item={item} setItem={setItem} />
+      <View style={styles.container}>
+        <Text style={{ position: 'absolute', color: 'white' }}>DEBUG TIPE ITEM</Text>
+        { ['audio' ,'book', 'video'].map((type, index) => (
+          <Button
+            key={index}
+            style={styles.buttonContainer}
+            styleButton={styles.button}
+            text={type}
+            onPress={() => setItem(placeholder[type])}
+          />
+        ))
+        }
+      </View>
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  buttonContainer: {
+    marginTop: 24,
+    marginRight: 8,
+    width: 'auto',
+  },
+  button: {
+    paddingVertical: 8,
+    paddingHorizontal: 32,
+    backgroundColor: '#3333335f',
+  },
+});
