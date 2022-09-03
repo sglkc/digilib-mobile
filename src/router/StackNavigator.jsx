@@ -212,7 +212,7 @@ export const StackNavigator = () => {
       drawer.current.closeDrawer()
       setTimeout(() => {
         setClicked(false)
-      }, 50);
+      }, 1);
     }
   }, [Clicked])
   
