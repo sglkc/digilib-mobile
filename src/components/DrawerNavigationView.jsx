@@ -39,7 +39,7 @@ export default function DrawerContent() {
   ];
 
   return (
-    <View style={{ paddingTop: StatusBar.currentHeight + 16, flex: 1 }}>
+    <View style={{ paddingTop: StatusBar.currentHeight - 10, flex: 1 }}>
       <View>
         <Image
           style={styles.logo}
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   button: {
     paddingTop: 8,
     paddingBottom: 8,
-    backgroundColor: 'green'
+    backgroundColor: '#3dd20e'
   },
   buttonText: {
     textAlign: 'center',

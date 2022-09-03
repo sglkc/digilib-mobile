@@ -11,12 +11,16 @@ import {
   View
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
 
 export default function ({
-  button, collapsed, component, drawer, style, title, transparent
+  button, collapsed, component, drawer, style, title, transparent, CLOSE_DRAWER_PLEASE
 }) {
   const navigation = useNavigation();
-
+  useEffect(() => {
+    CLOSE_DRAWER_PLEASE
+  }, [])
+  
   return (
     <SafeAreaView>
       <ImageBackground

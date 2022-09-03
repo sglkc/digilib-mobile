@@ -31,7 +31,7 @@ import DetailItem from '@/views/DetailItem';
 import TextButton from '@/components/TextButton';
 import ViewContainer from '@/components/ViewContainer';
 import GlobalStyles from '@/func/GlobalStyles';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DrawerNavigationView from '@/components/DrawerNavigationView'
 
 const style = StyleSheet.create({
@@ -50,9 +50,10 @@ const Stack = createNativeStackNavigator();
 
 export const StackNavigator = () => {
   const drawer = useRef(null);
+  const [Clicked, setClicked] = useState(false)
   const click = ()=>{
     drawer.current.openDrawer()
-    console.log(drawer)
+    // console.log(drawer)
   }
   const navigation = useNavigation();
   const SearchButton = (
@@ -205,13 +206,23 @@ export const StackNavigator = () => {
       },
     },
   ];
+
+  useEffect(() => {
+    if (Clicked == true) {
+      drawer.current.closeDrawer()
+    }
+    setTimeout(() => {
+      setClicked(false)
+    }, 100);
+  }, [Clicked])
+  
   return (
       <DrawerLayoutAndroid
         ref={drawer}
         drawerWidth={280}
         drawerPosition="left"
         renderNavigationView={() => (
-          <DrawerNavigationView />
+          <DrawerNavigationView CloseDrawer={()=>drawer.current.closeDrawer()} />
         )}
       >
     <Stack.Navigator initialRouteName='Login'>
@@ -231,6 +242,7 @@ export const StackNavigator = () => {
                   style={view.container.style}
                   title={view.container.title}
                   transparent={view.container.transparent}
+                  CLOSE_DRAWER_PLEASE={ setClicked(true) }
                 />
               )
             }}

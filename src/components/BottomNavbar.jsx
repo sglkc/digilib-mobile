@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    backgroundColor: 'green',
+    backgroundColor: '#3dd20e',
     width: '75%',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
