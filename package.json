@@ -22,6 +22,7 @@
     "react-native-screens": "~3.15.0",
     "react-native-select-dropdown": "^2.0.4",
     "react-native-vector-icons": "^9.2.0",
+    "react-native-webview": "^11.23.0",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0"
   },

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// import Drawer from 'react-native-draggable-view';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Audio from '@/components/DetailItem/Audio';
 import Book from '@/components/DetailItem/Book';
@@ -47,7 +46,7 @@ export default function ({ item, setItem }) {
               />
             </TouchableOpacity>
           </View>
-          { item.type === 'book' && <Book /> }
+          { item.type === 'book' && <Book uri={item.media} /> }
           { item.type === 'audio' && <Audio /> }
           <Text style={styles.subtitle}>Deskripsi Singkat</Text>
           <Text style={styles.description}>{ item.description }</Text>
