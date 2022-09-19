@@ -215,7 +215,7 @@ export const StackNavigator = () => {
       }, 1);
     }
   }, [Clicked])
-  
+
   return (
       <DrawerLayoutAndroid
         ref={drawer}
@@ -242,7 +242,7 @@ export const StackNavigator = () => {
                   style={view.container.style}
                   title={view.container.title}
                   transparent={view.container.transparent}
-                  CLOSE_DRAWER_PLEASE={ setClicked(true) }
+                  setClicked={setClicked}
                 />
               )
             }}

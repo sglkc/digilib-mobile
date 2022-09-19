@@ -14,13 +14,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 
 export default function ({
-  button, collapsed, component, drawer, style, title, transparent, CLOSE_DRAWER_PLEASE
+  button, collapsed, component, drawer, style, title, transparent, setClicked
 }) {
   const navigation = useNavigation();
   useEffect(() => {
-    CLOSE_DRAWER_PLEASE
+    setClicked(true);
   }, [])
-  
+
   return (
     <SafeAreaView>
       <ImageBackground
