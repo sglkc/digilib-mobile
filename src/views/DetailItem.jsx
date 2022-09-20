@@ -13,7 +13,7 @@ export default function () {
       'accusantium doloremque laudantium.',
       categories: ['Sains dan Pendidikan', 'Psikologi', 'Komunikasi', 'Neurosains'],
       cover: 'http://cdn.medicalxpress.com/newman/gfx/news/2014/0318_cogsci-grades-orig.jpg',
-      media: '',
+      media: 'https://filesamples.com/samples/audio/mp3/sample1.mp3',
       type: 'audio',
       bookmark: false,
     },
