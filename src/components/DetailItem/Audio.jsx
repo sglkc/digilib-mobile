@@ -19,7 +19,7 @@ export default function ({ uri }) {
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState('volume-high');
-  const [rate, setRate] = useState(1.0);
+  const [rate, setRate] = useState(1);
   const spinValue = new Animated.Value(0);
 
   Animated.loop(
@@ -71,7 +71,7 @@ export default function ({ uri }) {
   }, [audio]);
 
   const toggleAudio = async () => {
-    if (playIcon === 'play') {
+    if (playIcon !== 'pause') {
       await audio.sound.playAsync();
       setPlayIcon('pause');
     } else {
@@ -100,6 +100,26 @@ export default function ({ uri }) {
     }
   };
 
+  const toggleRate = async () => {
+    switch(rate) {
+      case 1:
+        setRate(1.25);
+        await audio.sound.setRateAsync(1.25, true);
+        break;
+      case 1.25:
+        setRate(1.5);
+        await audio.sound.setRateAsync(1.5, true);
+        break;
+      case 1.5:
+        setRate(0.75);
+        await audio.sound.setRateAsync(0.75, true);
+        break;
+      default:
+        setRate(1);
+        await audio.sound.setRateAsync(1, true);
+    }
+  };
+
   const onSlidingComplete = async (seconds) => {
     await audio.sound.playFromPositionAsync(seconds * 1000);
   };
@@ -121,8 +141,8 @@ export default function ({ uri }) {
             <Icon name={playIcon} size={42} color="black" />
           </Animated.View>
         </Pressable>
-        <Pressable style={styles.headerContainer}>
-          <Text style={[styles.header, { color: 'grey' }]}>{ rate }x</Text>
+        <Pressable onPress={toggleRate} style={styles.headerContainer}>
+          <Text style={styles.header}>{ rate }x</Text>
         </Pressable>
       </View>
       <Slider
