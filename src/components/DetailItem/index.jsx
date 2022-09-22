@@ -1,26 +1,45 @@
 import { useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Audio from '@/components/DetailItem/Audio';
 import Book from '@/components/DetailItem/Book';
+import Video from '@/components/DetailItem/Video';
 import Chip from '@/components/Item/Chip';
 
 export default function ({ item, setItem }) {
+  const [videoOverlay, setVideoOverlay] = useState(false);
   const toggleBookmark = () => {
     const temp = { ...item };
     temp.bookmark = !temp.bookmark;
     setItem(temp);
   };
 
+  const toggleVideo = () => {
+    setVideoOverlay(!videoOverlay);
+  };
+
   return (
     <>
-      <View style={styles.thumbnailContainer}>
+      { videoOverlay &&
+      <Video thumbnail={item.cover} uri={item.media} onClose={toggleVideo} />
+      }
+      <View style={styles.thumbnail.container}>
+        { item.type === 'video' &&
+        <Pressable style={styles.thumbnail.icon} onPress={toggleVideo}>
+          <Icon name="play-arrow" color="white" size={65} />
+        </Pressable>
+        }
         <Image
           style={[styles.thumbnail.default, styles.thumbnail[item.type]]}
           source={{ uri: item.cover }}
         />
       </View>
-      <ScrollView overScrollMode="never" contentContainerStyle={{ minHeight: '100%' }}>
+      <ScrollView
+        overScrollMode="never"
+        contentContainerStyle={{ minHeight: '100%' }}
+      >
         <View
           style={[
             styles.container, item.type === 'video' && styles.containerVideo
@@ -68,14 +87,20 @@ export default function ({ item, setItem }) {
 }
 
 const styles = StyleSheet.create({
-  thumbnailContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-  },
   thumbnail: {
-    default: { resizeMode: 'contain', },
+    container: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    icon: {
+      padding: 32,
+      position: 'absolute',
+      zIndex: 100,
+    },
+    default: { resizeMode: 'contain' },
     audio: { width: 370, height: 500 },
     book: { width: 300, height: 500 },
     video: { width: '100%', height: 256, resizeMode: 'cover' },

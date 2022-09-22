@@ -37,7 +37,7 @@ export default function () {
       'accusantium doloremque laudantium.',
       categories: ['Sains dan Pendidikan', 'Psikologi', 'Komunikasi', 'Neurosains'],
       cover: 'https://i.ytimg.com/vi/zxFWIa9mDIo/maxresdefault.jpg',
-      media: '',
+      media: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
       type: 'video',
       bookmark: false,
     }
