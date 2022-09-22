@@ -2,18 +2,22 @@ import { useEffect, useState } from 'react';
 import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Audio } from 'expo-av';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Slider from '@react-native-community/slider';
 
 const ripple = {
   color: 'silver',
   borderless: true,
 };
 
+const secondsToTimestamp = (seconds) => {
+  return new Date(seconds * 1000).toISOString().substr(14, 5);
+};
+
 export default function ({ uri }) {
   const [playIcon, setPlayIcon] = useState('play');
   const [audio, setAudio] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [position, setPosition] = useState('00:00');
-  const [duration, setDuration] = useState('00:00');
+  const [position, setPosition] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState('volume-high');
   const [rate, setRate] = useState(1.0);
   const spinValue = new Animated.Value(0);
@@ -45,19 +49,12 @@ export default function ({ uri }) {
       loadedAudio.sound.setOnPlaybackStatusUpdate((status) => {
         if (!status.isLoaded) {
           setPlayIcon('loading');
-          console.log('not laoded');
-          if (status.error) console.error('Erorr playback: ' + status.error);
+          if (status.error) console.error('Error playback: ' + status.error);
         } else {
           const { durationMillis, positionMillis } = status;
 
-          setDuration(new Date(durationMillis).toISOString().substr(14, 5));
-          setPosition(new Date(positionMillis).toISOString().substr(14, 5));
-          setProgress(positionMillis / durationMillis * 100);
-
-          if (status.isPlaying) console.log('playing');
-          else console.log('pausing');
-
-          if (status.isBuffering) console.log('bufering');
+          setDuration(Math.round(durationMillis / 1000));
+          setPosition(Math.round(positionMillis / 1000));
         }
       });
 
@@ -103,6 +100,10 @@ export default function ({ uri }) {
     }
   };
 
+  const onSlidingComplete = async (seconds) => {
+    await audio.sound.playFromPositionAsync(seconds * 1000);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -124,12 +125,19 @@ export default function ({ uri }) {
           <Text style={[styles.header, { color: 'grey' }]}>{ rate }x</Text>
         </Pressable>
       </View>
-      <View style={styles.progressContainer}>
-        <View style={[styles.progress, { width: progress + '%' }]} />
-      </View>
+      <Slider
+        minimumTrackTintColor="orange"
+        minimumValue={0}
+        maximumValue={duration}
+        step={1}
+        style={styles.slider}
+        thumbTintColor="orange"
+        value={position}
+        onSlidingComplete={onSlidingComplete}
+      />
       <View style={styles.row}>
-        <Text style={styles.footer}>{ position }</Text>
-        <Text style={styles.footer}>{ duration }</Text>
+        <Text style={styles.footer}>{ secondsToTimestamp(position) }</Text>
+        <Text style={styles.footer}>{ secondsToTimestamp(duration) }</Text>
       </View>
     </View>
   );
@@ -151,15 +159,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
   },
-  progressContainer: {
+  slider: {
     marginVertical: 8,
-    height: 6,
-    backgroundColor: '#333',
-  },
-  progress: {
-    height: 6,
-    backgroundColor: 'orange',
-//    width: '25%',
   },
   footer: {
     fontWeight: '600',
