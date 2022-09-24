@@ -65,7 +65,7 @@ export default function ({ item, setItem }) {
               />
             </TouchableOpacity>
           </View>
-          { item.type === 'book' && <Book uri={item.media} /> }
+          { item.type === 'book' && <Book /> }
           { item.type === 'audio' && <Audio uri={item.media} /> }
           <Text style={styles.subtitle}>Deskripsi Singkat</Text>
           <Text style={styles.description}>{ item.description }</Text>

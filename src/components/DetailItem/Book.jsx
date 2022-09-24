@@ -1,30 +1,26 @@
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { WebView } from 'react-native-webview';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Button from '@/components/Button';
 
-export default function ({ uri }) {
-  const [download, setDownload] = useState(false);
+export default function () {
+  const navigation = useNavigation();
 
   return (
-    <>
-      { download && <WebView source={{ uri }} containerStyle={styles.webview} /> }
-      <View style={styles.container}>
-        <Button
-          style={styles.buttonContainer}
-          styleButton={styles.button}
-          text="Baca"
-          onPress={() => setDownload(true)}
-        />
-        <View style={{ marginHorizontal: 4 }} />
-        <Button
-          style={styles.buttonContainer}
-          styleButton={[styles.button, styles.buttonAlt]}
-          styleText={styles.buttonAltText}
-          text="Beli Buku"
-        />
-      </View>
-    </>
+    <View style={styles.container}>
+      <Button
+        style={styles.buttonContainer}
+        styleButton={styles.button}
+        text="Baca"
+        onPress={() => navigation.navigate('PDFReader')}
+      />
+      <View style={{ marginHorizontal: 4 }} />
+      <Button
+        style={styles.buttonContainer}
+        styleButton={[styles.button, styles.buttonAlt]}
+        styleText={styles.buttonAltText}
+        text="Beli Buku"
+      />
+    </View>
   );
 }
 
@@ -46,8 +42,5 @@ const styles = StyleSheet.create({
   },
   buttonAltText: {
     color: 'orange',
-  },
-  webview: {
-    height: 0,
   },
 });

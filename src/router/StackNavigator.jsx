@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   SafeAreaView,
@@ -28,10 +29,10 @@ import Riwayat from '@/views/Riwayat';
 import UmpanBalik from '@/views/UmpanBalik';
 import Tentang from '@/views/Tentang';
 import DetailItem from '@/views/DetailItem';
+import PDFReader from '@/components/DetailItem/PDFReader';
 import TextButton from '@/components/TextButton';
 import ViewContainer from '@/components/ViewContainer';
 import GlobalStyles from '@/func/GlobalStyles';
-import { useEffect, useRef, useState } from 'react';
 import DrawerNavigationView from '@/components/DrawerNavigationView'
 
 const style = StyleSheet.create({
@@ -43,24 +44,18 @@ const style = StyleSheet.create({
   },
 });
 
-
-
 const Stack = createNativeStackNavigator();
-
 
 export const StackNavigator = () => {
   const drawer = useRef(null);
-  const [Clicked, setClicked] = useState(false)
-  const click = ()=>{
-    drawer.current.openDrawer()
-    // console.log(drawer)
-  }
+  const [Clicked, setClicked] = useState(false);
   const navigation = useNavigation();
   const SearchButton = (
     <TouchableOpacity onPress={() => navigation.navigate('Pencarian')}>
       <Icon name="search" size={25} color="white" />
     </TouchableOpacity>
   );
+
   const views = [
     {
       route: 'Login',
@@ -88,7 +83,9 @@ export const StackNavigator = () => {
     },
     {
       route: 'Etalase',
-      component: () => <Etalase onClickDrawer={click} />,
+      component: () => (
+        <Etalase onClickDrawer={() => drawer.current.openDrawer()} />
+      ),
     },
     {
       route: 'Jelajahi',
@@ -205,52 +202,61 @@ export const StackNavigator = () => {
         transparent: true,
       },
     },
+    {
+      route: 'PDFReader',
+      container: {
+        title: '',
+        component: <PDFReader />,
+        collapsed: true,
+        style: { paddingVertical: 0, paddingHorizontal: 0 },
+      },
+    },
   ];
 
   useEffect(() => {
-    if (Clicked == true) {
-      drawer.current.closeDrawer()
+    if (Clicked === true) {
+      drawer.current.closeDrawer();
       setTimeout(() => {
-        setClicked(false)
+        setClicked(false);
       }, 1);
     }
   }, [Clicked])
 
   return (
-      <DrawerLayoutAndroid
-        ref={drawer}
-        drawerWidth={280}
-        drawerPosition="left"
-        renderNavigationView={() => (
-          <DrawerNavigationView CloseDrawer={()=>drawer.current.closeDrawer()} />
-        )}
-      >
-    <Stack.Navigator initialRouteName='Login'>
-      { views.map((view, index) => {
-        return (
-          <Stack.Screen
-            name={view.route}
-            key={index}
-            options={{ headerShown: false }}
-          >
-            { view.component || view.container && function () {
-              return (
-                <ViewContainer
-                  button={view.container.button}
-                  collapsed={view.container.collapsed}
-                  component={view.container.component}
-                  style={view.container.style}
-                  title={view.container.title}
-                  transparent={view.container.transparent}
-                  setClicked={setClicked}
-                />
-              )
-            }}
-          </Stack.Screen>
-        );
-      })
-    }
-    </Stack.Navigator>
+    <DrawerLayoutAndroid
+      ref={drawer}
+      drawerWidth={280}
+      drawerPosition="left"
+      renderNavigationView={() => (
+        <DrawerNavigationView CloseDrawer={()=>drawer.current.closeDrawer()} />
+      )}
+    >
+      <Stack.Navigator initialRouteName='Login'>
+        { views.map((view, index) => {
+          return (
+            <Stack.Screen
+              name={view.route}
+              key={index}
+              options={{ headerShown: false }}
+            >
+              { view.component || view.container && function () {
+                return (
+                  <ViewContainer
+                    button={view.container.button}
+                    collapsed={view.container.collapsed}
+                    component={view.container.component}
+                    style={view.container.style}
+                    title={view.container.title}
+                    transparent={view.container.transparent}
+                    setClicked={setClicked}
+                  />
+                )
+              }}
+            </Stack.Screen>
+          );
+        })
+        }
+      </Stack.Navigator>
     </DrawerLayoutAndroid>
   );
 }
