@@ -220,7 +220,7 @@ export const StackNavigator = () => {
         setClicked(false);
       }, 1);
     }
-  }, [Clicked])
+  }, [Clicked]);
 
   return (
     <DrawerLayoutAndroid

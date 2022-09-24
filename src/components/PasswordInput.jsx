@@ -5,7 +5,7 @@ import TextInput from '@/components/TextInput';
 
 export default function ({ placeholder, style }) {
   const [hide, setHide] = useState(true);
-  const [icon, setIcon] = useState('eye');
+  const [icon, setIcon] = useState('eye-off');
   const toggleHide = () => {
     setHide(!hide);
     setIcon(hide ? 'eye' : 'eye-off');
