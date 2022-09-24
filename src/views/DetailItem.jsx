@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setItem } from '@/state/reducers/ItemReducer';
 import Button from '@/components/Button';
 import DetailItem from '@/components/DetailItem';
 
@@ -42,7 +44,8 @@ export default function () {
       bookmark: false,
     }
   };
-  const [item, setItem] = useState(placeholder.book);
+  const item = useSelector((state) => state.item);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -55,7 +58,7 @@ export default function () {
             style={styles.buttonContainer}
             styleButton={styles.button}
             text={type}
-            onPress={() => setItem(placeholder[type])}
+            onPress={() => dispatch(setItem(placeholder[type]))}
           />
         ))
         }

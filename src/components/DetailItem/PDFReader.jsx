@@ -1,11 +1,9 @@
 import { WebView } from 'react-native-webview';
+import { useSelector } from 'react-redux';
 
 export default function () {
-  const uri = 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Placeholder.pdf';
+  const item = useSelector((state) => state.item);
+  const uri = 'https://docs.google.com/gview?embedded=true&url=' + item.media
 
-  return (
-    <WebView
-      source={{ uri: 'https://docs.google.com/gview?embedded=true&url=' + uri }}
-    />
-  );
+  return <WebView source={{ uri }} />;
 }
