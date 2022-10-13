@@ -49,6 +49,7 @@ const Stack = createNativeStackNavigator();
 export const StackNavigator = () => {
   const drawer = useRef(null);
   const [Clicked, setClicked] = useState(false);
+  const [pastFirstScreen, setPastFirstScreen] = useState(false);
   const navigation = useNavigation();
   const SearchButton = (
     <TouchableOpacity onPress={() => navigation.navigate('Pencarian')}>
@@ -227,11 +228,22 @@ export const StackNavigator = () => {
       ref={drawer}
       drawerWidth={280}
       drawerPosition="left"
+      drawerLockMode={pastFirstScreen ? 'unlocked' : 'locked-closed'}
       renderNavigationView={() => (
         <DrawerNavigationView CloseDrawer={()=>drawer.current.closeDrawer()} />
       )}
     >
-      <Stack.Navigator initialRouteName='Login'>
+      <Stack.Navigator
+        initialRouteName='Login'
+        screenListeners={({ navigation }) => ({
+          state: (e) => {
+            const { routes } = e.data.state;
+            const currentRoute = routes[routes.length - 1].name;
+
+            setPastFirstScreen(!['Login', 'Register'].includes(currentRoute));
+          }
+        })}
+      >
         { views.map((view, index) => {
           return (
             <Stack.Screen
