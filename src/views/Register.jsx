@@ -1,15 +1,69 @@
+import { useState, useRef } from 'react';
 import {
   StyleSheet, Image, Pressable, Text, View
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
-import Button from '@/components/Button';
 import CheckBox from 'expo-checkbox';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Button from '@/components/Button';
 import PasswordInput from '@/components/PasswordInput';
 import TextButton from '@/components/TextButton';
 import TextInput from '@/components/TextInput';
+import Axios from '@/func/Axios';
 
 export default function () {
+  const [error, setError] = useState(null);
+  const [checked, setChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [datepicker, setDatepicker] = useState(false);
+  const state = useRef({
+    nama: '',
+    email: '',
+    password: '',
+    tanggal_lahir: ''
+  });
+
   const navigation = useNavigation();
+
+  function onDatepickerChange(e) {
+    if (e.type !== 'set') return setDatepicker(false);
+
+    const timestamp = new Date(e.nativeEvent.timestamp);
+    const date = new Date(
+      timestamp.getTime() - timestamp.getTimezoneOffset() * 60000
+    );
+
+    state.current.tanggal_lahir = date.toISOString().substr(0, 10);
+
+    setDatepicker(false);
+  }
+
+  function register() {
+    if (Object.values(state.current).filter(e => !e).length) {
+      return setError('Mohon isi semua data diatas');
+    }
+
+    if (!checked) return setError('Mohon untuk menceklis kotak diatas');
+
+    setLoading(true);
+
+    Axios.post('/auth/register', { ...state.current })
+      .then(async (res) => {
+        setError(null);
+        await SecureStore.setItemAsync('token', res.data.token);
+        navigation.navigate('Etalase');
+      })
+      .catch((err) => {
+        const msg = err.data?.message;
+        const localized = msg === 'EMAIL_DUPLICATE' ? 'Email sudah terdaftar'
+          : 'Terjadi error, silahkan coba lagi'
+
+        setError(localized);
+      })
+      .finally(() => setLoading(false));
+  }
 
   return (
     <View style={styles.container}>
@@ -23,12 +77,42 @@ export default function () {
         />
       </Pressable>
       <Text style={styles.title}>Daftar</Text>
-      <TextInput placeholder="Nama Lengkap" style={styles.input} />
-      <TextInput placeholder="Email" style={styles.input} />
-      <TextInput placeholder="Tanggal Lahir" style={styles.input} />
-      <PasswordInput style={styles.input} />
+      <TextInput
+        placeholder="Nama Lengkap"
+        style={styles.input}
+        onChangeText={(val) => (state.current.nama = val)}
+      />
+      <TextInput
+        placeholder="Email"
+        style={styles.input}
+        onChangeText={(val) => (state.current.email = val)}
+      />
+      <Pressable style={{ width: '100%' }} onPress={() => (setDatepicker(true))}>
+        <TextInput
+          style={[styles.input, { color: 'black' }]}
+          placeholder="Tanggal Lahir"
+          editable={false}
+          value={state.current.tanggal_lahir}
+        />
+      </Pressable>
+      { datepicker &&
+      <DateTimePicker
+        maximumDate={new Date()}
+        value={new Date(1999, 0)}
+        onChange={onDatepickerChange}
+      />
+      }
+      <PasswordInput
+        style={styles.input}
+        onChangeText={(val) => (state.current.password = val)}
+      />
       <View style={styles.confirmContainer}>
-        <CheckBox style={styles.confirmCheck} />
+        <CheckBox
+          style={styles.confirmCheck}
+          value={checked}
+          onValueChange={setChecked}
+          color="#ffa500"
+        />
         <Text style={{ fontSize: 16 }}>
           Dengan ini menyatakan Anda setuju, Anda menerima segala isi
           <Text style={styles.confirmBold}> Syarat Penggunaan </Text>
@@ -37,10 +121,14 @@ export default function () {
           Jalan Rahmat
         </Text>
       </View>
-      <Button style={styles.button}>
-        <Text style={styles.buttonText}>
-          Daftar Sekarang
-        </Text>
+      { error &&
+      <View style={styles.alert}>
+        <Icon name="exclamation-triangle" size={22} color="white" />
+        <Text style={styles.alertText}>{ error }</Text>
+      </View>
+      }
+      <Button loading={loading} style={styles.button} onPress={register}>
+        Daftar Sekarang
       </Button>
       <View style={{ flexDirection: 'row' }}>
         <Text style={{ fontSize: 16, marginEnd: 8 }}>
@@ -93,4 +181,16 @@ const styles = StyleSheet.create({
     marginTop: 32,
     marginBottom: 24,
   },
+  alert: {
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: '#dc3545',
+    borderRadius: 8,
+    flexDirection: 'row'
+  },
+  alertText: {
+    marginLeft: 8,
+    fontSize: 16,
+    color: 'white'
+  }
 });
