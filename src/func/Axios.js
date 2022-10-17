@@ -9,25 +9,31 @@ const axios = Axios.create({
   }
 });
 
-axios.interceptors.request.use(function (config) {
-  return SecureStore.getItemAsync('token')
-    .then((token) => {
-      config.headers.Authorization = 'bearer ' + token
-      return config;
-    })
-    .catch(() => config)
-}, function (config) {
-  return Promise.reject(err);
-});
+axios.interceptors.request.use(
+  function (config) {
+    return SecureStore.getItemAsync('token')
+      .then((token) => {
+        config.headers.Authorization = 'bearer ' + token
+        return config;
+      })
+      .catch(() => config)
+  },
+  function (err) {
+    return Promise.reject(err);
+  }
+);
 
-axios.interceptors.response.use(function (res) {
-  res.data.status = res.status;
-  return res;
-}, function (err) {
-  err.message = err.response.data.message;
-  err.data = err.response.data;
+axios.interceptors.response.use(
+  function (res) {
+    res.data.status = res.status;
+    return res;
+  },
+  function (err) {
+    err.message = err.response.data.message;
+    err.data = err.response.data;
 
-  return Promise.reject(err);
-});
+    return Promise.reject(err);
+  }
+);
 
 export default axios;

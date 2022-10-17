@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   Image, StyleSheet, Text, View
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '@/components/Button';
 import TextButton from '@/components/TextButton';
 import TextInput from '@/components/TextInput';
@@ -13,17 +14,33 @@ import Axios from '@/func/Axios';
 
 export default function () {
   const [modal, showModal] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const state = { email: null, password: null };
+  const state = useRef({ email: '', password: '' });
 
   function login() {
-    Axios.post('/auth/login', { ...state })
+    if (state.current.email === '' || state.current.password === '') {
+      return setError('Mohon isi email dan kata sandi');
+    }
+
+    setLoading(true);
+
+    Axios.post('/auth/login', { ...state.current })
       .then(async (res) => {
-        console.log(res.config.headers)
+        setError(null);
         await SecureStore.setItemAsync('token', res.data.token);
         navigation.navigate('Etalase');
       })
-      .catch((err) => console.error(err.data.message));
+      .catch((err) => {
+        const msg = err.data.message;
+        const localized = msg === 'EMAIL_NOT_FOUND' ? 'Email tidak terdaftar'
+          : msg === 'INVALID_PASSWORD' ? 'Password salah'
+          : 'Terjadi error, silahkan coba lagi'
+
+        setError(localized);
+      })
+      .finally(() => setLoading(false));
   }
 
   return (
@@ -35,13 +52,14 @@ export default function () {
         resizeMode="contain"
       />
       <TextInput
+        keyboardType="email-address"
         placeholder="Email"
         style={styles.input}
-        onChangeText={(val) => (state.email = val)}
+        onChangeText={(val) => (state.current.email = val)}
       />
       <PasswordInput
         style={styles.input}
-        onChangeText={(val) => (state.password = val)}
+        onChangeText={(val) => (state.current.password = val)}
       />
       <TextButton
         style={{ alignSelf: 'flex-end' }}
@@ -49,7 +67,15 @@ export default function () {
       >
         Lupa Kata Sandi?
       </TextButton>
-      <Button style={styles.button} onPress={login}>Masuk</Button>
+      { error &&
+        <View style={styles.alert}>
+          <Icon name="exclamation-triangle" size={22} color="white" />
+          <Text style={styles.alertText}>{ error }</Text>
+        </View>
+      }
+      <Button loading={loading} style={styles.button} onPress={login}>
+        Masuk
+      </Button>
       <View style={{ flexDirection: 'row' }}>
         <Text style={{ fontSize: 16, marginEnd: 6 }}>
           Belum punya akun?
@@ -84,5 +110,17 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 32,
     marginBottom: 24,
+  },
+  alert: {
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: '#dc3545',
+    borderRadius: 8,
+    flexDirection: 'row'
+  },
+  alertText: {
+    marginLeft: 8,
+    fontSize: 16,
+    color: 'white'
   }
 });

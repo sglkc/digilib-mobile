@@ -1,7 +1,8 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Spinner from '@/components/Spinner';
 
 export default function ({
-  children, text, style, styleButton, styleText, onPress
+  children, text, style, styleButton, styleText, loading, onPress
 }) {
   return (
     <View style={[ styles.container, style ]}>
@@ -9,10 +10,14 @@ export default function ({
         style={[ styles.container, styles.button, styleButton ]}
         onPress={onPress}
         android_ripple={{ color: 'silver', borderless: true }}
+        disabled={loading}
       >
-        <Text style={[ styles.text, styleText ]}>
-          { text || children }
-        </Text>
+        { loading && <Spinner /> }
+        { !loading &&
+          <Text style={[ styles.text, styleText ]}>
+            { text || children }
+          </Text>
+        }
       </Pressable>
     </View>
   );
