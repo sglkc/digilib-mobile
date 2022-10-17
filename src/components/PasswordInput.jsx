@@ -3,7 +3,7 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import TextInput from '@/components/TextInput';
 
-export default function ({ placeholder, style }) {
+export default function ({ placeholder, style, onChangeText }) {
   const [hide, setHide] = useState(true);
   const [icon, setIcon] = useState('eye-off');
   const toggleHide = () => {
@@ -16,6 +16,7 @@ export default function ({ placeholder, style }) {
       <TextInput
         hide={hide}
         placeholder={placeholder || 'Kata Sandi'}
+        onChangeText={onChangeText}
       />
       <Pressable style={styles.button} onPress={toggleHide}>
         <Icon name={icon} size={30} color="#333b" />
