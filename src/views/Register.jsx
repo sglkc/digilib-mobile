@@ -53,6 +53,7 @@ export default function () {
       .then(async (res) => {
         setError(null);
         await SecureStore.setItemAsync('token', res.data.token);
+        await SecureStore.setItemAsync('user', JSON.stringify(res.data.result));
         navigation.navigate('Etalase');
       })
       .catch((err) => {

@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import {
   Image, Text, View, StyleSheet, TouchableHighlight, StatusBar
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
+import * as SecureStore from 'expo-secure-store';
 import Button from '@/components/Button';
 
 export default function DrawerContent() {
+  const [user, setUser] = useState(null);
   const navigation = useNavigation();
   const items = [
     {
@@ -38,6 +41,10 @@ export default function DrawerContent() {
     },
   ];
 
+  SecureStore.getItemAsync('user')
+    .then((str) => setUser(JSON.parse(str)))
+    .catch(console.error);
+
   return (
     <View style={{ paddingTop: StatusBar.currentHeight - 10, flex: 1 }}>
       <View>
@@ -45,8 +52,10 @@ export default function DrawerContent() {
           style={styles.logo}
           source={require('assets/logo.png')}/>
         <View style={{ paddingLeft: 16, marginVertical: 8 }}>
-          <Text style={{ fontSize: 16, fontWeight: '800' }}>Nama</Text>
-          <Text>nama@email.com</Text>
+          <Text style={{ fontSize: 16, fontWeight: '800' }}>
+            { user?.nama }
+          </Text>
+          <Text>{ user?.email }</Text>
         </View>
         <View style={styles.LineDivider} />
         {
