@@ -21,6 +21,12 @@ export default function () {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  SecureStore.getItemAsync('token')
+    .then((token) => {
+      Axios.get('/user').then(() => navigation.navigate('Etalase'));
+    })
+    .catch(() => false);
+
   function login() {
     if (state.current.email === '' || state.current.password === '') {
       return setError('Mohon isi email dan kata sandi');
