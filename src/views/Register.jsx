@@ -1,13 +1,11 @@
 import { useState, useRef } from 'react';
-import {
-  StyleSheet, Image, Pressable, Text, View
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, Image, Pressable, Text, View } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import CheckBox from 'expo-checkbox';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import Alert from '@/components/Alert';
 import Button from '@/components/Button';
+import Datepicker from '@/components/Datepicker';
 import PasswordInput from '@/components/PasswordInput';
 import TextButton from '@/components/TextButton';
 import TextInput from '@/components/TextInput';
@@ -17,7 +15,6 @@ export default function () {
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [datepicker, setDatepicker] = useState(false);
   const state = useRef({
     nama: '',
     email: '',
@@ -26,19 +23,6 @@ export default function () {
   });
 
   const navigation = useNavigation();
-
-  function onDatepickerChange(e) {
-    if (e.type !== 'set') return setDatepicker(false);
-
-    const timestamp = new Date(e.nativeEvent.timestamp);
-    const date = new Date(
-      timestamp.getTime() - timestamp.getTimezoneOffset() * 60000
-    );
-
-    state.current.tanggal_lahir = date.toISOString().substr(0, 10);
-
-    setDatepicker(false);
-  }
 
   function register() {
     if (Object.values(state.current).filter(e => !e).length) {
@@ -88,21 +72,7 @@ export default function () {
         style={styles.input}
         onChangeText={(val) => (state.current.email = val)}
       />
-      <Pressable style={{ width: '100%' }} onPress={() => (setDatepicker(true))}>
-        <TextInput
-          style={[styles.input, { color: 'black' }]}
-          placeholder="Tanggal Lahir"
-          editable={false}
-          value={state.current.tanggal_lahir}
-        />
-      </Pressable>
-      { datepicker &&
-      <DateTimePicker
-        maximumDate={new Date()}
-        value={new Date(1999, 0)}
-        onChange={onDatepickerChange}
-      />
-      }
+      <Datepicker onChangeValue={(val) => state.current.tanggal_lahir = val} />
       <PasswordInput
         style={styles.input}
         onChangeText={(val) => (state.current.password = val)}
@@ -122,12 +92,7 @@ export default function () {
           Jalan Rahmat
         </Text>
       </View>
-      { error &&
-      <View style={styles.alert}>
-        <Icon name="exclamation-triangle" size={22} color="white" />
-        <Text style={styles.alertText}>{ error }</Text>
-      </View>
-      }
+      { error && <Alert text={error} /> }
       <Button loading={loading} style={styles.button} onPress={register}>
         Daftar Sekarang
       </Button>
@@ -181,17 +146,5 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 32,
     marginBottom: 24,
-  },
-  alert: {
-    marginTop: 16,
-    padding: 16,
-    backgroundColor: '#dc3545',
-    borderRadius: 8,
-    flexDirection: 'row'
-  },
-  alertText: {
-    marginLeft: 8,
-    fontSize: 16,
-    color: 'white'
   }
 });

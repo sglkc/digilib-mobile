@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Alert from '@/components/Alert';
 import Button from '@/components/Button';
 import TextButton from '@/components/TextButton';
 import TextInput from '@/components/TextInput';
@@ -68,12 +68,7 @@ export default function () {
       >
         Lupa Kata Sandi?
       </TextButton>
-      { error &&
-        <View style={styles.alert}>
-          <Icon name="exclamation-triangle" size={22} color="white" />
-          <Text style={styles.alertText}>{ error }</Text>
-        </View>
-      }
+      { error && <Alert text={error} /> }
       <Button loading={loading} style={styles.button} onPress={login}>
         Masuk
       </Button>
@@ -111,17 +106,5 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 32,
     marginBottom: 24,
-  },
-  alert: {
-    marginTop: 16,
-    padding: 16,
-    backgroundColor: '#dc3545',
-    borderRadius: 8,
-    flexDirection: 'row'
-  },
-  alertText: {
-    marginLeft: 8,
-    fontSize: 16,
-    color: 'white'
   }
 });
