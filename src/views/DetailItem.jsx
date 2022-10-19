@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setItem } from '@/state/reducers/ItemReducer';
+import { setItem } from '@/store/ItemReducer';
 import Button from '@/components/Button';
 import DetailItem from '@/components/DetailItem';
 

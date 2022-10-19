@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
-import {
-  Image, StyleSheet, Text, View
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+import { useNavigation } from '@react-navigation/native';
+import { setUser } from '@/store/UserReducer';
+import { useDispatch, useSelector } from 'react-redux';
 import Alert from '@/components/Alert';
 import Button from '@/components/Button';
 import TextButton from '@/components/TextButton';
@@ -16,8 +16,10 @@ export default function () {
   const [modal, showModal] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigation = useNavigation();
   const state = useRef({ email: '', password: '' });
+  const navigation = useNavigation();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   function login() {
     if (state.current.email === '' || state.current.password === '') {
@@ -30,7 +32,7 @@ export default function () {
       .then(async (res) => {
         setError(null);
         await SecureStore.setItemAsync('token', res.data.token);
-        await SecureStore.setItemAsync('user', JSON.stringify(res.data.result));
+        dispatch(setUser(res.data.result));
         navigation.navigate('Etalase');
       })
       .catch((err) => {

@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import { useSelector, useDispatch } from 'react-redux'
-import { setCurrentMenu } from '@/state/reducers/MenuListReducer.js';
+import { setCurrentMenu } from '@/store/MenuListReducer';
 
 const categories = [
   { name: 'Semua', function: () => console.log(index) },

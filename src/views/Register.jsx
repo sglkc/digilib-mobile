@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react';
-import { StyleSheet, Image, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
+import { setUser } from '@/store/UserReducer';
+import { useDispatch, useSelector } from 'react-redux';
 import CheckBox from 'expo-checkbox';
 import Alert from '@/components/Alert';
 import Button from '@/components/Button';
@@ -23,6 +25,8 @@ export default function () {
   });
 
   const navigation = useNavigation();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   function register() {
     if (Object.values(state.current).filter(e => !e).length) {
@@ -37,7 +41,7 @@ export default function () {
       .then(async (res) => {
         setError(null);
         await SecureStore.setItemAsync('token', res.data.token);
-        await SecureStore.setItemAsync('user', JSON.stringify(res.data.result));
+        dispatch(setUser(res.data.result));
         navigation.navigate('Etalase');
       })
       .catch((err) => {

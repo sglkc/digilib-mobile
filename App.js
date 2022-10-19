@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
-import store from '@/state/store';
+import store from '@/store';
 import { StackNavigator } from '@/router/StackNavigator';
 import SplashScreen from '@/views/SplashScreen';
 
