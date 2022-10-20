@@ -25,7 +25,7 @@ export default function () {
     .then((token) => {
       Axios.get('/user').then((res) => {
         dispatch(setUser(res.data.result));
-        navigation.navigate('Etalase');
+        navigation.navigate('Home');
       });
     })
     .catch(() => false);
@@ -42,7 +42,7 @@ export default function () {
         setError(null);
         await SecureStore.setItemAsync('token', res.data.token);
         dispatch(setUser(res.data.result));
-        navigation.navigate('Etalase');
+        navigation.navigate('Home');
       })
       .catch((err) => {
         const msg = err.data?.message;
