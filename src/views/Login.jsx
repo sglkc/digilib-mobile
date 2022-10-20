@@ -23,7 +23,10 @@ export default function () {
 
   SecureStore.getItemAsync('token')
     .then((token) => {
-      Axios.get('/user').then(() => navigation.navigate('Etalase'));
+      Axios.get('/user').then((res) => {
+        dispatch(setUser(res.data.result));
+        navigation.navigate('Etalase');
+      });
     })
     .catch(() => false);
 
