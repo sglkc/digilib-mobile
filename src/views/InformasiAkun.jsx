@@ -22,7 +22,7 @@ export default function InformasiAkun({ navigation }) {
     </>
   );
 
-  return <ViewContainer backgroundColor="white" component={Component} />;
+  return <ViewContainer component={Component} />;
 }
 
 const styles = StyleSheet.create({

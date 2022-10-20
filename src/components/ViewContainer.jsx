@@ -6,9 +6,7 @@ import {
   View
 } from 'react-native';
 
-export default function ViewContainer({
-  backgroundColor, component, noPadding
-}) {
+export default function ViewContainer({ component, noPadding, transparent }) {
   return (
     <SafeAreaView>
       <ImageBackground
@@ -19,7 +17,7 @@ export default function ViewContainer({
           <View style={{
             paddingHorizontal: noPadding ? 0 : 32,
             paddingVertical: noPadding ? 0 : 32,
-            backgroundColor,
+            backgroundColor: transparent ? 'transparent' : 'white',
             height: '100%',
           }}
           >

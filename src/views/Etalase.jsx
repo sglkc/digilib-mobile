@@ -95,7 +95,7 @@ export default function Etalase({ navigation }) {
     </>
   );
 
-  return <ViewContainer component={Component} noPadding={true} />;
+  return <ViewContainer component={Component} noPadding transparent />;
 }
 const styles = StyleSheet.create({
   title: {

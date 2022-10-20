@@ -23,14 +23,14 @@ export default function Header({ navigation, route, options, layout }) {
           <TouchableOpacity
             style={styles.left.icon}
             onPress={
-              options.hideMenu
-                ? () => navigation.goBack()
-                : () => navigation.openDrawer()
+              options.menuButton
+                ? () => navigation.openDrawer()
+                : () => navigation.goBack()
             }
           >
             <Icon
               style={options.expand && { marginBottom: 8 }}
-              name={options.hideMenu ? 'arrow-left' : 'menu'}
+              name={options.menuButton ? 'menu' : 'arrow-left'}
               color="white"
               size={32}
             />
@@ -39,20 +39,20 @@ export default function Header({ navigation, route, options, layout }) {
             { !options.hideTitle && route.name }
           </Text>
         </View>
-        { options.uniqueButton ?
-          (<TextButton
+        { route.name === 'Informasi Akun' ?
+          <TextButton
             style={options.expand && styles.right.button}
             styleText={styles.right.uniqueButton}
             text="Ubah"
             onPress={() => navigation.navigate('Ubah Informasi Akun')}
-          />)
-          :
-          (<TouchableOpacity
+          />
+          : options.searchButton &&
+          <TouchableOpacity
             style={options.expand && styles.right.button}
             onPress={() => navigation.navigate('Pencarian')}
           >
             <Icon name="search" size={25} color="white" />
-          </TouchableOpacity>)
+          </TouchableOpacity>
         }
       </View>
     </ImageBackground>

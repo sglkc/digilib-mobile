@@ -1,5 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
+import BottomNavbar from '@/components/BottomNavbar';
+import CategoryScroller from "@/components/CategoryScroller";
 import Item from '@/components/Item';
+import ViewContainer from '@/components/ViewContainer';
 
 export default function () {
   const items = [
@@ -33,10 +36,11 @@ export default function () {
     },
   ];
 
-  return (
-    <View>
-      { items.map((item, index) => {
-        return (
+  const Component = (
+    <>
+      <CategoryScroller style={{ flexGrow: 0 }} />
+      <ScrollView style={{ paddingHorizontal: 24, flexGrow: 1 }}>
+        { items.map((item, index) => (
           <Item
             key={index}
             author={item.author}
@@ -45,9 +49,23 @@ export default function () {
             cover={item.cover}
             title={item.title}
           />
-        );
-      })
-      }
-    </View>
+        ))
+        }
+        <View style={{ paddingVertical: 32 }} />
+      </ScrollView>
+      <View
+        style={{
+          position: 'absolute',
+          alignItems: 'center',
+          bottom: 0,
+          left: 0,
+          right: 0
+        }}
+      >
+        <BottomNavbar />
+      </View>
+    </>
   );
+
+  return <ViewContainer component={Component} noPadding />
 }

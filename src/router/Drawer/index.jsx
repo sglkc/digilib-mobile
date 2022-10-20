@@ -15,16 +15,17 @@ const screens = [
     name: 'Etalase',
     component: Etalase,
     options: {
+      drawerItemStyle: { display: 'none' },
       hideBanner: true,
       hideTitle: true,
-      drawerItemStyle: { display: 'none' },
+      menuButton: true,
+      searchButton: true
     }
   },
   {
     name: 'Informasi Akun',
     component: InformasiAkun,
     options: {
-      uniqueButton: true,
       expand: true,
       drawerIcon: () => <Icon name="account-outline" size={25} color="black" />,
       headerStyle: {
@@ -37,6 +38,7 @@ const screens = [
     name: 'Notifikasi',
     component: Notifikasi,
     options: {
+      expand: true,
       drawerIcon: () => <Icon name="bell-outline" size={25} color="black" />
     }
   },
@@ -44,7 +46,8 @@ const screens = [
     name: 'Riwayat',
     component: Riwayat,
     options: {
-      drawerIcon: () => <Icon name="history" size={25} color="black" />
+      drawerIcon: () => <Icon name="history" size={25} color="black" />,
+      searchButton: true,
     }
   },
   {
@@ -63,16 +66,21 @@ const screens = [
     name: 'Umpan Balik',
     component: UmpanBalik,
     options: {
+      expand: true,
       drawerIcon: () => (
         <Icon name="message-processing-outline" size={25} color="black" />
       )
     }
   },
   {
-    name: 'Tentang',
+    name: 'Tentang Aplikasi',
     component: Tentang,
     options: {
-      drawerIcon: () => <Icon name="information-outline" size={25} color="black" />
+      expand: true,
+      drawerLabel: 'Tentang',
+      drawerIcon: () => (
+        <Icon name="information-outline" size={25} color="black" />
+      )
     }
   },
 ];

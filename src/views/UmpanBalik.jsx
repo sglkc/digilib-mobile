@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Octicons from 'react-native-vector-icons/Octicons';
+import ViewContainer from '@/components/ViewContainer';
 
 export default function () {
-  return (
-    <View>
+  const Component = (
+    <>
       <Text style={styles.text}>
         Jangan ragu untuk menghubungi kami untuk pertanyaan Anda. Hubungi kami
         di kontak dibawah ini.
@@ -15,8 +16,10 @@ export default function () {
           <Text style={styles.emailText}>info@jalanrahmat.com</Text>
         </View>
       </View>
-    </View>
+    </>
   );
+
+  return <ViewContainer component={Component} />;
 }
 
 const styles = StyleSheet.create({

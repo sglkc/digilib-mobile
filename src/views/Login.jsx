@@ -96,7 +96,7 @@ export default function Login({ navigation }) {
     </View>
   );
 
-  return <ViewContainer backgroundColor="white" component={Component} />;
+  return <ViewContainer component={Component} />;
 }
 
 const styles = StyleSheet.create({

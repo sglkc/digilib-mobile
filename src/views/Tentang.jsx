@@ -1,15 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text } from 'react-native';
+import ViewContainer from '@/components/ViewContainer';
 
-export default function () {
-  return (
-    <View>
-      <Text style={styles.text}>
-        Aplikasi untuk koleksi karya dan pemikiran Allahyarham KH. Jalaluddin
-        Rakhmat beserta penulis dan tokoh lain yang menelaah, menyebarkan, dan
-        meneruskan karya Kang Jalal. Nama aplikasi "Jalan Rahmat" diambil dari
-        salah satu karya beliau yang berbentuk buku. Perpustakaan ini mencakup
-        topik-topik yang menjadikan perhatian Allahyarham, yaitu:
-        {`
+export default function Tentang() {
+  const Component = (
+    <Text style={{ fontSize: 16, lineHeight: 28 }}>
+      Aplikasi untuk koleksi karya dan pemikiran Allah yarham KH. Jalaluddin
+      Rakhmat beserta penulis dan tokoh lain yang menelaah, menyebarkan, dan
+      meneruskan karya Kang Jalal. Nama aplikasi "Jalan Rahmat" diambil dari
+      salah satu karya beliau yang berbentuk buku. Perpustakaan ini mencakup
+      topik-topik yang menjadikan perhatian Allahyarham, yaitu:
+      {`
+
         - Ahlul Bait
         - Tafsir Al-Qur'an
         - Hadits
@@ -25,14 +26,8 @@ export default function () {
         - Neurosains
         - Do'a
         `.replace(/^[ ]+/gm, '')}
-      </Text>
-    </View>
+    </Text>
   );
-}
 
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 16,
-    lineHeight: 28,
-  },
-});
+  return <ViewContainer component={Component} />;
+}
