@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -12,23 +12,21 @@ import {
   Button,
   StatusBar
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import BottomNavbar from '@/components/BottomNavbar';
-import Icon from 'react-native-vector-icons/Feather';
 import CategoryScroller from "@/components/CategoryScroller";
 import SortByComponent from "@/components/SortByComponent";
 import Item from '@/components/Item';
+import ViewContainer from '@/components/ViewContainer';
 
-export default function Etalase({onClickDrawer}) {
-  const navigation = useNavigation();
-  // const drawer = useRef(null);
+export default function Etalase({ navigation }) {
   const quote = {
     text: 'Banyak jalan untuk mendekati Tuhan, sebanyak bilangan nafas' +
     ' para pencari Tuhan. Tapi jalan yang paling dekat pada Allah adalah' +
     ' membahagiakan orang lain di sekitarmu. Engkau berkhidmat kepada mereka.',
     source: 'Jalaluddin Rakhmat - The Road to Allah (hal.268)'
   };
+
   const items = [
     {
       cover: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1332922051l/13563593.jpg',
@@ -60,84 +58,49 @@ export default function Etalase({onClickDrawer}) {
     },
   ];
 
-  return (
-    // <DrawerLayoutAndroid
-    //   ref={drawer}
-    //   drawerWidth={280}
-    //   drawerPosition="left"
-    //   renderNavigationView={() => (
-    //     <DrawerNavigationView />
-    //   )}
-    // >
-      <ImageBackground
-        source={require('assets/BG_ORANGE.png')}
-        style={{width: '100%', height: '100%'}}
-      >
-        <View style={styles.title.container}>
-          <View style={styles.title.icons}>
-            <TouchableOpacity
-              style={{ paddingRight: 32 }}
-              onPress={onClickDrawer}
-            >
-              <Icon name="menu" size={32} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ paddingLeft: 32 }}
-              onPress={() => navigation.navigate('Pencarian')}
-            >
-              <Icon name="search" size={25} color="white" />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <Text style={styles.quote.title}>Quotes Harian</Text>
-            <View>
-              <Text style={styles.quote.mark}>“</Text>
-              <Text style={styles.quote.text}>{ quote.text }</Text>
-              <Text style={[styles.quote.mark, { bottom: 0, right: 0 }]}>„</Text>
-            </View>
-            <Text style={styles.quote.source}>{ quote.source }</Text>
-          </View>
+  const Component = (
+    <>
+      <View style={styles.title}>
+        <Text style={styles.quote.title}>Quotes Harian</Text>
+        <View>
+          <Text style={styles.quote.mark}>“</Text>
+          <Text style={styles.quote.text}>{ quote.text }</Text>
+          <Text style={[styles.quote.mark, { bottom: 0, right: 0 }]}>„</Text>
         </View>
-        <View style={styles.container}>
-          <CategoryScroller style={{ flexGrow: 0 }} />
-          <ScrollView style={styles.scroller}>
-            <SortByComponent style={{ marginHorizontal: 8 }} />
-            { items.map((item, index) => {
-              return (
-                <Item
-                  key={index}
-                  author={item.author}
-                  bookmark={item.bookmark}
-                  category={item.category}
-                  cover={item.cover}
-                  title={item.title}
-                />
-              );
-            })
-            }
-            <View style={{ paddingVertical: 38 }} />
-          </ScrollView>
-          <View style={styles.bottom}>
-            <BottomNavbar />
-          </View>
+        <Text style={styles.quote.source}>{ quote.source }</Text>
+      </View>
+      <View style={styles.container}>
+        <CategoryScroller style={{ flexGrow: 0 }} />
+        <ScrollView style={styles.scroller}>
+          <SortByComponent style={{ marginHorizontal: 8 }} />
+          { items.map((item, index) => {
+            return (
+              <Item
+                key={index}
+                author={item.author}
+                bookmark={item.bookmark}
+                category={item.category}
+                cover={item.cover}
+                title={item.title}
+              />
+            );
+          })
+          }
+          <View style={{ paddingVertical: 38 }} />
+        </ScrollView>
+        <View style={styles.bottom}>
+          <BottomNavbar />
         </View>
-      </ImageBackground>
-    // </DrawerLayoutAndroid>
+      </View>
+    </>
   );
+
+  return <ViewContainer component={Component} noPadding={true} />;
 }
 const styles = StyleSheet.create({
   title: {
-    container: {
-      paddingTop: StatusBar.currentHeight + 16,
-      paddingBottom: 16,
-      paddingHorizontal: 32,
-    },
-    icons: {
-      paddingBottom: 16,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    },
+    paddingBottom: 16,
+    paddingHorizontal: 32,
   },
   quote: {
     title: {

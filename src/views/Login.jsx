@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import { useNavigation } from '@react-navigation/native';
 import { setUser } from '@/store/UserReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '@/components/Alert';
@@ -10,14 +9,14 @@ import TextButton from '@/components/TextButton';
 import TextInput from '@/components/TextInput';
 import PasswordInput from '@/components/PasswordInput';
 import Modal from '@/components/Login/Modal';
+import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
-export default function () {
+export default function Login({ navigation }) {
   const [modal, showModal] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const state = useRef({ email: '', password: '' });
-  const navigation = useNavigation();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -55,7 +54,7 @@ export default function () {
       .finally(() => setLoading(false));
   }
 
-  return (
+  const Component = (
     <View style={styles.container}>
       <Modal visible={modal} onClose={() => showModal(false)} />
       <Image
@@ -96,6 +95,8 @@ export default function () {
       </View>
     </View>
   );
+
+  return <ViewContainer backgroundColor="white" component={Component} />;
 }
 
 const styles = StyleSheet.create({

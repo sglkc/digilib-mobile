@@ -1,19 +1,13 @@
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Text } from 'react-native';
+import { useSelector } from 'react-redux';
 import TextButton from '@/components/TextButton';
-import * as SecureStore from 'expo-secure-store';
+import ViewContainer from '@/components/ViewContainer';
 
-export default function () {
-  const [user, setUser] = useState(null);
-  const navigation = useNavigation();
+export default function InformasiAkun({ navigation }) {
+  const user = useSelector((state) => state.user);
 
-  SecureStore.getItemAsync('user')
-    .then((str) => setUser(JSON.parse(str)))
-    .catch(console.error);
-
-  return (
-    <View>
+  const Component = (
+    <>
       <Text style={styles.title}>Nama</Text>
       <Text style={styles.content}>{ user?.nama }</Text>
       <Text style={styles.title}>Email</Text>
@@ -22,11 +16,13 @@ export default function () {
       <Text style={styles.content}>{ user?.tanggal_lahir }</Text>
       <TextButton
         styleText={styles.button}
-        onPress={() => navigation.navigate('UbahPassword')}
+        onPress={() => navigation.navigate('Ubah Password')}
         text="Ganti Kata Sandi?"
       />
-    </View>
+    </>
   );
+
+  return <ViewContainer backgroundColor="white" component={Component} />;
 }
 
 const styles = StyleSheet.create({
