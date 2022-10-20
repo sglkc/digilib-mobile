@@ -16,7 +16,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import BottomNavbar from '@/components/BottomNavbar';
 import Icon from 'react-native-vector-icons/Feather';
-import DrawerNavigationView from '@/components/DrawerNavigationView'
 import CategoryScroller from "@/components/CategoryScroller";
 import SortByComponent from "@/components/SortByComponent";
 import Item from '@/components/Item';
