@@ -1,4 +1,5 @@
 import {
+  ImageBackground,
   Text,
   TouchableOpacity,
   StatusBar,
@@ -6,33 +7,55 @@ import {
   View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import TextButton from '@/components/TextButton';
 
 export default function Header({ navigation, route, options, layout }) {
   return (
-    <View style={styles.container}>
-      <View style={styles.left.container}>
-        <TouchableOpacity
-          style={styles.left.icon}
-          onPress={
-            options.hideMenu
-              ? () => navigation.goBack()
-              : () => navigation.openDrawer()
-          }
-        >
-          <Icon
-            name={options.hideMenu ? 'arrow-left' : 'menu'}
-            color="white"
-            size={32}
-          />
-        </TouchableOpacity>
-        <Text style={styles.left.title}>
-          { !options.hideTitle && route.name }
-        </Text>
+    <ImageBackground
+      source={!options.hideBanner && require('assets/BG_ORANGE_BANNER.png')}
+      style={options.hideBanner && { backgroundColor: '#ffa213' }}
+    >
+      <View style={styles.container}>
+        <View style={[
+          styles.left.container,
+          options.expand && styles.left.expand
+        ]}>
+          <TouchableOpacity
+            style={styles.left.icon}
+            onPress={
+              options.hideMenu
+                ? () => navigation.goBack()
+                : () => navigation.openDrawer()
+            }
+          >
+            <Icon
+              style={options.expand && { marginBottom: 8 }}
+              name={options.hideMenu ? 'arrow-left' : 'menu'}
+              color="white"
+              size={32}
+            />
+          </TouchableOpacity>
+          <Text style={styles.left.title}>
+            { !options.hideTitle && route.name }
+          </Text>
+        </View>
+        { options.uniqueButton ?
+          (<TextButton
+            style={options.expand && styles.right.button}
+            styleText={styles.right.uniqueButton}
+            text="Ubah"
+            onPress={() => navigation.navigate('Ubah Informasi Akun')}
+          />)
+          :
+          (<TouchableOpacity
+            style={options.expand && styles.right.button}
+            onPress={() => navigation.navigate('Pencarian')}
+          >
+            <Icon name="search" size={25} color="white" />
+          </TouchableOpacity>)
+        }
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('Pencarian')}>
-        <Icon name="search" size={25} color="white" />
-      </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -42,7 +65,6 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingHorizontal: 32,
     backgroundColor: 'transparent',
-    position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -52,6 +74,10 @@ const styles = StyleSheet.create({
       flexGrow: 1,
       alignItems: 'center',
     },
+    expand: {
+      flexDirection: 'column',
+      alignItems: 'flex-start'
+    },
     icon: {
       marginRight: 16,
     },
@@ -59,6 +85,16 @@ const styles = StyleSheet.create({
       fontSize: 20,
       fontWeight: 'bold',
       color: 'white',
+    },
+  },
+  right: {
+    button: {
+      marginTop: 3,
+      alignSelf: 'flex-start'
+    },
+    uniqueButton: {
+      color: 'white',
+      fontWeight: '500'
     },
   },
 });

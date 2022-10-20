@@ -15,6 +15,7 @@ const screens = [
     name: 'Etalase',
     component: Etalase,
     options: {
+      hideBanner: true,
       hideTitle: true,
       drawerItemStyle: { display: 'none' },
     }
@@ -23,6 +24,8 @@ const screens = [
     name: 'Informasi Akun',
     component: InformasiAkun,
     options: {
+      uniqueButton: true,
+      expand: true,
       drawerIcon: () => <Icon name="account-outline" size={25} color="black" />,
       headerStyle: {
         backgroundColor: 'transparent',
