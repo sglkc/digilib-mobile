@@ -1,19 +1,20 @@
 import { useState, useRef } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import { useNavigation } from '@react-navigation/native';
-import { setUser } from '@/store/UserReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckBox from 'expo-checkbox';
+import Icon from 'react-native-vector-icons/Feather';
+import { setUser } from '@/store/UserReducer';
 import Alert from '@/components/Alert';
 import Button from '@/components/Button';
 import Datepicker from '@/components/Datepicker';
 import PasswordInput from '@/components/PasswordInput';
 import TextButton from '@/components/TextButton';
 import TextInput from '@/components/TextInput';
+import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
-export default function () {
+export default function Register({ navigation }) {
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,6 @@ export default function () {
     tanggal_lahir: ''
   });
 
-  const navigation = useNavigation();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ export default function () {
         setError(null);
         await SecureStore.setItemAsync('token', res.data.token);
         dispatch(setUser(res.data.result));
-        navigation.navigate('Etalase');
+        navigation.navigate('Home');
       })
       .catch((err) => {
         const msg = err.data?.message;
@@ -54,16 +54,13 @@ export default function () {
       .finally(() => setLoading(false));
   }
 
-  return (
+  const Component = (
     <View style={styles.container}>
       <Pressable
-        style={{ alignSelf: 'flex-start' }}
+        style={styles.icon}
         onPress={() => navigation.goBack()}
       >
-        <Image
-          source={require('assets/arrow-left.png')}
-          style={styles.image}
-        />
+        <Icon name="arrow-left" color="black" size={32} />
       </Pressable>
       <Text style={styles.title}>Daftar</Text>
       <TextInput
@@ -113,6 +110,8 @@ export default function () {
       </View>
     </View>
   );
+
+  return <ViewContainer component={Component} />;
 }
 
 const styles = StyleSheet.create({
@@ -120,9 +119,9 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
-  image: {
-    height: 16,
-    width: 38,
+  icon: {
+    marginTop: 24,
+    alignSelf: 'flex-start',
   },
   title: {
     marginVertical: 32,

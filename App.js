@@ -3,7 +3,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 import store from '@/store';
-import { StackNavigator } from '@/router/StackNavigator';
+import NativeStack from '@/router/NativeStack';
 import SplashScreen from '@/views/SplashScreen';
 
 export default function App() {
@@ -19,8 +19,7 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Provider store={store}>
-          { splash && <SplashScreen /> }
-          { !splash && <StackNavigator /> }
+          <NativeStack />
         </Provider>
       </NavigationContainer>
     </SafeAreaProvider>

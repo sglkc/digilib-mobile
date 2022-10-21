@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import TextButton from '@/components/TextButton';
+import ViewContainer from '@/components/ViewContainer';
 
 export default function () {
   const [notifications, setNotifications] = useState([
@@ -10,7 +11,7 @@ export default function () {
     { date: '05 August 21', title: 'Update Aplikasi telah tersedia' },
   ]);
 
-  return (
+  const Component = (
     <View style={styles.container}>
       <TextButton
         styleText={styles.clear}
@@ -39,6 +40,8 @@ export default function () {
       }
     </View>
   );
+
+  return <ViewContainer component={Component} />
 }
 
 const styles = StyleSheet.create({
