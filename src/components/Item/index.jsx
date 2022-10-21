@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Chip from '@/components/Item/Chip';
 
@@ -15,6 +16,7 @@ export default function ({
   author, bookmark, category, cover, title, onBookmark
 }) {
   const navigation = useNavigation();
+  const token = useSelector((state) => state.user.token);
   const [bookmarked, setBookmark] = useState(bookmark);
   const toggleBookmark = () => {
     setBookmark(!bookmarked || bookmark);
@@ -27,7 +29,10 @@ export default function ({
         android_ripple={{ color: 'lightgrey', borderless: true }}
       >
         <View style={styles.itemContainer}>
-          <Image style={styles.image} source={{ uri: cover }} />
+          <Image
+            style={styles.image}
+            source={{ uri: cover, headers: { Authorization: token }}}
+          />
           <View style={styles.detail}>
             <View style={styles.detailText}>
               <View style={{ flexGrow: 1, flexShrink: 1 }}>
@@ -76,7 +81,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
     width: 80,
     height: 135,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
   },
   detail: {
     flex: 1,
