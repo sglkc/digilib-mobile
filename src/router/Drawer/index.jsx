@@ -104,8 +104,16 @@ const screens = {
     { name: 'Pencarian', component: Pencarian },
     { name: 'PDF Reader', component: PDFReader },
     { name: 'Tandai', component: Tandai },
-    { name: 'Ubah Informasi Akun', component: UbahInformasiAkun },
-    { name: 'Ubah Password', component: UbahPassword },
+    {
+      name: 'Ubah Informasi Akun',
+      component: UbahInformasiAkun,
+      options: { expand: true }
+    },
+    {
+      name: 'Ubah Password',
+      component: UbahPassword,
+      options: { expand: true }
+    },
   ]
 };
 
@@ -132,12 +140,8 @@ export default function DrawerNavigator() {
       { screens.hidden.map((props, key) => (
         <Drawer.Screen
           key={key}
-          options={{
-            drawerItemStyle: {
-              display: 'none'
-            }
-          }}
           {...props}
+          options={{ drawerItemStyle: { display: 'none' }, ...props.options }}
         />
       ))
       }

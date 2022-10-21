@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Pressable } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import TextInput from '@/components/TextInput';
 
@@ -26,7 +27,7 @@ export default function Datepicker({ onChangeValue }) {
   return (
     <>
       <Pressable
-        style={{ width: '100%' }}
+        style={{ width: '100%', justifyContent: 'center' }}
         onPress={() => (setDatepicker(true))}
       >
         <TextInput
@@ -34,6 +35,16 @@ export default function Datepicker({ onChangeValue }) {
           placeholder="Tanggal Lahir"
           editable={false}
           value={tanggal_lahir.current}
+        />
+        <Icon
+          style={{
+            padding: 16,
+            position: 'absolute',
+            right: 0,
+          }}
+          name="calendar"
+          size={30}
+          color="#333b"
         />
       </Pressable>
       { datepicker &&

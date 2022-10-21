@@ -1,10 +1,12 @@
 import { Text, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function Alert({ background, color, icon, text }) {
+export default function Alert({ background, color, icon, style, text }) {
   return (
     <View
-      style={[styles.container, { backgroundColor: background || '#dc3545'}]}
+      style={[
+        styles.container, style, { backgroundColor: background || '#dc3545'}
+      ]}
     >
       <Icon
         name={icon || 'exclamation-triangle'}
