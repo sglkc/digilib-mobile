@@ -4,6 +4,7 @@ const initialState = {
   nama: '',
   email: '',
   tanggal_lahir: '',
+  token: ''
 };
 
 export const Item = createSlice({
@@ -11,7 +12,11 @@ export const Item = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state = Object.assign(state, action.payload);
+      const { payload } = action;
+      const token = payload.token ? 'Bearer ' + payload.token : '';
+
+      payload.token = token;
+      state = Object.assign(state, payload);
     },
   },
 });

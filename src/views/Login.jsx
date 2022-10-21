@@ -40,7 +40,7 @@ export default function Login({ navigation }) {
       .then(async (res) => {
         setError(null);
         await SecureStore.setItemAsync('token', res.data.token);
-        dispatch(setUser(res.data.result));
+        dispatch(setUser({ ...res.data }));
         navigation.navigate('Home');
       })
       .catch((err) => {

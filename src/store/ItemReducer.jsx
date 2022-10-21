@@ -8,7 +8,7 @@ const initialState = {
   'fugit, sed quia consequuntur magni dolored eos qui ratione voluptatem.',
   categories: ['Doa', 'Agama'],
   cover: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1332922051l/13563593.jpg',
-  media: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Placeholder.pdf',
+  media: 'https://core.ac.uk/download/pdf/161807137.pdf',
   type: 'book',
   bookmark: false,
 };
