@@ -41,7 +41,7 @@ export default function Etalase({ navigation }) {
       <View style={styles.container}>
         <CategoryScroller style={{ flexGrow: 0 }} />
         <SortByComponent style={{ marginHorizontal: 32 }} />
-        <ItemScroller style={{ paddingHorizontal: 24 }} bottomPadding />
+        <ItemScroller url="/items" bottomPadding />
         <View style={styles.bottom}>
           <BottomNavbar />
         </View>

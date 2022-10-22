@@ -30,7 +30,7 @@ export default function () {
         setTimeout(() => setAlert(null), 5000);
         dispatch(setUser({ ...state.current }));
       })
-      .catch(console.log);
+      .catch(() => setAlert({ text: 'Terjadi error, silahkan coba lagi' }));
   }
 
   const Component = (
