@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { setUser } from '@/store/UserReducer';
@@ -14,42 +14,45 @@ import Axios from '@/func/Axios';
 
 export default function Login({ navigation }) {
   const [modal, showModal] = useState(false);
-  const [error, setError] = useState(null);
+  const [alert, setAlert] = useState(null);
   const [loading, setLoading] = useState(false);
   const state = useRef({ email: '', password: '' });
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  SecureStore.getItemAsync('token')
-    .then((token) => {
-      Axios.get('/user').then((res) => {
-        dispatch(setUser(res.data.result));
-        navigation.navigate('Home');
-      });
-    })
-    .catch(() => false);
+  useEffect(() => {
+    SecureStore.getItemAsync('token')
+      .then((token) => {
+        Axios.get('/user').then((res) => {
+          dispatch(setUser({ ...res.data.result, token: res.data.token }));
+          navigation.navigate('Home');
+        })
+          .catch(() => setAlert('Silahkan login'));
+      })
+      .catch(() => false);
+  }, []);
 
   function login() {
     if (state.current.email === '' || state.current.password === '') {
-      return setError('Mohon isi email dan kata sandi');
+      return setAlert('Mohon isi email dan kata sandi');
     }
 
     setLoading(true);
 
     Axios.post('/auth/login', { ...state.current })
       .then(async (res) => {
-        setError(null);
+        setAlert(null);
         await SecureStore.setItemAsync('token', res.data.token);
-        dispatch(setUser({ ...res.data }));
+        dispatch(setUser({ ...res.data.result, token: res.data.token }));
         navigation.navigate('Home');
       })
       .catch((err) => {
         const msg = err.data?.message;
         const localized = msg === 'EMAIL_NOT_FOUND' ? 'Email tidak terdaftar'
           : msg === 'INVALID_PASSWORD' ? 'Password salah'
-          : 'Terjadi error, silahkan coba lagi'
+          : 'Terjadi alert, silahkan coba lagi'
 
-        setError(localized);
+        setAlert(localized);
       })
       .finally(() => setLoading(false));
   }
@@ -78,7 +81,7 @@ export default function Login({ navigation }) {
       >
         Lupa Kata Sandi?
       </TextButton>
-      { error && <Alert text={error} /> }
+      { alert && <Alert text={alert} /> }
       <Button loading={loading} style={styles.button} onPress={login}>
         Masuk
       </Button>

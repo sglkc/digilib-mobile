@@ -14,7 +14,6 @@ const defaultState = {
 
 export default function ItemScroller({ bottomPadding, url, style }) {
   const [state, setState] = useState(defaultState);
-  const coverUrl = Axios.getUri({ url: '/files/cover/' });
   const props = {
     getItem: useCallback((data, index) => data[index], []),
     getItemCount: useCallback((data) => data.length, []),
@@ -53,9 +52,9 @@ export default function ItemScroller({ bottomPadding, url, style }) {
     renderItem: useCallback(({ item }) => (
       <Item
         author={item.author}
-        bookmark={item.bookmark || false}
+        bookmark={item.Bookmark}
         category={item.Categories.map((category) => category.name)}
-        cover={coverUrl + item.cover}
+        cover={item.cover}
         title={item.title}
       />
     ), []),

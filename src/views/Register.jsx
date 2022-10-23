@@ -41,7 +41,7 @@ export default function Register({ navigation }) {
       .then(async (res) => {
         setError(null);
         await SecureStore.setItemAsync('token', res.data.token);
-        dispatch(setUser({ ...res.data }));
+        dispatch(setUser({ ...res.data.result, token: res.data.token }));
         navigation.navigate('Home');
       })
       .catch((err) => {

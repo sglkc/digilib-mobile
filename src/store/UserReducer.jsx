@@ -12,11 +12,7 @@ export const Item = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      const { payload } = action;
-      const token = payload.token ? 'Bearer ' + payload.token : '';
-
-      payload.token = token;
-      state = Object.assign(state, payload);
+      state = Object.assign(state, action.payload);
     },
   },
 });

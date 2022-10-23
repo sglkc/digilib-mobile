@@ -11,11 +11,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Chip from '@/components/Item/Chip';
+import Axios from '@/func/Axios';
 
 export default function ({
   author, bookmark, category, cover, title, onBookmark
 }) {
   const navigation = useNavigation();
+  const coverUrl = Axios.getUri({ url: '/files/cover/' });
   const token = useSelector((state) => state.user.token);
   const [bookmarked, setBookmark] = useState(bookmark);
   const toggleBookmark = () => {
@@ -31,7 +33,7 @@ export default function ({
         <View style={styles.itemContainer}>
           <Image
             style={styles.image}
-            source={{ uri: cover, headers: { Authorization: token }}}
+            source={{ uri: coverUrl + cover + '?token=' + token }}
           />
           <View style={styles.detail}>
             <View style={styles.detailText}>
