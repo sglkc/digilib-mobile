@@ -11,18 +11,36 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Chip from '@/components/Item/Chip';
+import Spinner from '@/components/Spinner';
 import Axios from '@/func/Axios';
 
-export default function ({
-  author, bookmark, category, cover, title, onBookmark
-}) {
+export default function Item({ author, bookmark, category, cover, id, title }) {
   const navigation = useNavigation();
   const coverUrl = Axios.getUri({ url: '/files/cover/' });
   const token = useSelector((state) => state.user.token);
   const [bookmarked, setBookmark] = useState(bookmark);
-  const toggleBookmark = () => {
-    setBookmark(!bookmarked || bookmark);
-    onBookmark && onBookmark();
+  const [loading, setLoading] = useState(false);
+
+  function toggleBookmark() {
+    if (loading) return;
+
+    setLoading(true);
+    Axios.request({
+      url: '/bookmarks/' + id,
+      method: bookmarked ? 'delete' : 'post'
+    })
+      .then((res) => {
+        const bookmark = res.data.message === 'ADDED_BOOKMARK';
+        setBookmark(bookmark);
+      })
+      .catch(() => {
+        Axios.get('/bookmarks/' + id).then((res) => {
+          const bookmark = res.data.message === 'ADDED_BOOKMARK';
+          setBookmark(bookmark);
+        })
+          .catch(() => false);
+      })
+      .finally(() => setLoading(false));
   }
 
   return (
@@ -46,11 +64,15 @@ export default function ({
                 android_ripple={{ color: 'lightgrey' }}
                 onPress={toggleBookmark}
               >
-                <Icon
-                  name={bookmarked ? 'bookmark' : 'bookmark-outline'}
-                  size={30}
-                  color="orange"
-                />
+                { loading ?
+                  <Spinner style={styles.icon} color="orange" size={25} />
+                  :
+                  <Icon
+                    name={bookmarked ? 'bookmark' : 'bookmark-outline'}
+                    color="orange"
+                    size={30}
+                  />
+                }
               </Pressable>
             </View>
             <ScrollView style={styles.category} horizontal={true}>

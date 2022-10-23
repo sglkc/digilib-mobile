@@ -55,6 +55,7 @@ export default function ItemScroller({ bottomPadding, url, style }) {
         bookmark={item.Bookmark}
         category={item.Categories.map((category) => category.name)}
         cover={item.cover}
+        id={item.item_id}
         title={item.title}
       />
     ), []),
