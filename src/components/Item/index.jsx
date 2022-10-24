@@ -14,7 +14,7 @@ import Chip from '@/components/Item/Chip';
 import Spinner from '@/components/Spinner';
 import Axios from '@/func/Axios';
 
-function Item({ author, bookmark, category, cover, id, title }) {
+function Item({ author, bookmark, category, cover, id, title, onBookmark }) {
   const navigation = useNavigation();
   const coverUrl = Axios.getUri({ url: '/files/cover/' });
   const token = useSelector((state) => state.user.token);
@@ -24,6 +24,7 @@ function Item({ author, bookmark, category, cover, id, title }) {
   function toggleBookmark() {
     if (loading) return;
 
+    onBookmark && onBookmark();
     setLoading(true);
     Axios.request({
       url: '/bookmarks/' + id,

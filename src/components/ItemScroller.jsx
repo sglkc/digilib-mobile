@@ -5,7 +5,9 @@ import Item from '@/components/Item';
 import Spinner from '@/components/Spinner';
 import Axios from '@/func/Axios';
 
-export default function ItemScroller({ bottomPadding, url, style }) {
+export default function ItemScroller({
+  bookmarkOnly, bottomPadding, url, style
+}) {
   const defaultState = {
     count: 0,
     items: [],
@@ -14,6 +16,7 @@ export default function ItemScroller({ bottomPadding, url, style }) {
   };
   const [state, setState] = useState(defaultState);
   const [shouldUpdate, setUpdate] = useState(false);
+  const onBookmark = useCallback(() => setUpdate(!!bookmarkOnly), []);
   const props = {
     getItem: useCallback((data, index) => data[index], []),
     getItemCount: useCallback((data) => data.length, []),
@@ -62,6 +65,7 @@ export default function ItemScroller({ bottomPadding, url, style }) {
         cover={item.cover}
         id={item.item_id}
         title={item.title}
+        onBookmark={onBookmark}
       />
     ), []),
   };
@@ -69,12 +73,11 @@ export default function ItemScroller({ bottomPadding, url, style }) {
   useEffect(getItems, [shouldUpdate]);
   useFocusEffect(useCallback(() => {
     setState({ ...defaultState });
-    setUpdate(true);
+    if (!shouldUpdate) setUpdate(true);
   }, []));
 
   function getItems() {
     if (!shouldUpdate) return;
-    if (state.items.length >= state.count && state.count !== 0) return;
 
     Axios.get(url, { params: { page: state.page, limit: 10 } })
       .then((res) => {
