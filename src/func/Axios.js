@@ -33,6 +33,7 @@ axios.interceptors.response.use(
   function (err) {
     err.message = err.response.data.message;
     err.data = err.response.data;
+    err.status = err.response.status;
 
     return Promise.reject(err);
   }

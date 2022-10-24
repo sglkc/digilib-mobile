@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import {
   Image,
   Pressable,
@@ -14,7 +14,7 @@ import Chip from '@/components/Item/Chip';
 import Spinner from '@/components/Spinner';
 import Axios from '@/func/Axios';
 
-export default function Item({ author, bookmark, category, cover, id, title }) {
+function Item({ author, bookmark, category, cover, id, title }) {
   const navigation = useNavigation();
   const coverUrl = Axios.getUri({ url: '/files/cover/' });
   const token = useSelector((state) => state.user.token);
@@ -137,3 +137,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'orange',
   },
 });
+
+export default memo(Item);

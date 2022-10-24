@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Text, View, VirtualizedList } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import Item from '@/components/Item';
 import Spinner from '@/components/Spinner';
 import Axios from '@/func/Axios';
 
-const defaultState = {
-  count: 0,
-  items: [],
-  page: 1,
-  refreshing: false,
-  error: false
-};
-
 export default function ItemScroller({ bottomPadding, url, style }) {
+  const defaultState = {
+    count: 0,
+    items: [],
+    page: 1,
+    error: false
+  };
   const [state, setState] = useState(defaultState);
+  const [shouldUpdate, setUpdate] = useState(false);
   const props = {
     getItem: useCallback((data, index) => data[index], []),
     getItemCount: useCallback((data) => data.length, []),
@@ -24,21 +24,26 @@ export default function ItemScroller({ bottomPadding, url, style }) {
     }), []),
     keyExtractor: useCallback((item) => item.item_id, []),
     ListEmptyComponent: (
-      <Text style={{ marginTop: 16, textAlign: 'center' }}>
-        { state.error ?
-          <Text style={{ fontWeight: 'bold' }}>
-            Terjadi error, mohon coba lagi nanti
-          </Text>
-          :
-          <>
-            <Spinner color="black" />
-            { '\n' }
-            <Text style={{ fontWeight: 'bold' }}>Sedang mengunduh data...</Text>
-            { '\n\n' }
-            <Text>
-              Jika berlangsung lama, pastikan Anda terhubung ke koneksi internet
-            </Text>
-          </>
+      <Text
+        style={{
+          marginTop: state.error ? 32 : 72,
+          textAlign: 'center',
+          fontSize: 16,
+          fontWeight: 'bold'
+        }}
+      >
+        { state.error === 'PAGE_EMPTY' ?
+          <Text>Halaman ini kosong</Text>
+          : state.error ?
+            <Text>Terjadi error, mohon coba lagi nanti</Text>
+            :
+            <>
+              <Text>Sedang mengunduh data...{'\n\n'}</Text>
+              <Text style={{ fontSize: 14, fontWeight: 'normal' }}>
+                Jika berlangsung lama, pastikan Anda terhubung ke koneksi
+                internet
+              </Text>
+            </>
         }
       </Text>
     ),
@@ -48,7 +53,7 @@ export default function ItemScroller({ bottomPadding, url, style }) {
         { bottomPadding && <View style={{ marginBottom: 72 }} /> }
       </>
     ),
-    onRefresh: () => setState({ ...defaultState, refreshing: true }),
+    onRefresh: () => setUpdate(true),
     renderItem: useCallback(({ item }) => (
       <Item
         author={item.author}
@@ -61,22 +66,28 @@ export default function ItemScroller({ bottomPadding, url, style }) {
     ), []),
   };
 
-  useEffect(getItems, [state.refreshing]);
+  useEffect(getItems, [shouldUpdate]);
+  useFocusEffect(useCallback(() => {
+    setState({ ...defaultState });
+    setUpdate(true);
+  }, []));
 
   function getItems() {
+    if (!shouldUpdate) return;
     if (state.items.length >= state.count && state.count !== 0) return;
 
     Axios.get(url, { params: { page: state.page, limit: 10 } })
       .then((res) => {
         const lazy = state.items[0]?.item_id === res.data.result[0].item_id;
-        const items = state.refreshing || lazy
+        const items = shouldUpdate || lazy
           ? res.data.result
           : state.items.concat(res.data.result);
-        const page = state.refreshing ? 1 : state.page + 1;
+        const page = shouldUpdate ? 1 : state.page + 1;
 
         setState({ ...defaultState, count: res.data.count, items, page });
       })
-      .catch(() => setState({ ...defaultState, error: true }));
+      .catch((err) => setState({ ...defaultState, error: err.data.message }))
+      .finally(() => setUpdate(false));
   }
 
   return (
@@ -85,7 +96,7 @@ export default function ItemScroller({ bottomPadding, url, style }) {
       data={state.items}
       onEndReached={getItems}
       onEndReachedThreshold={0.15}
-      refreshing={state.refreshing}
+      refreshing={shouldUpdate}
       {...props}
     />
   );
