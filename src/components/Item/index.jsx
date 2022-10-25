@@ -8,18 +8,25 @@ import {
   View
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setItem } from '@/store/ItemReducer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Chip from '@/components/Item/Chip';
 import Spinner from '@/components/Spinner';
 import Axios from '@/func/Axios';
 
-function Item({ author, bookmark, category, cover, id, title, onBookmark }) {
+function Item({ item, onBookmark }) {
+  const { author, Bookmark, Categories, cover, item_id, media, title } = item;
   const navigation = useNavigation();
-  const coverUrl = Axios.getUri({ url: '/files/cover/' });
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
-  const [bookmarked, setBookmark] = useState(bookmark);
+  const [bookmarked, setBookmark] = useState(Bookmark);
   const [loading, setLoading] = useState(false);
+  const categories = Categories.map(c => c.name);
+  const coverUrl = Axios.getUri({
+    url: '/files/cover/' + cover,
+    params: { token }
+  });
 
   function toggleBookmark() {
     if (loading) return;
@@ -27,7 +34,7 @@ function Item({ author, bookmark, category, cover, id, title, onBookmark }) {
     onBookmark && onBookmark();
     setLoading(true);
     Axios.request({
-      url: '/bookmarks/' + id,
+      url: '/bookmarks/' + item_id,
       method: bookmarked ? 'delete' : 'post'
     })
       .then((res) => {
@@ -35,7 +42,7 @@ function Item({ author, bookmark, category, cover, id, title, onBookmark }) {
         setBookmark(bookmark);
       })
       .catch(() => {
-        Axios.get('/bookmarks/' + id).then((res) => {
+        Axios.get('/bookmarks/' + item_id).then((res) => {
           const bookmark = res.data.message === 'ADDED_BOOKMARK';
           setBookmark(bookmark);
         })
@@ -44,16 +51,18 @@ function Item({ author, bookmark, category, cover, id, title, onBookmark }) {
       .finally(() => setLoading(false));
   }
 
+  function onDetail() {
+    dispatch(setItem({ ...item }));
+    navigation.navigate('Detail Item');
+  }
+
   return (
     <View style={styles.container}>
       <Pressable
         android_ripple={{ color: 'lightgrey', borderless: true }}
       >
         <View style={styles.itemContainer}>
-          <Image
-            style={styles.image}
-            source={{ uri: coverUrl + cover + '?token=' + token }}
-          />
+          <Image style={styles.image} source={{ uri: coverUrl }} />
           <View style={styles.detail}>
             <View style={styles.detailText}>
               <View style={{ flexGrow: 1, flexShrink: 1 }}>
@@ -76,13 +85,15 @@ function Item({ author, bookmark, category, cover, id, title, onBookmark }) {
                 }
               </Pressable>
             </View>
-            <ScrollView style={styles.category} horizontal={true}>
-              { category.map((name, index) => <Chip key={index} text={name} />) }
+            <ScrollView horizontal={true}>
+              <View style={styles.categories}>
+              { categories.map((name, index) => <Chip key={index} text={name} />) }
               <Chip
                 style={styles.chipDetail}
                 text="Lihat Detail"
-                onPress={() => navigation.navigate('DetailItem')}
+                onPress={onDetail}
               />
+              </View>
             </ScrollView>
           </View>
         </View>
@@ -131,7 +142,7 @@ const styles = StyleSheet.create({
     padding: 4,
     alignSelf: 'flex-start',
   },
-  category: {
+  categories: {
     flexDirection: 'row',
   },
   chipDetail: {

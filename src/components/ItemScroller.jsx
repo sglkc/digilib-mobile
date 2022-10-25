@@ -25,7 +25,7 @@ export default function ItemScroller({
       offset: 100 * index,
       index
     }), []),
-    keyExtractor: useCallback((item) => item.item_id, []),
+    keyExtractor: useCallback((item, index) => index, []),
     ListEmptyComponent: (
       <Text
         style={{
@@ -56,17 +56,10 @@ export default function ItemScroller({
         { bottomPadding && <View style={{ marginBottom: 72 }} /> }
       </>
     ),
+    onEndReached: () => getItems(true),
     onRefresh: () => setUpdate(true),
     renderItem: useCallback(({ item }) => (
-      <Item
-        author={item.author}
-        bookmark={item.Bookmark}
-        category={item.Categories.map((category) => category.name)}
-        cover={item.cover}
-        id={item.item_id}
-        title={item.title}
-        onBookmark={onBookmark}
-      />
+      <Item item={item} onBookmark={onBookmark} />
     ), []),
   };
 
@@ -76,13 +69,14 @@ export default function ItemScroller({
     if (!shouldUpdate) setUpdate(true);
   }, []));
 
-  function getItems() {
-    if (!shouldUpdate) return;
+  function getItems(force = false) {
+    if (!shouldUpdate && !force) return;
+    if (state.items.length >= state.count && state.count !== 0) return;
 
     Axios.get(url, { params: { page: state.page, limit: 10 } })
       .then((res) => {
         const lazy = state.items[0]?.item_id === res.data.result[0].item_id;
-        const items = shouldUpdate || lazy
+        const items = lazy
           ? res.data.result
           : state.items.concat(res.data.result);
         const page = shouldUpdate ? 1 : state.page + 1;
@@ -97,7 +91,6 @@ export default function ItemScroller({
     <VirtualizedList
       style={[style, { paddingHorizontal: 24 }]}
       data={state.items}
-      onEndReached={getItems}
       onEndReachedThreshold={0.15}
       refreshing={shouldUpdate}
       {...props}

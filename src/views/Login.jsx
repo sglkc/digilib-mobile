@@ -50,7 +50,7 @@ export default function Login({ navigation }) {
         const msg = err.data?.message;
         const localized = msg === 'EMAIL_NOT_FOUND' ? 'Email tidak terdaftar'
           : msg === 'INVALID_PASSWORD' ? 'Password salah'
-          : 'Terjadi alert, silahkan coba lagi'
+          : 'Terjadi error, silahkan coba lagi'
 
         setAlert(localized);
       })
