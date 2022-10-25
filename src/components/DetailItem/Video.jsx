@@ -1,32 +1,47 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  BackHandler, Dimensions, Pressable, ScrollView, StyleSheet
-} from 'react-native';
+import { BackHandler, Dimensions, Pressable, ScrollView } from 'react-native';
+import { useSelector } from 'react-redux';
 import { ResizeMode } from 'expo-av';
 import { setStatusBarHidden } from 'expo-status-bar';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import VideoPlayer from 'expo-video-player';
+import Axios from '@/func/Axios';
 
-export default function ({ thumbnail, uri, onClose }) {
-  const [fullscreen, setFullscreen] = useState(false);
+export default function VideoDetail({ onClose }) {
+  const state = useSelector((state) => state);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const refVideo = useRef(null);
   const refScrollView = useRef(null);
-  const onContentSizeChange = () => {
-    if (!fullscreen) return;
+
+  function getUri(file) {
+    return Axios.getUri({
+      url: '/files/' + file,
+      params: { token: state.user.token }
+    });
+  };
+
+  function onContentSizeChange() {
+    if (!isFullscreen) return;
     refScrollView.current.scrollToEnd({ animated: true });
   };
 
-  const onBackgroundClick = async (close = true) => {
-    setStatusBarHidden(false, 'none');
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
-    if (close) onClose();
+  async function setFullscreen(value = true) {
+    const orientation = value
+      ? ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
+      : ScreenOrientation.OrientationLock.DEFAULT;
+
+    setStatusBarHidden(value, 'none');
+    await ScreenOrientation.lockAsync(orientation);
+    setIsFullscreen(value);
+
+    if (!value) onClose();
   };
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       async () => {
-        await onBackgroundClick(false);
+        await setFullscreen(false);
         return true;
       }
     );
@@ -36,14 +51,21 @@ export default function ({ thumbnail, uri, onClose }) {
 
   return (
     <Pressable
-      style={styles.container}
-      onPress={!fullscreen ? onBackgroundClick : () => null}
+      style={{
+        position: 'absolute',
+        backgroundColor: '#3333335f',
+        zIndex: 500,
+        height: '100%',
+        width: '100%',
+        justifyContent: 'center'
+      }}
+      onPress={!isFullscreen && setFullscreen}
     >
       <ScrollView
-        scrollEnabled={!fullscreen}
+        scrollEnabled={!isFullscreen}
         ref={refScrollView}
         onContentSizeChange={onContentSizeChange}
-        style={fullscreen && {
+        style={isFullscreen && {
           backgroundColor: 'black',
           position: 'absolute',
           height: '155%',
@@ -52,44 +74,26 @@ export default function ({ thumbnail, uri, onClose }) {
         }}
       >
         <VideoPlayer
-          defaultControlsVisible={true}
           videoProps={{
             shouldPlay: true,
             resizeMode: ResizeMode.COVER,
-            posterSource: { uri: thumbnail },
-            source: { uri },
+            posterSource: { uri: getUri('/cover/' + state.item.cover) },
+            source: { uri: getUri('/media/' + state.item.media) },
           }}
           fullscreen={{
-            inFullscreen: fullscreen,
-            enterFullscreen: async () => {
-              setStatusBarHidden(true, 'none');
-              await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
-              setFullscreen(true);
-            },
-            exitFullscreen: async () => {
-              setStatusBarHidden(false, 'none');
-              await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
-              setFullscreen(false);
-            },
+            inFullscreen: isFullscreen,
+            enterFullscreen: async () => await setFullscreen(),
+            exitFullscreen: async () => await setFullscreen(false),
           }}
           style={{
             videoBackgroundColor: 'silver',
-            height: fullscreen ? Dimensions.get('window').width : 256,
-            width: fullscreen ? Dimensions.get('window').height : Dimensions.get('window').width,
+            height: isFullscreen ? Dimensions.get('window').width : 256,
+            width: isFullscreen
+              ? Dimensions.get('window').height
+              : Dimensions.get('window').width,
           }}
         />
       </ScrollView>
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    backgroundColor: '#3333335f',
-    zIndex: 500,
-    height: '100%',
-    width: '100%',
-    justifyContent: 'center'
-  },
-});

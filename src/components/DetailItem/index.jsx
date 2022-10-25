@@ -2,25 +2,57 @@ import { useState } from 'react';
 import {
   Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Audio from '@/components/DetailItem/Audio';
 import Book from '@/components/DetailItem/Book';
 import Video from '@/components/DetailItem/Video';
 import Chip from '@/components/Item/Chip';
+import ViewContainer from '@/components/ViewContainer';
+import Axios from '@/func/Axios';
 
-export default function ({ item, setItem }) {
+export default function DetailItem({ item }) {
+  const token = useSelector((state) => state.user.token);
   const [videoOverlay, setVideoOverlay] = useState(false);
+  const coverUrl = Axios.getUri({
+    url: '/files/cover/' + item.cover,
+    params: { token }
+  });
+
   const toggleBookmark = () => {
     const temp = { ...item };
     temp.bookmark = !temp.bookmark;
-    setItem(temp);
+    /* TODO
+{
+    if (loading) return;
+
+    onBookmark && onBookmark();
+    setLoading(true);
+    Axios.request({
+      url: '/bookmarks/' + item_id,
+      method: bookmarked ? 'delete' : 'post'
+    })
+      .then((res) => {
+        const bookmark = res.data.message === 'ADDED_BOOKMARK';
+        setBookmark(bookmark);
+      })
+      .catch(() => {
+        Axios.get('/bookmarks/' + item_id).then((res) => {
+          const bookmark = res.data.message === 'ADDED_BOOKMARK';
+          setBookmark(bookmark);
+        })
+          .catch(() => false);
+      })
+      .finally(() => setLoading(false));
+  }
+  */
   };
 
   const toggleVideo = () => {
     setVideoOverlay(!videoOverlay);
   };
 
-  return (
+  const component = (
     <>
       { videoOverlay &&
       <Video thumbnail={item.cover} uri={item.media} onClose={toggleVideo} />
@@ -33,7 +65,7 @@ export default function ({ item, setItem }) {
         }
         <Image
           style={[styles.thumbnail.default, styles.thumbnail[item.type]]}
-          source={{ uri: item.cover }}
+          source={{ uri: coverUrl }}
         />
       </View>
       <ScrollView
@@ -66,7 +98,7 @@ export default function ({ item, setItem }) {
             </TouchableOpacity>
           </View>
           { item.type === 'book' && <Book /> }
-          { item.type === 'audio' && <Audio uri={item.media} /> }
+          { item.type === 'audio' && <Audio /> }
           <Text style={styles.subtitle}>Deskripsi Singkat</Text>
           <Text style={styles.description}>{ item.description }</Text>
           <Text style={styles.subtitle}>Tagar</Text>
@@ -84,6 +116,8 @@ export default function ({ item, setItem }) {
       </ScrollView>
     </>
   );
+
+  return <ViewContainer component={component} noPadding transparent />;
 }
 
 const styles = StyleSheet.create({

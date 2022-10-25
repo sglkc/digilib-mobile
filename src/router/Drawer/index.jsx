@@ -98,7 +98,11 @@ const screens = {
   ],
   hidden: [
     { name: 'Detail', component: Detail },
-    { name: 'DetailItem', component: DetailItem, options: { hideTitle: true } },
+    {
+      name: 'Detail Item',
+      component: DetailItem,
+      options: { hideBanner: true, hideTitle: true }
+    },
     { name: 'Jelajahi', component: Jelajahi },
     { name: 'Kategori', component: Kategori },
     { name: 'Pencarian', component: Pencarian },

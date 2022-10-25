@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '@/components/Button';
 
-export default function () {
+export default function BookDetail() {
   const navigation = useNavigation();
 
   return (
@@ -11,7 +11,7 @@ export default function () {
         style={styles.buttonContainer}
         styleButton={styles.button}
         text="Baca"
-        onPress={() => navigation.navigate('PDFReader')}
+        onPress={() => navigation.navigate('PDF Reader')}
       />
       <View style={{ marginHorizontal: 4 }} />
       <Button

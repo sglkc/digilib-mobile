@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setItem } from '@/store/ItemReducer';
 import Button from '@/components/Button';
 import DetailItem from '@/components/DetailItem';
+import { NODE_ENV } from '@env';
 
-export default function () {
+export default function DetailItemComponent() {
   const placeholder = {
     audio: {
       title: 'Neuro Psikologi',
@@ -14,8 +15,8 @@ export default function () {
       'Ed ut perspiciatis unde omnis iste natus error sit voluptatem ' +
       'accusantium doloremque laudantium.',
       categories: ['Sains dan Pendidikan', 'Psikologi', 'Komunikasi', 'Neurosains'],
-      cover: 'http://cdn.medicalxpress.com/newman/gfx/news/2014/0318_cogsci-grades-orig.jpg',
-      media: 'https://filesamples.com/samples/audio/mp3/sample1.mp3',
+      cover: 'placeholder-1.jpg',
+      media: 'placeholder.mp3',
       type: 'audio',
       bookmark: false,
     },
@@ -26,8 +27,8 @@ export default function () {
       'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut' +
       'fugit, sed quia consequuntur magni dolored eos qui ratione voluptatem.',
       categories: ['Doa', 'Agama'],
-      cover: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1332922051l/13563593.jpg',
-      media: 'https://core.ac.uk/download/pdf/161807137.pdf',
+      cover: 'placeholder-2.jpg',
+      media: 'placeholder.pdf',
       type: 'book',
       bookmark: false,
     },
@@ -38,8 +39,8 @@ export default function () {
       'Ed ut perspiciatis unde omnis iste natus error sit voluptatem ' +
       'accusantium doloremque laudantium.',
       categories: ['Sains dan Pendidikan', 'Psikologi', 'Komunikasi', 'Neurosains'],
-      cover: 'https://i.ytimg.com/vi/zxFWIa9mDIo/maxresdefault.jpg',
-      media: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      cover: 'placeholder-3.jpg',
+      media: 'placeholder.mp4',
       type: 'video',
       bookmark: false,
     }
@@ -50,8 +51,11 @@ export default function () {
   return (
     <>
       <DetailItem item={item} setItem={setItem} />
+      { NODE_ENV !== 'production' &&
       <View style={styles.container}>
-        <Text style={{ position: 'absolute', color: 'white' }}>DEBUG TIPE ITEM</Text>
+        <Text style={{ position: 'absolute', color: 'white' }}>
+          DEBUG TIPE ITEM
+        </Text>
         { ['audio' ,'book', 'video'].map((type, index) => (
           <Button
             key={index}
@@ -63,6 +67,7 @@ export default function () {
         ))
         }
       </View>
+      }
     </>
   );
 }

@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import { Audio } from 'expo-av';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
+import Axios from '@/func/Axios';
 
 const ripple = {
   color: 'silver',
@@ -13,7 +15,8 @@ const secondsToTimestamp = (seconds) => {
   return new Date(seconds * 1000).toISOString().substr(14, 5);
 };
 
-export default function ({ uri }) {
+export default function AudioDetail() {
+  const state = useSelector((state) => state);
   const [playIcon, setPlayIcon] = useState('play');
   const [audio, setAudio] = useState(null);
   const [position, setPosition] = useState(0);
@@ -21,6 +24,10 @@ export default function ({ uri }) {
   const [volume, setVolume] = useState('volume-high');
   const [rate, setRate] = useState(1);
   const spinValue = new Animated.Value(0);
+  const mediaUrl = Axios.getUri({
+    url: '/files/media/' + state.item.media,
+    params: { token: state.user.token }
+  });
 
   Animated.loop(
     Animated.timing(
@@ -42,7 +49,7 @@ export default function ({ uri }) {
   useEffect(() => {
     if (!audio) (async () => {
       const loadedAudio = await Audio.Sound.createAsync(
-        { uri },
+        { uri: mediaUrl },
         { progressUpdateIntervalMillis: 1000 }
       );
 
