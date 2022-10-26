@@ -31,7 +31,7 @@ axios.interceptors.response.use(
     return res;
   },
   function (err) {
-    err.message = err.response.data.message;
+    err.message = err.response.data?.message;
     err.data = err.response.data;
     err.status = err.response.status;
 

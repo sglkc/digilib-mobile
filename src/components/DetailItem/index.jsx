@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import {
-  Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View
+  Image,
+  ImageBackground,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,28 +15,26 @@ import Audio from '@/components/DetailItem/Audio';
 import Book from '@/components/DetailItem/Book';
 import Video from '@/components/DetailItem/Video';
 import Chip from '@/components/Item/Chip';
+import Spinner from '@/components/Spinner';
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
 export default function DetailItem({ item }) {
-  const token = useSelector((state) => state.user.token);
   const [videoOverlay, setVideoOverlay] = useState(false);
+  const [bookmarkLoading, setBookmarkLoading] = useState(false);
+  const [bookmarked, setBookmark] = useState(item.Bookmark)
+  const token = useSelector((state) => state.user.token);
   const coverUrl = Axios.getUri({
     url: '/files/cover/' + item.cover,
     params: { token }
   });
 
   const toggleBookmark = () => {
-    const temp = { ...item };
-    temp.bookmark = !temp.bookmark;
-    /* TODO
-{
-    if (loading) return;
+    if (bookmarkLoading) return;
 
-    onBookmark && onBookmark();
-    setLoading(true);
+    setBookmarkLoading(true);
     Axios.request({
-      url: '/bookmarks/' + item_id,
+      url: '/bookmarks/' + item.item_id,
       method: bookmarked ? 'delete' : 'post'
     })
       .then((res) => {
@@ -37,23 +42,23 @@ export default function DetailItem({ item }) {
         setBookmark(bookmark);
       })
       .catch(() => {
-        Axios.get('/bookmarks/' + item_id).then((res) => {
+        Axios.get('/bookmarks/' + item.item_id).then((res) => {
           const bookmark = res.data.message === 'ADDED_BOOKMARK';
           setBookmark(bookmark);
         })
           .catch(() => false);
       })
-      .finally(() => setLoading(false));
-  }
-  */
+      .finally(() => setBookmarkLoading(false));
   };
 
   const toggleVideo = () => {
     setVideoOverlay(!videoOverlay);
   };
 
-  const component = (
-    <>
+  return (
+    <ImageBackground
+      source={require('assets/BG_ORANGE.png')}
+    >
       { videoOverlay &&
       <Video thumbnail={item.cover} uri={item.media} onClose={toggleVideo} />
       }
@@ -69,8 +74,9 @@ export default function DetailItem({ item }) {
         />
       </View>
       <ScrollView
-        overScrollMode="never"
         contentContainerStyle={{ minHeight: '100%' }}
+        overScrollMode="never"
+        showsVerticalScrollIndicator={false}
       >
         <View
           style={[
@@ -90,11 +96,15 @@ export default function DetailItem({ item }) {
               activeOpacity={0.5}
               onPress={toggleBookmark}
             >
-              <Icon
-                name={item.bookmark ? 'bookmark' : 'bookmark-outline'}
-                size={25}
-                color="orange"
-              />
+              { bookmarkLoading ?
+                <Spinner style={{ marginRight: 6 }} color="orange" size={20} />
+                :
+                <Icon
+                  name={bookmarked ? 'bookmark' : 'bookmark-outline'}
+                  size={25}
+                  color="orange"
+                />
+              }
             </TouchableOpacity>
           </View>
           { item.type === 'book' && <Book /> }
@@ -114,10 +124,8 @@ export default function DetailItem({ item }) {
           </View>
         </View>
       </ScrollView>
-    </>
+    </ImageBackground>
   );
-
-  return <ViewContainer component={component} noPadding transparent />;
 }
 
 const styles = StyleSheet.create({
