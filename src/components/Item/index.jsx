@@ -62,7 +62,10 @@ function Item({ item, onBookmark }) {
         android_ripple={{ color: 'lightgrey', borderless: true }}
       >
         <View style={styles.itemContainer}>
-          <Image style={styles.image} source={{ uri: coverUrl }} />
+          <Image
+            style={styles.image}
+            source={{ uri: coverUrl }}
+          />
           <View style={styles.detail}>
             <View style={styles.detailText}>
               <View style={{ flexGrow: 1, flexShrink: 1 }}>
@@ -114,10 +117,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   image: {
+    backgroundColor: '#aaa',
     marginRight: 16,
-    width: 80,
-    height: 135,
+    width: 86,
+    height: 138,
     resizeMode: 'cover',
+    borderRadius: 8
   },
   detail: {
     flex: 1,

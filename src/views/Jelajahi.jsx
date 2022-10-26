@@ -1,61 +1,86 @@
-import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useEffect, useRef, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from '@/components/Button';
 import Chip from '@/components/Item/Chip';
+import Spinner from '@/components/Spinner';
 import TextInput from '@/components/TextInput';
+import ViewContainer from '@/components/ViewContainer';
+import Axios from '@/func/Axios';
 
-export default function () {
-  const navigation = useNavigation();
-  const initialCategories = [
-    { name: 'Tafsir Al-Quran', selected: false },
-    { name: 'Psikologi', selected: false },
-    { name: 'Agama', selected: true },
-    { name: 'Doa', selected: false },
-    { name: 'Hadits', selected: false },
-    { name: 'Komunikasi', selected: false },
-    { name: 'Neurosains', selected: false },
-    { name: 'Sains dan Pendidikan', selected: true },
-    { name: 'Fikih', selected: false },
-  ];
-  const [categories, setCategories] = useState(initialCategories);
+export default function Jelajahi({ navigation }) {
+  const [categories, setCategories] = useState([]);
+  const defaultCategories = useRef([]);
+  const search = useRef('');
   const toggleCategory = (index) => {
     const temp = [...categories];
     temp[index].selected = !temp[index].selected;
     setCategories(temp);
   };
 
-  return (
-    <View>
+  useEffect(() => {
+    Axios.get('/categories')
+      .then((res) => {
+        const data = res.data.result.map((category) => ({
+          name: category,
+          selected: false
+        }));
+
+        setCategories(data);
+        defaultCategories.current = data;
+      })
+      .catch(console.error);
+  }, []);
+
+  function searchText() {
+    const filtered = defaultCategories.current
+      .filter(cat => {
+        return cat.name.toLowerCase().match(search.current.toLowerCase());
+      });
+
+    setCategories(filtered);
+  }
+
+  const Component = (
+    <>
       <Text style={styles.text}>Pilih kategori yang ingin Anda tampilkan.</Text>
       <View style={styles.input.container}>
         <TextInput
           style={styles.input.box}
           placeholder="Cari Kategori disini"
+          onChangeText={(val) => (search.current = val)}
         />
         <Pressable
           style={styles.input.button}
-          android_ripple={{ color: '#fff', borderless: true, radius: 24 }}
+          android_ripple={{ color: '#fff', borderless: true }}
+          onPress={searchText}
         >
           <Icon name="search" size={30} color="#333" />
         </Pressable>
       </View>
-      <View style={styles.chip.container}>
-        { categories.map((category, index) => (
-          <Chip
-            key={index}
-            text={category.name}
-            style={[
-              styles.chip.button, category.selected && styles.chip.selected
-            ]}
-            styleText={[
-              styles.chip.text, category.selected && styles.chip.selectedText
-            ]}
-            onPress={() => toggleCategory(index)}
-          />
-        ))}
-      </View>
+      <ScrollView>
+        { categories.length ?
+          <View style={styles.chip.container}>
+            { categories.map((category, index) => (
+              <Chip
+                key={index}
+                text={category.name}
+                style={[
+                  styles.chip.button,
+                  category.selected && styles.chip.selected
+                ]}
+                styleText={[
+                  styles.chip.text,
+                  category.selected && styles.chip.selectedText
+                ]}
+                onPress={() => toggleCategory(index)}
+              />
+            ))}
+          </View>
+          :
+          <Spinner style={{ marginTop: 32 }} color="black" size={30} />
+        }
+      </ScrollView>
       <Button
         style={styles.button.container}
         styleButton={styles.button.box}
@@ -64,8 +89,10 @@ export default function () {
       >
         Cari Kategori
       </Button>
-    </View>
+    </>
   );
+
+  return <ViewContainer component={Component} />;
 }
 
 const styles = StyleSheet.create({
@@ -82,19 +109,20 @@ const styles = StyleSheet.create({
     },
     button: {
       marginVertical: 4,
-      marginHorizontal: 8,
-      padding: 8,
+      marginHorizontal: 4,
       borderRadius: 64,
     },
     selected: {
       backgroundColor: 'orange',
     },
     selectedText: {
-      fontWeight: '700',
       color: 'white',
     },
     text: {
+      padding: 8,
       fontSize: 18,
+      fontWeight: '700',
+      textAlign: 'center'
     },
   },
   input: {
@@ -113,11 +141,11 @@ const styles = StyleSheet.create({
   },
   button: {
     container: {
-      marginTop: 32,
+      marginTop: 16,
     },
     box: {
       paddingVertical: 12,
-      backgroundColor: 'green',
+      backgroundColor: '#3dd20e'
     },
     text: {
       color: 'white',
