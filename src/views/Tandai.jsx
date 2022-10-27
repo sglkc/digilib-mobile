@@ -18,7 +18,7 @@ export default function Tandai() {
           right: 0
         }}
       >
-        <BottomNavbar />
+        <BottomNavbar selected={2} />
       </View>
     </>
   );

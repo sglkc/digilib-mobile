@@ -81,7 +81,7 @@ export default function ItemScroller({ bookmarkOnly, url, style }) {
 
         setState({ ...defaultState, count: res.data.count, items, page });
       })
-      .catch((err) => setState({ ...defaultState, error: err.data.message }))
+      .catch(() => setState({ ...defaultState, error: true }))
       .finally(() => setUpdate(false));
   }
 

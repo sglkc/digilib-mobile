@@ -25,7 +25,7 @@ export default function Detail({ route, navigation }) {
           right: 0
         }}
       >
-        <BottomNavbar />
+        <BottomNavbar selected={1} />
       </View>
     </>
   );

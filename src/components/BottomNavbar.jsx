@@ -1,13 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function BottomNavbar() {
+export default function BottomNavbar({ selected }) {
   const navigation = useNavigation();
   const items = [
     { name: 'Etalase', icon: 'home', route: 'Etalase' },
-    { name: 'Jelajahi', icon: 'folder-open-o', route: 'Jelajahi' },
-    { name: 'Tandai', icon: 'bookmark-o', route: 'Tandai' },
+    { name: 'Jelajahi', icon: 'folder-open', route: 'Jelajahi' },
+    { name: 'Tandai', icon: 'bookmark', route: 'Tandai' },
   ];
 
   return (
@@ -15,11 +15,18 @@ export default function BottomNavbar() {
       { items.map((item, index) => (
         <View key={index} style={styles.item}>
           <Pressable
-            android_ripple={{ color: '#ddd5', borderless: true, radius: 64 }}
+            android_ripple={{ color: '#ddd5', borderless: true, radius: 58 }}
             onPress={() => navigation.navigate(item.route)}
           >
-            <Icon name={item.icon} size={25} color="white" style={styles.icon}/>
-            <Text style={styles.text}>{ item.name }</Text>
+            <Icon
+              style={styles.icon}
+              name={selected === index ? item.icon : item.icon + '-outline'}
+              size={25}
+              color={selected === index ? '#333' : 'white'}
+            />
+            <Text style={[styles.text, selected === index && { color: '#333' }]}>
+              { item.name }
+            </Text>
           </Pressable>
         </View>
       )

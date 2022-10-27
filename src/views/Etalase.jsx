@@ -43,7 +43,7 @@ export default function Etalase({ navigation }) {
         <SortByComponent style={{ marginHorizontal: 32 }} />
         <ItemScroller url="/items" />
         <View style={styles.bottom}>
-          <BottomNavbar />
+          <BottomNavbar selected={0} />
         </View>
       </View>
     </>
