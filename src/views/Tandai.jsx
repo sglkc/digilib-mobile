@@ -8,7 +8,7 @@ export default function Tandai() {
   const Component = (
     <>
       <CategoryScroller style={{ flexGrow: 0 }} />
-      <ItemScroller url="/bookmarks" bookmarkOnly bottomPadding />
+      <ItemScroller url="/bookmarks" bookmarkOnly />
       <View
         style={{
           position: 'absolute',

@@ -8,7 +8,7 @@ export default function Riwayat() {
   const Component = (
     <>
       <CategoryScroller style={{ flexGrow: 0 }} />
-      <ItemScroller url="/histories" bottomPadding />
+      <ItemScroller url="/histories" />
       <View
         style={{
           position: 'absolute',

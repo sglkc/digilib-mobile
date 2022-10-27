@@ -5,9 +5,7 @@ import Item from '@/components/Item';
 import Spinner from '@/components/Spinner';
 import Axios from '@/func/Axios';
 
-export default function ItemScroller({
-  bookmarkOnly, bottomPadding, url, style
-}) {
+export default function ItemScroller({ bookmarkOnly, url, style }) {
   const defaultState = {
     count: 0,
     items: [],
@@ -53,7 +51,7 @@ export default function ItemScroller({
     ListFooterComponent: (
       <>
         { state.items.length < state.count && <Spinner color="black" /> }
-        { bottomPadding && <View style={{ marginBottom: 72 }} /> }
+        <View style={{ marginBottom: 72 }} />
       </>
     ),
     onEndReached: () => getItems(true),

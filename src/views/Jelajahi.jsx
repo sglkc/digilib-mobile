@@ -41,6 +41,16 @@ export default function Jelajahi({ navigation }) {
     setCategories(filtered);
   }
 
+  function searchSelected() {
+    const selected = categories
+      .filter(cat => cat.selected)
+      .map(cat => cat.name);
+
+    if (!selected.length) return;
+
+    navigation.navigate('Detail', { search: selected });
+  }
+
   const Component = (
     <>
       <Text style={styles.text}>Pilih kategori yang ingin Anda tampilkan.</Text>
@@ -85,7 +95,7 @@ export default function Jelajahi({ navigation }) {
         style={styles.button.container}
         styleButton={styles.button.box}
         styleText={styles.button.text}
-        onPress={() => navigation.navigate('Detail')}
+        onPress={searchSelected}
       >
         Cari Kategori
       </Button>
