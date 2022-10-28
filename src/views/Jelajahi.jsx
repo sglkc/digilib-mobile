@@ -59,6 +59,7 @@ export default function Jelajahi({ navigation }) {
           style={styles.input.box}
           placeholder="Cari Kategori disini"
           onChangeText={(val) => (search.current = val)}
+          onSubmitEditing={searchText}
         />
         <Pressable
           style={styles.input.button}

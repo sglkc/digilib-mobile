@@ -1,25 +1,11 @@
 import { StyleSheet, TextInput } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux'
 
-export default function ({
-  editable,
-  hide,
-  keyboardType,
-  placeholder,
-  style,
-  value,
-  onChangeText
-}) {
-  const dispatch = useDispatch()
+export default function CustomTextInput(props) {
   return (
     <TextInput
-      editable={editable}
-      placeholder={placeholder}
-      keyboardType={keyboardType}
-      style={[ defaultStyle, style ]}
-      secureTextEntry={hide}
-      value={value}
-      onChangeText={onChangeText}
+      {...props}
+      style={[ defaultStyle, props.style ]}
+      secureTextEntry={props.hide}
     />
   );
 }

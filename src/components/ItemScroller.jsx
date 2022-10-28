@@ -5,7 +5,7 @@ import Item from '@/components/Item';
 import Spinner from '@/components/Spinner';
 import Axios from '@/func/Axios';
 
-export default function ItemScroller({ bookmarkOnly, url, style }) {
+export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
   const defaultState = {
     count: 0,
     items: [],
@@ -51,7 +51,7 @@ export default function ItemScroller({ bookmarkOnly, url, style }) {
     ListFooterComponent: (
       <>
         { state.items.length < state.count && <Spinner color="black" /> }
-        <View style={{ marginBottom: 72 }} />
+        <View style={{ marginBottom: noBottom ? 16 : 72 }} />
       </>
     ),
     onEndReached: () => getItems(true),
@@ -65,7 +65,7 @@ export default function ItemScroller({ bookmarkOnly, url, style }) {
   useFocusEffect(useCallback(() => {
     setState({ ...defaultState });
     if (!shouldUpdate) setUpdate(true);
-  }, []));
+  }, [url]));
 
   function getItems(force = false) {
     if (!shouldUpdate && !force) return;
