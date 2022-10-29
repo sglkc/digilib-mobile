@@ -1,22 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import TextButton from '@/components/TextButton';
 import ViewContainer from '@/components/ViewContainer';
+import Axios from '@/func/Axios';
 
-export default function () {
-  const [notifications, setNotifications] = useState([
-    { date: '05 August 21', title: 'Update Aplikasi telah tersedia' },
-    { date: '05 August 21', title: 'Update Aplikasi telah tersedia' },
-    { date: '05 August 21', title: 'Update Aplikasi telah tersedia' },
-    { date: '05 August 21', title: 'Update Aplikasi telah tersedia' },
-  ]);
+export default function Notifikasi() {
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    Axios.get('/user/notifications')
+      .then((res) => {
+        const result = res.data.result.map((r) => ({
+          name: r.name,
+          text: r.text,
+          date: new Date(r.createdAt).toString()
+        }));
+
+        setNotifications(result);
+      })
+      .catch(() => false);
+  }, []);
+
+  function deleteAll() {
+    Axios.delete('/user/notifications')
+      .then((res) => setNotifications([]))
+      .catch(() => false);
+  }
 
   const Component = (
     <View style={styles.container}>
-      <TextButton
-        styleText={styles.clear}
-        onPress={() => setNotifications([])}
-      >
+      <TextButton styleText={styles.clear} onPress={deleteAll}>
         Hapus Semua
       </TextButton>
       { !notifications.length &&
@@ -29,7 +42,7 @@ export default function () {
           <View key={index}>
             <View style={styles.listItem}>
               <Text style={styles.listDate}>{ notification.date }</Text>
-              <Text style={styles.listTitle}>{ notification.title }</Text>
+              <Text style={styles.listTitle}>{ notification.text }</Text>
             </View>
             { index + 1 < notifications.length &&
             <View style={styles.divider}></View>
