@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Text, View, VirtualizedList } from 'react-native';
+import { useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import Item from '@/components/Item';
 import Spinner from '@/components/Spinner';
@@ -12,6 +13,7 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
     page: 1,
     error: false
   };
+  const itemType = useSelector(state => state.itemType);
   const [state, setState] = useState(defaultState);
   const [shouldUpdate, setUpdate] = useState(false);
   const onBookmark = useCallback(() => setUpdate(!!bookmarkOnly), []);
@@ -65,13 +67,19 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
   useFocusEffect(useCallback(() => {
     setState({ ...defaultState });
     if (!shouldUpdate) setUpdate(true);
-  }, [url]));
+  }, [itemType, url]));
 
   function getItems(force = false) {
     if (!shouldUpdate && !force) return;
     if (state.items.length >= state.count && state.count !== 0) return;
 
-    Axios.get(url, { params: { page: state.page, limit: 10 } })
+    Axios.get(url, {
+      params: {
+        limit: 10,
+        page: state.page,
+        type: itemType === 'semua' ? undefined : itemType
+      }
+    })
       .then((res) => {
         const lazy = state.items[0]?.item_id === res.data.result[0].item_id;
         const items = lazy

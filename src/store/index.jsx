@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import MenuListReducer from "./MenuListReducer";
+import ItemTypeReducer from "./ItemTypeReducer";
 import UserReducer from "./UserReducer";
 import ItemReducer from './ItemReducer';
 
 export default configureStore({
   reducer: {
-    menu: MenuListReducer,
+    itemType: ItemTypeReducer,
     user: UserReducer,
     item: ItemReducer,
   },

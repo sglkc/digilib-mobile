@@ -9,7 +9,7 @@ import {
   View
 } from 'react-native';
 
-export default function () {
+export default function Kategori() {
   const categories = [
     {
       name: 'Agama',

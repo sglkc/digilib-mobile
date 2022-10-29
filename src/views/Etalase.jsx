@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import BottomNavbar from '@/components/BottomNavbar';
-import CategoryScroller from "@/components/CategoryScroller";
+import ItemType from "@/components/ItemType";
 import SortByComponent from "@/components/SortByComponent";
 import ItemScroller from '@/components/ItemScroller';
 import ViewContainer from '@/components/ViewContainer';
@@ -39,7 +39,7 @@ export default function Etalase({ navigation }) {
         <Text style={styles.quote.source}>{ quote.source }</Text>
       </View>
       <View style={styles.container}>
-        <CategoryScroller style={{ flexGrow: 0 }} />
+        <ItemType />
         <SortByComponent style={{ marginHorizontal: 32 }} />
         <ItemScroller url="/items" />
         <View style={styles.bottom}>

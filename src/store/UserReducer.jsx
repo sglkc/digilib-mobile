@@ -7,7 +7,7 @@ const initialState = {
   token: ''
 };
 
-export const Item = createSlice({
+export const User = createSlice({
   name: 'User',
   initialState,
   reducers: {
@@ -17,6 +17,6 @@ export const Item = createSlice({
   },
 });
 
-export const { setUser } = Item.actions;
+export const { setUser } = User.actions;
 
-export default Item.reducer;
+export default User.reducer;

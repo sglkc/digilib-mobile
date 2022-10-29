@@ -1,13 +1,13 @@
 import { View } from 'react-native';
 import BottomNavbar from '@/components/BottomNavbar';
-import CategoryScroller from "@/components/CategoryScroller";
+import ItemType from "@/components/ItemType";
 import ItemScroller from '@/components/ItemScroller';
 import ViewContainer from '@/components/ViewContainer';
 
 export default function Riwayat() {
   const Component = (
     <>
-      <CategoryScroller style={{ flexGrow: 0 }} />
+      <ItemType />
       <ItemScroller url="/histories" />
       <View
         style={{
