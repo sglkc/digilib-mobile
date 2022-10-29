@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setItem } from '@/store/ItemReducer';
 import Button from '@/components/Button';
 import DetailItem from '@/components/DetailItem';
+import Axios from '@/func/Axios';
 import { NODE_ENV } from '@env';
 
-export default function DetailItemComponent() {
+export default function DetailItemView() {
   const placeholder = {
     audio: {
       title: 'Neuro Psikologi',
@@ -47,6 +48,12 @@ export default function DetailItemComponent() {
   };
   const item = useSelector((state) => state.item);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    Axios.post('/histories/' + item.item_id)
+      .then(() => false)
+      .catch(() => false);
+  }, [item.item_id]);
 
   return (
     <>
