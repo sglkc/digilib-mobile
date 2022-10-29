@@ -107,7 +107,7 @@ function Item({ item, onBookmark }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 6,
+    marginBottom: 6,
     borderRadius: 16,
     overflow: 'hidden',
   },

@@ -13,7 +13,7 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
     page: 1,
     error: false
   };
-  const itemType = useSelector(state => state.itemType);
+  const itemFilter = useSelector(state => state.itemFilter);
   const [state, setState] = useState(defaultState);
   const [shouldUpdate, setUpdate] = useState(false);
   const onBookmark = useCallback(() => setUpdate(!!bookmarkOnly), []);
@@ -35,7 +35,7 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
           fontWeight: 'bold'
         }}
       >
-        { state.error === 'PAGE_EMPTY' ?
+        { state.error.status === 400 ?
           <Text>Halaman ini kosong</Text>
           : state.error ?
             <Text>Terjadi error, mohon coba lagi nanti</Text>
@@ -67,7 +67,7 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
   useFocusEffect(useCallback(() => {
     setState({ ...defaultState });
     if (!shouldUpdate) setUpdate(true);
-  }, [itemType, url]));
+  }, [itemFilter, url]));
 
   function getItems(force = false) {
     if (!shouldUpdate && !force) return;
@@ -76,8 +76,9 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
     Axios.get(url, {
       params: {
         limit: 10,
+        order: itemFilter.order === 'Terbaru' ? undefined : 'DESC',
         page: state.page,
-        type: itemType === 'semua' ? undefined : itemType
+        type: itemFilter.type === 'semua' ? undefined : itemFilter.type
       }
     })
       .then((res) => {
@@ -89,7 +90,7 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
 
         setState({ ...defaultState, count: res.data.count, items, page });
       })
-      .catch(() => setState({ ...defaultState, error: true }))
+      .catch((err) => setState({ ...defaultState, error: err }))
       .finally(() => setUpdate(false));
   }
 

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Pressable, Text, StyleSheet, View } from "react-native";
 import { useSelector, useDispatch } from 'react-redux'
-import { setItemType } from '@/store/ItemTypeReducer';
+import { setType } from '@/store/ItemFilterReducer';
 
 const types = ['Semua', 'Audio', 'Book', 'Video'];
 
 export default function ItemType({ style }) {
-  const selected = useSelector(state => state.itemType);
+  const selected = useSelector(state => state.itemFilter.type);
   const dispatch = useDispatch();
 
   return(
@@ -21,7 +21,7 @@ export default function ItemType({ style }) {
         >
           <Pressable
             android_ripple={{ color: 'lightgrey' }}
-            onPress={() => dispatch(setItemType(type.toLowerCase()))}
+            onPress={() => dispatch(setType(type.toLowerCase()))}
           >
             <Text
               style={[

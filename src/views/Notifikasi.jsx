@@ -28,7 +28,7 @@ export default function Notifikasi() {
   }
 
   const Component = (
-    <View style={styles.container}>
+    <>
       <TextButton styleText={styles.clear} onPress={deleteAll}>
         Hapus Semua
       </TextButton>
@@ -51,7 +51,7 @@ export default function Notifikasi() {
         );
       })
       }
-    </View>
+    </>
   );
 
   return <ViewContainer component={Component} />
