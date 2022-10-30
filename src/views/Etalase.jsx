@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -18,14 +18,16 @@ import ItemSort from '@/components/ItemSort';
 import ItemScroller from '@/components/ItemScroller';
 import ItemType from "@/components/ItemType";
 import ViewContainer from '@/components/ViewContainer';
+import Axios from '@/func/Axios';
 
 export default function Etalase({ navigation }) {
-  const quote = {
-    text: 'Banyak jalan untuk mendekati Tuhan, sebanyak bilangan nafas' +
-    ' para pencari Tuhan. Tapi jalan yang paling dekat pada Allah adalah' +
-    ' membahagiakan orang lain di sekitarmu. Engkau berkhidmat kepada mereka.',
-    source: 'Jalaluddin Rakhmat - The Road to Allah (hal.268)'
-  };
+  const [quote, setQuote] = useState({});
+
+  useEffect(() => {
+    Axios.get('/quotes/random')
+      .then((res) => setQuote(res.data.result))
+      .catch(() => false);
+  }, []);
 
   const Component = (
     <>
@@ -36,7 +38,7 @@ export default function Etalase({ navigation }) {
           <Text style={styles.quote.text}>{ quote.text }</Text>
           <Text style={[styles.quote.mark, { bottom: 0, right: 0 }]}>„</Text>
         </View>
-        <Text style={styles.quote.source}>{ quote.source }</Text>
+        <Text style={styles.quote.source}>{ quote.author }</Text>
       </View>
       <View style={styles.container}>
         <ItemType />
