@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet, Text, TouchableWithoutFeedback, View, VirtualizedList
+} from 'react-native';
 import TextButton from '@/components/TextButton';
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
@@ -13,7 +15,7 @@ export default function Notifikasi() {
         const result = res.data.result.map((r) => ({
           name: r.name,
           text: r.text,
-          date: new Date(r.createdAt).toString()
+          date: new Date(r.createdAt).toString().replace('GMT+0700 ', '')
         }));
 
         setNotifications(result);
@@ -32,25 +34,30 @@ export default function Notifikasi() {
       <TextButton styleText={styles.clear} onPress={deleteAll}>
         Hapus Semua
       </TextButton>
-      { !notifications.length &&
-      <View>
-        <Text style={styles.listTitle}>Notifikasi kosong</Text>
-      </View>
-      }
-      { notifications.map((notification, index) => {
-        return (
-          <View key={index}>
+      <VirtualizedList
+        getItem={(data, index) => data[index]}
+        getItemCount={(data) => data.length}
+        data={notifications}
+        ItemSeparatorComponent={() => (
+          <TouchableWithoutFeedback>
+            <View style={styles.divider} />
+          </TouchableWithoutFeedback>
+        )}
+        keyExtractor={(item, index) => index}
+        ListEmptyComponent={(
+          <Text style={styles.listTitle}>Notifikasi kosong</Text>
+        )}
+        renderItem={({ item }) => (
+          <TouchableWithoutFeedback>
             <View style={styles.listItem}>
-              <Text style={styles.listDate}>{ notification.date }</Text>
-              <Text style={styles.listTitle}>{ notification.text }</Text>
+              <Text style={styles.listDate}>{ item.date }</Text>
+              <Text style={styles.listTitle}>{ item.text }</Text>
             </View>
-            { index + 1 < notifications.length &&
-            <View style={styles.divider}></View>
-            }
-          </View>
-        );
-      })
-      }
+          </TouchableWithoutFeedback>
+        )}
+        style={{ flexGrow: 1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
+      />
     </>
   );
 
