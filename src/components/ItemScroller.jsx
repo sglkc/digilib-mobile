@@ -71,7 +71,9 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
 
   function getItems(force = false) {
     if (!shouldUpdate && !force) return;
-    if (state.items.length >= state.count && state.count !== 0) return;
+    if (state.items.length >= state.count && state.count !== 0) {
+      return setUpdate(false);
+    }
 
     Axios.get(url, {
       params: {

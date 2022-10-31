@@ -10,24 +10,26 @@ import Axios from '@/func/Axios';
 
 export default function Jelajahi({ navigation }) {
   const [categories, setCategories] = useState([]);
+  const [selected, setSelected] = useState([]);
   const defaultCategories = useRef([]);
   const search = useRef('');
   const toggleCategory = (index) => {
-    const temp = [...categories];
-    temp[index].selected = !temp[index].selected;
-    setCategories(temp);
+    let temp = [...selected];
+
+    if (selected.includes(index)) {
+      temp = [...temp.filter(i => i !== index)];
+    } else {
+      temp.push(index);
+    }
+
+    setSelected(temp);
   };
 
   useEffect(() => {
     Axios.get('/categories')
       .then((res) => {
-        const data = res.data.result.map((category) => ({
-          name: category,
-          selected: false
-        }));
-
-        setCategories(data);
-        defaultCategories.current = data;
+        setCategories(res.data.result);
+        defaultCategories.current = res.data.result;
       })
       .catch(console.error);
   }, []);
@@ -42,13 +44,11 @@ export default function Jelajahi({ navigation }) {
   }
 
   function searchSelected() {
-    const selected = categories
-      .filter(cat => cat.selected)
-      .map(cat => cat.name);
+    const mapped = selected.map(i => categories[i]);
 
-    if (!selected.length) return;
+    if (!mapped.length) return;
 
-    navigation.navigate('Detail', { search: selected });
+    navigation.navigate('Detail', { search: mapped });
   }
 
   const Component = (
@@ -75,14 +75,14 @@ export default function Jelajahi({ navigation }) {
             { categories.map((category, index) => (
               <Chip
                 key={index}
-                text={category.name}
+                text={category}
                 style={[
                   styles.chip.button,
-                  category.selected && styles.chip.selected
+                  selected.includes(index) && styles.chip.selected
                 ]}
                 styleText={[
                   styles.chip.text,
-                  category.selected && styles.chip.selectedText
+                  selected.includes(index) && styles.chip.selectedText
                 ]}
                 onPress={() => toggleCategory(index)}
               />
