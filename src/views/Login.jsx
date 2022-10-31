@@ -37,6 +37,13 @@ export default function Login({ navigation }) {
       return setAlert('Mohon isi email dan kata sandi');
     }
 
+    if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i
+        .test(state.current.email)
+    ) {
+      return setAlert('Email Anda tidak valid');
+    }
+
     setLoading(true);
 
     Axios.post('/auth/login', { ...state.current })

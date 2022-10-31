@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '@/store/UserReducer';
 import Alert from '@/components/Alert';
@@ -16,8 +16,19 @@ export default function () {
   const dispatch = useDispatch();
 
   function changeProfile() {
+    const { email, nama } = state.current;
     if (Object.values(state.current).filter(e => !e).length) {
       return setAlert({ text: 'Mohon isi semua data diatas' });
+    }
+
+    if (/[^\p{L}\d\s@#]|[\d]/ui.test(nama)) {
+      return setAlert({ text: 'Nama Lengkap hanya menerima alfabet A-Z' });
+    }
+
+    if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i.test(email)
+    ) {
+      return setAlert({ text: 'Email Anda tidak valid' });
     }
 
     Axios.patch('/user', { ...state.current })
@@ -35,14 +46,20 @@ export default function () {
 
   const Component = (
     <>
+      <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 8 }}>
+        Silahkan ubah informasi akun Anda disini.
+      </Text>
+      <Text style={{ fontSize: 16 }}>Kosongkan yang tidak ingin diubah</Text>
       <TextInput
         style={{ marginTop: 16 }}
         placeholder="Nama Lengkap"
+        maxLength={40}
         onChangeText={(val) => (state.current.nama = val)}
       />
       <TextInput
         style={{ marginTop: 16 }}
         placeholder="Email"
+        maxLength={40}
         onChangeText={(val) => (state.current.email = val)}
       />
       <Datepicker onChangeValue={(val) => state.current.tanggal_lahir = val} />

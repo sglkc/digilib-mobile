@@ -29,8 +29,24 @@ export default function Register({ navigation }) {
   const dispatch = useDispatch();
 
   function register() {
+    const { email, nama, password } = state.current;
+
     if (Object.values(state.current).filter(e => !e).length) {
       return setError('Mohon isi semua data diatas');
+    }
+
+    if (password.length < 6) {
+      return setError('Kata Sandi harus melebihi dari 6 karakter')
+    }
+
+    if (/[^\p{L}\d\s@#]|[\d]/ui.test(nama)) {
+      return setError('Nama Lengkap hanya menerima alfabet A-Z');
+    }
+
+    if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i.test(email)
+    ) {
+      return setError('Email Anda tidak valid');
     }
 
     if (!checked) return setError('Mohon untuk menceklis kotak diatas');
@@ -66,11 +82,13 @@ export default function Register({ navigation }) {
       <TextInput
         placeholder="Nama Lengkap"
         style={styles.input}
+        maxLength={40}
         onChangeText={(val) => (state.current.nama = val)}
       />
       <TextInput
         placeholder="Email"
         style={styles.input}
+        maxLength={40}
         onChangeText={(val) => (state.current.email = val)}
       />
       <Datepicker onChangeValue={(val) => state.current.tanggal_lahir = val} />

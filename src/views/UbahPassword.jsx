@@ -15,6 +15,10 @@ export default function UbahPassword() {
       return setAlert({ text: 'Silahkan isi kata sandi baru' });
     }
 
+    if (password.current.length < 6) {
+      return setAlert({ text: 'Kata Sandi harus melebihi dari 6 karakter' })
+    }
+
     Axios.patch('/user/password', { password: password.current })
       .then(() => {
         setAlert({
