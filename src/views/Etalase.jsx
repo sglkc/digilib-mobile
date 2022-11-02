@@ -10,7 +10,6 @@ import {
   View,
   DrawerLayoutAndroid,
   Button,
-  StatusBar
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import BottomNavbar from '@/components/BottomNavbar';

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 import Store from '@/store';
 import NativeStack from '@/router/NativeStack';
-import { NODE_ENV } from '@env';
 
 export default function App() {
-  const [splash, setSplash] = useState(NODE_ENV !== 'development');
+  const [splash, setSplash] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setSplash(false), 5000);
@@ -16,6 +16,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
+      <StatusBar translucent={true} />
       <NavigationContainer>
         <Provider store={Store}>
           { splash ?

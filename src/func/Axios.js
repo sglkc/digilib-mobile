@@ -1,9 +1,8 @@
 import * as SecureStore from 'expo-secure-store';
 import { default as Axios } from 'axios';
-import { API_URL } from '@env';
 
 const axios = Axios.create({
-  baseURL: API_URL,
+  baseURL: 'http://192.168.1.104:5000/api',
   headers: {
     'X-Requested-With': 'jracademys',
   }
@@ -31,9 +30,9 @@ axios.interceptors.response.use(
     return res;
   },
   function (err) {
-    err.message = err.response.data?.message;
-    err.data = err.response.data;
-    err.status = err.response.status;
+    err.message = err.response?.data?.message;
+    err.data = err.response?.data;
+    err.status = err.response?.status;
 
     return Promise.reject(err);
   }
