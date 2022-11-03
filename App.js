@@ -9,6 +9,10 @@ import NativeStack from '@/router/NativeStack';
 
 export default function App() {
   const [splash, setSplash] = useState(false);
+  const [isHome, setHome]= useState(false);
+  const onStateChange = ({ routes }) => {
+    setHome(routes[routes.length - 1].name === 'Home');
+  }
 
   useEffect(() => {
     setTimeout(() => setSplash(false), 5000);
@@ -16,8 +20,8 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar translucent={true} />
-      <NavigationContainer>
+    <StatusBar translucent={isHome} style={isHome ? 'dark' : 'light'} />
+      <NavigationContainer onStateChange={onStateChange}>
         <Provider store={Store}>
           { splash ?
             <Image
