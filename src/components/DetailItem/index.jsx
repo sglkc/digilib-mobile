@@ -113,10 +113,10 @@ export default function DetailItem({ item }) {
           <Text style={styles.description}>{ item.description }</Text>
           <Text style={styles.subtitle}>Tagar</Text>
           <View style={styles.row}>
-            { item.categories.map((category, index) => (
+            { item.Categories.map((category, index) => (
               <Chip
                 key={index}
-                text={category}
+                text={category.name}
                 style={styles.chip}
                 styleText={styles.chipText}
               />

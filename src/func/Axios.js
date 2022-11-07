@@ -2,7 +2,7 @@ import * as SecureStore from 'expo-secure-store';
 import { default as Axios } from 'axios';
 
 const axios = Axios.create({
-  baseURL: 'http://192.168.1.104:5000/api',
+  baseURL: 'https://digilib.jalanrahmat.id/api',
   headers: {
     'X-Requested-With': 'jracademys',
   }
