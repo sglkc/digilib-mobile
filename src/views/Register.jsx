@@ -103,13 +103,25 @@ export default function Register({ navigation }) {
           onValueChange={setChecked}
           color="#ffa500"
         />
-        <Text style={{ fontSize: 16 }}>
-          Dengan ini menyatakan Anda setuju, Anda menerima segala isi
-          <Text style={styles.confirmBold}> Syarat Penggunaan </Text>
-          dan
-          <Text style={styles.confirmBold}> Kebijakan Privasi </Text>
-          Jalan Rahmat
-        </Text>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          <Text style={{ fontSize: 16 }}>
+            Dengan ini menyatakan Anda setuju, Anda menerima segala isi
+          </Text>
+          <TextButton
+            styleText={styles.confirmBold}
+            onPress={() => navigation.navigate('Syarat')}
+          >
+            Syarat Penggunaan
+          </TextButton>
+          <Text style={{ fontSize: 16 }}> dan </Text>
+          <TextButton
+            styleText={styles.confirmBold}
+            onPress={() => navigation.navigate('Kebijakan')}
+          >
+            Kebijakan Privasi
+          </TextButton>
+          <Text style={{ fontSize: 16 }}>Jalan Rahmat</Text>
+        </View>
       </View>
       { error && <Alert text={error} /> }
       <Button loading={loading} style={styles.button} onPress={register}>
@@ -161,7 +173,7 @@ const styles = StyleSheet.create({
     marginEnd: 16,
   },
   confirmBold: {
-    marginHorizontal: 8,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   button: {

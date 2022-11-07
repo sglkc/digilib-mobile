@@ -23,6 +23,7 @@ export default function Login({ navigation }) {
   useEffect(() => {
     SecureStore.getItemAsync('token')
       .then((token) => {
+        if (!token) throw new Error();
         Axios.get('/user').then((res) => {
           dispatch(setUser({ ...res.data.result, token: res.data.token }));
           navigation.navigate('Home');
