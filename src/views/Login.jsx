@@ -23,6 +23,7 @@ export default function Login({ navigation }) {
   useEffect(() => {
     SecureStore.getItemAsync('token')
       .then((token) => {
+        if (!token) throw new Error();
         Axios.get('/user').then((res) => {
           dispatch(setUser({ ...res.data.result, token: res.data.token }));
           navigation.navigate('Home');
@@ -57,7 +58,7 @@ export default function Login({ navigation }) {
         const msg = err.data?.message;
         const localized = msg === 'EMAIL_NOT_FOUND' ? 'Email tidak terdaftar'
           : msg === 'INVALID_PASSWORD' ? 'Password salah'
-          : 'Terjadi error, silahkan coba lagi'
+          : err.code;
 
         setAlert(localized);
       })

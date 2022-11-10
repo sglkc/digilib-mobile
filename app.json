@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "jracademy",
+    "name": "Jalan Rahmat Academy",
     "slug": "jracademy",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.jalanrahmat.jracademy"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dbbbcd53-f596-4101-84bd-01f8d068ad8e"
+      }
     }
   }
 }

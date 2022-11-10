@@ -5,7 +5,6 @@ import DetailItem from '@/views/DetailItem';
 import Etalase from '@/views/Etalase';
 import InformasiAkun from '@/views/InformasiAkun';
 import Jelajahi from '@/views/Jelajahi';
-import Kategori from '@/views/Kategori';
 import Notifikasi from '@/views/Notifikasi';
 import Pencarian from '@/views/Pencarian';
 import Riwayat from '@/views/Riwayat';
@@ -104,7 +103,6 @@ const screens = {
       options: { hideBanner: true, hideTitle: true }
     },
     { name: 'Jelajahi', component: Jelajahi },
-    { name: 'Kategori', component: Kategori },
     { name: 'Pencarian', component: Pencarian },
     { name: 'PDF Reader', component: PDFReader, options: { hideTitle: true } },
     { name: 'Tandai', component: Tandai },

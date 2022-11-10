@@ -4,10 +4,18 @@ import {
   DrawerContentScrollView,
   DrawerItemList
 } from '@react-navigation/drawer';
+import * as SecureStore from 'expo-secure-store';
 import Button from '@/components/Button';
 
 export default function DrawerContent(props) {
   const user = useSelector((state) => state.user);
+
+  function logout() {
+    SecureStore.deleteItemAsync('token')
+      .then(() => false)
+      .catch(() => false)
+      .finally(() => props.navigation.navigate('Login'));
+  }
 
   return (
     <DrawerContentScrollView {...props}>
@@ -23,7 +31,7 @@ export default function DrawerContent(props) {
           style={styles.buttonContainer}
           styleButton={styles.button}
           styleText={styles.buttonText}
-          onPress={() => props.navigation.navigate('Login')}
+          onPress={logout}
         >
           Keluar
         </Button>

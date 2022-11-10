@@ -10,7 +10,6 @@ import {
   View,
   DrawerLayoutAndroid,
   Button,
-  StatusBar
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import BottomNavbar from '@/components/BottomNavbar';
@@ -21,7 +20,7 @@ import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
 export default function Etalase({ navigation }) {
-  const [quote, setQuote] = useState({});
+  const [quote, setQuote] = useState(null);
 
   useEffect(() => {
     Axios.get('/quotes/random')
@@ -31,15 +30,17 @@ export default function Etalase({ navigation }) {
 
   const Component = (
     <>
-      <View style={styles.title}>
-        <Text style={styles.quote.title}>Quotes Harian</Text>
-        <View>
-          <Text style={styles.quote.mark}>“</Text>
-          <Text style={styles.quote.text}>{ quote.text }</Text>
-          <Text style={[styles.quote.mark, { bottom: 0, right: 0 }]}>„</Text>
+      { quote &&
+        <View style={styles.title}>
+          <Text style={styles.quote.title}>Quotes Harian</Text>
+          <View>
+            <Text style={styles.quote.mark}>“</Text>
+            <Text style={styles.quote.text}>{ quote.text }</Text>
+            <Text style={[styles.quote.mark, { bottom: 0, right: 0 }]}>„</Text>
+          </View>
+          <Text style={styles.quote.source}>{ quote.author }</Text>
         </View>
-        <Text style={styles.quote.source}>{ quote.author }</Text>
-      </View>
+      }
       <View style={styles.container}>
         <ItemType />
         <ItemSort style={{ marginHorizontal: 32 }} />

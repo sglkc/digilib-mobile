@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, Linking, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '@/components/Button';
 
@@ -19,6 +19,7 @@ export default function BookDetail() {
         styleButton={[styles.button, styles.buttonAlt]}
         styleText={styles.buttonAltText}
         text="Beli Buku"
+        onPress={() => Linking.openURL('https://jalanrahmat.id/')}
       />
     </View>
   );

@@ -16,6 +16,7 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
   const itemFilter = useSelector(state => state.itemFilter);
   const [state, setState] = useState(defaultState);
   const [shouldUpdate, setUpdate] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const onBookmark = useCallback(() => setUpdate(!!bookmarkOnly), []);
   const props = {
     getItem: useCallback((data, index) => data[index], []),
@@ -57,7 +58,7 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
       </>
     ),
     onEndReached: () => getItems(true),
-    onRefresh: () => setUpdate(true),
+    onRefresh: () => setRefresh(true),
     renderItem: useCallback(({ item }) => (
       <Item item={item} onBookmark={onBookmark} />
     ), []),
@@ -67,7 +68,7 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
   useFocusEffect(useCallback(() => {
     setState({ ...defaultState });
     if (!shouldUpdate) setUpdate(true);
-  }, [itemFilter, url]));
+  }, [itemFilter, refresh, url]));
 
   function getItems(force = false) {
     if (!shouldUpdate && !force) return;
@@ -88,12 +89,15 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
         const items = lazy
           ? res.data.result
           : state.items.concat(res.data.result);
-        const page = shouldUpdate ? 1 : state.page + 1;
+        const page = refresh ? 1 : state.page + 1;
 
         setState({ ...defaultState, count: res.data.count, items, page });
       })
       .catch((err) => setState({ ...defaultState, error: err }))
-      .finally(() => setUpdate(false));
+      .finally(() => {
+        setUpdate(false);
+        setRefresh(false);
+      });
   }
 
   return (
@@ -101,7 +105,7 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
       style={[style, { paddingHorizontal: 24 }]}
       data={state.items}
       onEndReachedThreshold={0.15}
-      refreshing={shouldUpdate}
+      refreshing={refresh || shouldUpdate}
       {...props}
     />
   );
