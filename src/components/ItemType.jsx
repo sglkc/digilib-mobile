@@ -1,16 +1,20 @@
-import { useState } from "react";
-import { Pressable, Text, StyleSheet, View } from "react-native";
+import { Pressable, Text, ScrollView, StyleSheet, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
 import { setType } from '@/store/ItemFilterReducer';
 
-const types = ['Semua', 'Audio', 'Book', 'Video'];
-
 export default function ItemType({ style }) {
+  const types = [
+    { text: 'Semua', value: undefined },
+    { text: 'Artikel', value: 'article' },
+    { text: 'Audio', value: 'audio' },
+    { text: 'Buku', value: 'book' },
+    { text: 'Video', value: 'video' },
+  ];
   const selected = useSelector(state => state.itemFilter.type);
   const dispatch = useDispatch();
 
   return(
-    <View style={[styles.container, style]}>
+    <ScrollView style={[styles.container, style]} horizontal={true}>
       { types.map((type, index) => (
         <View
           key={index}
@@ -21,34 +25,33 @@ export default function ItemType({ style }) {
         >
           <Pressable
             android_ripple={{ color: 'lightgrey' }}
-            onPress={() => dispatch(setType(type.toLowerCase()))}
+            onPress={() => dispatch(setType(type.value))}
           >
             <Text
               style={[
                 styles.text,
-                selected === type.toLowerCase() && styles.selected
+                type.value === selected && styles.selected
               ]}
             >
-              {type}
+              { type.text }
             </Text>
           </Pressable>
         </View>
       )
       )}
-    </View>
+    </ScrollView>
   )}
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    flexGrow: 0
+    flexGrow: 0,
   },
   type: {
-    marginHorizontal: 8,
+    marginBottom: -16,
   },
   text: {
     padding: 16,
-    paddingBottom: 8,
     fontSize: 16,
     fontWeight: '800',
     color: 'grey',
@@ -56,6 +59,6 @@ const styles = StyleSheet.create({
   selected: {
     color: 'black',
     borderBottomColor:'orange',
-    borderBottomWidth:  4,
+    borderBottomWidth:  20,
   },
 });

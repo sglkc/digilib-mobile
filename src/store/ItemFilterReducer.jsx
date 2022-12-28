@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   order: 'Terbaru',
-  type: 'semua'
+  type: undefined
 };
 
 export const ItemFilter = createSlice({

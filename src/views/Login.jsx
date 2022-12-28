@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { setUser } from '@/store/UserReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Alert from '@/components/Alert';
 import Button from '@/components/Button';
 import TextButton from '@/components/TextButton';
@@ -17,7 +17,6 @@ export default function Login({ navigation }) {
   const [alert, setAlert] = useState(null);
   const [loading, setLoading] = useState(false);
   const state = useRef({ email: '', password: '' });
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +27,7 @@ export default function Login({ navigation }) {
           dispatch(setUser({ ...res.data.result, token: res.data.token }));
           navigation.navigate('Home');
         })
-          .catch(() => setAlert('Silahkan login'));
+          .catch(() => false);
       })
       .catch(() => false);
   }, []);

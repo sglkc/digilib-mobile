@@ -51,7 +51,7 @@ function Item({ item, onBookmark }) {
       .finally(() => setLoading(false));
   }
 
-  function onDetail() {
+  function onPress() {
     dispatch(setItem({ ...item }));
     navigation.navigate('Detail Item');
   }
@@ -60,6 +60,7 @@ function Item({ item, onBookmark }) {
     <View style={styles.container}>
       <Pressable
         android_ripple={{ color: 'lightgrey', borderless: true }}
+        onPress={onPress}
       >
         <View style={styles.itemContainer}>
           <Image
@@ -91,11 +92,6 @@ function Item({ item, onBookmark }) {
             <ScrollView horizontal={true}>
               <View style={styles.categories}>
               { categories.map((name, index) => <Chip key={index} text={name} />) }
-              <Chip
-                style={styles.chipDetail}
-                text="Lihat Detail"
-                onPress={onDetail}
-              />
               </View>
             </ScrollView>
           </View>
@@ -149,9 +145,6 @@ const styles = StyleSheet.create({
   },
   categories: {
     flexDirection: 'row',
-  },
-  chipDetail: {
-    backgroundColor: 'orange',
   },
 });
 

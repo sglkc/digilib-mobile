@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Text, View, VirtualizedList } from 'react-native';
 import { useSelector } from 'react-redux';
-import { useFocusEffect } from '@react-navigation/native';
 import Item from '@/components/Item';
 import Spinner from '@/components/Spinner';
 import Axios from '@/func/Axios';
@@ -42,7 +41,7 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
             <Text>Terjadi error, mohon coba lagi nanti</Text>
             :
             <>
-              <Text>Sedang mengunduh data...{'\n\n'}</Text>
+              <Text>{'\n'}Memuat...{'\n\n'}</Text>
               <Text style={{ fontSize: 14, fontWeight: 'normal' }}>
                 Jika berlangsung lama, pastikan Anda terhubung ke koneksi
                 internet
@@ -65,10 +64,11 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
   };
 
   useEffect(getItems, [shouldUpdate]);
-  useFocusEffect(useCallback(() => {
+
+  useEffect(() => {
     setState({ ...defaultState });
-    if (!shouldUpdate) setUpdate(true);
-  }, [itemFilter, refresh, url]));
+    setUpdate(true);
+  }, [itemFilter, refresh, url]);
 
   function getItems(force = false) {
     if (!shouldUpdate && !force) return;
@@ -79,9 +79,9 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
     Axios.get(url, {
       params: {
         limit: 10,
-        order: itemFilter.order === 'Terbaru' ? undefined : 'DESC',
+        order: itemFilter.order === 'Terbaru' ? 'DESC' : undefined,
         page: state.page,
-        type: itemFilter.type === 'semua' ? undefined : itemFilter.type
+        type: itemFilter.type
       }
     })
       .then((res) => {

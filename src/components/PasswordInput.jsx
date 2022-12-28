@@ -14,6 +14,8 @@ export default function ({ placeholder, style, onChangeText }) {
   return (
     <View style={[ styles.container, style ]}>
       <TextInput
+        pattern=".{6,}"
+        title="Password terdiri dari minimal 6 karakter"
         hide={hide}
         placeholder={placeholder || 'Kata Sandi'}
         onChangeText={onChangeText}
