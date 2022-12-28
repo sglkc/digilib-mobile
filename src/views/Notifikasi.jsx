@@ -6,7 +6,7 @@ import TextButton from '@/components/TextButton';
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
-export default function Notifikasi() {
+export default function NotifikasiView() {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function Notifikasi() {
 
   function deleteAll() {
     Axios.delete('/user/notifications')
-      .then((res) => setNotifications([]))
+      .then(() => setNotifications([]))
       .catch(() => false);
   }
 
@@ -81,11 +81,11 @@ const styles = StyleSheet.create({
   },
   listDate: {
     color: '#333',
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
   listTitle: {
     marginVertical: 8,
-    fontWeight: '700',
+    fontWeight: 'bold',
     fontSize: 16,
   },
 });

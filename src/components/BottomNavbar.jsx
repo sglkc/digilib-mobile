@@ -11,31 +11,42 @@ export default function BottomNavbar({ selected }) {
   ];
 
   return (
-    <View style={styles.container}>
-      { items.map((item, index) => (
-        <View key={index} style={styles.item}>
-          <Pressable
-            android_ripple={{ color: '#ddd5', borderless: true, radius: 58 }}
-            onPress={() => navigation.navigate(item.route)}
-          >
-            <Icon
-              style={styles.icon}
-              name={selected === index ? item.icon : item.icon + '-outline'}
-              size={25}
-              color={selected === index ? '#333' : 'white'}
-            />
-            <Text style={[styles.text, selected === index && { color: '#333' }]}>
-              { item.name }
-            </Text>
-          </Pressable>
-        </View>
-      )
-      )}
+    <View style={styles.float}>
+      <View style={styles.container}>
+        { items.map((item, index) => (
+          <View key={index} style={styles.item}>
+            <Pressable
+              android_ripple={{ color: '#ddd5', borderless: true, radius: 58 }}
+              onPress={() => navigation.navigate(item.route)}
+            >
+              <Icon
+                style={styles.icon}
+                name={selected === index ? item.icon : item.icon + '-outline'}
+                size={25}
+                color={selected === index ? '#333' : 'white'}
+              />
+              <Text
+                style={[styles.text, selected === index && { color: '#333' }]}
+              >
+                { item.name }
+              </Text>
+            </Pressable>
+          </View>
+        )
+        )}
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  float: {
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 0,
+    left: 0,
+    right: 0
+  },
   container: {
     paddingHorizontal: 16,
     paddingVertical: 8,

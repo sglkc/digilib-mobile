@@ -1,7 +1,7 @@
 import { ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
 import TextButton from '@/components/TextButton';
 
-export default function Kebijakan({ navigation }) {
+export default function KebijakanView({ navigation }) {
   const styles = {
     normal: { fontSize: 16, lineHeight: 25, textAlign: 'justify' },
     bold: { marginTop: 16, fontSize: 20, fontWeight: 'bold' }

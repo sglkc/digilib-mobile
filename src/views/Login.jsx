@@ -12,7 +12,7 @@ import Modal from '@/components/Login/Modal';
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
-export default function Login({ navigation }) {
+export default function LoginView({ navigation }) {
   const [modal, showModal] = useState(false);
   const [alert, setAlert] = useState(null);
   const [loading, setLoading] = useState(false);

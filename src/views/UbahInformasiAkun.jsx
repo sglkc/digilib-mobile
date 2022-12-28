@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '@/store/UserReducer';
 import Alert from '@/components/Alert';
@@ -9,7 +9,7 @@ import TextInput from '@/components/TextInput';
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
-export default function () {
+export default function UbahInformasiAkunView() {
   const user = useSelector((state) => state.user);
   const [alert, setAlert] = useState(null);
   const state = useRef({ ...user });

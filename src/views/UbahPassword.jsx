@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import Alert from '@/components/Alert';
 import Button from '@/components/Button';
 import PasswordInput from '@/components/PasswordInput';
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
-export default function UbahPassword() {
+export default function UbahPasswordView() {
   const [alert, setAlert] = useState(null);
   const password = useRef('');
 

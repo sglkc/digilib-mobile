@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import TextButton from '@/components/TextButton';
 import ViewContainer from '@/components/ViewContainer';
 
-export default function InformasiAkun({ navigation }) {
+export default function InformasiAkunView({ navigation }) {
   const user = useSelector((state) => state.user);
 
   const Component = (

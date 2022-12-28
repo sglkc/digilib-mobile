@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CheckBox from 'expo-checkbox';
 import Icon from 'react-native-vector-icons/Feather';
 import { setUser } from '@/store/UserReducer';
@@ -14,7 +14,7 @@ import TextInput from '@/components/TextInput';
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
-export default function Register({ navigation }) {
+export default function RegisterView({ navigation }) {
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,6 @@ export default function Register({ navigation }) {
     tanggal_lahir: ''
   });
 
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   function register() {

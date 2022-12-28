@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Octicons from 'react-native-vector-icons/Octicons';
 import ViewContainer from '@/components/ViewContainer';
 
-export default function () {
+export default function UmpanBalikView() {
   const Component = (
     <>
       <Text style={styles.text}>
@@ -12,7 +12,7 @@ export default function () {
       <View style={styles.emailContainer}>
         <Octicons style={styles.emailIcon} name="mail" size={32} color="black" />
         <View>
-          <Text style={{ fontWeight: '600' }}>Email</Text>
+          <Text style={{ fontWeight: 'bold' }}>Email</Text>
           <Text style={styles.emailText}>info@jalanrahmat.com</Text>
         </View>
       </View>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   emailText: {
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'green',
   },
 });

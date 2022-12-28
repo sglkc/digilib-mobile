@@ -20,12 +20,12 @@ export default function ItemScroller({ bookmarkOnly, noBottom, style, url }) {
   const props = {
     getItem: useCallback((data, index) => data[index], []),
     getItemCount: useCallback((data) => data.length, []),
-    getItemLayout: useCallback((data, index) => ({
+    getItemLayout: useCallback((_, index) => ({
       length: 100,
       offset: 100 * index,
       index
     }), []),
-    keyExtractor: useCallback((item, index) => index, []),
+    keyExtractor: useCallback((_, index) => index, []),
     ListEmptyComponent: (
       <Text
         style={{

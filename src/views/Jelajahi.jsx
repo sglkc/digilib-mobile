@@ -8,7 +8,7 @@ import TextInput from '@/components/TextInput';
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
-export default function Jelajahi({ navigation }) {
+export default function JelajahiView({ navigation }) {
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState([]);
   const defaultCategories = useRef([]);

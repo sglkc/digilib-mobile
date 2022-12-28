@@ -1,7 +1,7 @@
 import { Text } from 'react-native';
 import ViewContainer from '@/components/ViewContainer';
 
-export default function Tentang() {
+export default function TentangView() {
   const Component = (
     <Text style={{ fontSize: 16, lineHeight: 28 }}>
       Aplikasi untuk koleksi karya dan pemikiran Allah yarham KH. Jalaluddin

@@ -48,10 +48,12 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   type: {
+    marginLeft: 16,
     marginBottom: -16,
   },
   text: {
-    padding: 16,
+    paddingHorizontal: 8,
+    paddingVertical: 16,
     fontSize: 16,
     fontWeight: '800',
     color: 'grey',

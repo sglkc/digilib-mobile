@@ -9,7 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import TextButton from '@/components/TextButton';
 
-export default function Header({ navigation, route, options, layout }) {
+export default function Header({ navigation, route, options }) {
   return (
     <ImageBackground
       source={!options.hideBanner && require('assets/BG_ORANGE_BANNER.png')}

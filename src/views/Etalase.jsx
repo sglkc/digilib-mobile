@@ -1,17 +1,5 @@
-import { useEffect, useState } from "react";
-import {
-  Image,
-  ImageBackground,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-  DrawerLayoutAndroid,
-  Button,
-} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import BottomNavbar from '@/components/BottomNavbar';
 import ItemSort from '@/components/ItemSort';
 import ItemScroller from '@/components/ItemScroller';
@@ -19,7 +7,7 @@ import ItemType from "@/components/ItemType";
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
-export default function Etalase({ navigation }) {
+export default function EtalaseView() {
   const [quote, setQuote] = useState(null);
 
   useEffect(() => {
@@ -45,9 +33,7 @@ export default function Etalase({ navigation }) {
         <ItemType />
         <ItemSort style={{ marginHorizontal: 32 }} />
         <ItemScroller url="/items" />
-        <View style={styles.bottom}>
-          <BottomNavbar selected={0} />
-        </View>
+        <BottomNavbar selected={0} />
       </View>
     </>
   );
@@ -67,7 +53,7 @@ const styles = StyleSheet.create({
     mark: {
       position: 'absolute',
       color: '#eee',
-      fontWeight: '800',
+      fontWeight: 'bold',
       fontSize: 32,
     },
     text: {
@@ -90,13 +76,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-  },
-  bottom: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    left: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

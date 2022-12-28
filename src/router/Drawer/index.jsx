@@ -131,7 +131,7 @@ export default function DrawerNavigator() {
           marginLeft: -16,
           fontSize: 16,
           color: 'black',
-          fontWeight: '700'
+          fontWeight: '600'
         },
         header: Header
       }}

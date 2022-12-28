@@ -6,7 +6,7 @@ import TextInput from '@/components/TextInput';
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
-export default function Pencarian() {
+export default function PencarianView() {
   const search = useRef('');
   const [url, setUrl] = useState(
     Axios.getUri({ url: '/items' })

@@ -61,8 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingVertical: 12,
     backgroundColor: '#3dd20e'
   },
   buttonText: {
