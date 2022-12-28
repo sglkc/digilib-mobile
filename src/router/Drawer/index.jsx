@@ -13,6 +13,7 @@ import UbahPassword from '@/views/UbahPassword';
 import UmpanBalik from '@/views/UmpanBalik';
 import Tandai from '@/views/Tandai';
 import Tentang from '@/views/Tentang';
+import ArticleReader from '@/components/DetailItem/ArticleReader';
 import PDFReader from '@/components/DetailItem/PDFReader';
 import DrawerContent from './DrawerContent';
 import Header from './Header';
@@ -105,6 +106,11 @@ const screens = {
     { name: 'Jelajahi', component: Jelajahi },
     { name: 'Pencarian', component: Pencarian },
     { name: 'PDF Reader', component: PDFReader, options: { hideTitle: true } },
+    {
+      name: 'Article Reader',
+      component: ArticleReader,
+      options: { hideTitle: true }
+    },
     { name: 'Tandai', component: Tandai },
     {
       name: 'Ubah Informasi Akun',

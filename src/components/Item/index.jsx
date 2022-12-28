@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useState } from 'react';
 import {
   Image,
   Pressable,
@@ -16,7 +16,7 @@ import Spinner from '@/components/Spinner';
 import Axios from '@/func/Axios';
 
 function Item({ item, onBookmark }) {
-  const { author, Bookmark, Categories, cover, item_id, media, title } = item;
+  const { author, Bookmark, Categories, cover, item_id, title } = item;
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);

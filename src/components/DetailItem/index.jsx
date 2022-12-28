@@ -4,6 +4,7 @@ import {
   ImageBackground,
   Pressable,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,12 +12,12 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Article from '@/components/DetailItem/Article';
 import Audio from '@/components/DetailItem/Audio';
 import Book from '@/components/DetailItem/Book';
 import Video from '@/components/DetailItem/Video';
 import Chip from '@/components/Item/Chip';
 import Spinner from '@/components/Spinner';
-import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
 
 export default function DetailItem({ item }) {
@@ -55,6 +56,13 @@ export default function DetailItem({ item }) {
     setVideoOverlay(!videoOverlay);
   };
 
+  const share = () => {
+    Share.share({
+      message: 'https://digilib.jalanrahmat.id/item/' + item.item_id,
+    })
+      .catch(() => false);
+  };
+
   return (
     <ImageBackground
       source={require('assets/BG_ORANGE.png')}
@@ -87,8 +95,12 @@ export default function DetailItem({ item }) {
           <Text style={styles.title}>{ item.title }</Text>
           <Text style={styles.author}>{ item.author }</Text>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.row} activeOpacity={0.5}>
-              <Icon name="share" size={25} color="#555" />
+            <TouchableOpacity
+              style={styles.row}
+              activeOpacity={0.5}
+              onPress={share}
+            >
+              <Icon name="share" size={28} color="#555" />
               <Text style={styles.shareText}>Bagikan</Text>
             </TouchableOpacity>
             <View style={{ flexGrow: 1 }} />
@@ -101,14 +113,15 @@ export default function DetailItem({ item }) {
                 :
                 <Icon
                   name={bookmarked ? 'bookmark' : 'bookmark-outline'}
-                  size={25}
+                  size={32}
                   color="orange"
                 />
               }
             </TouchableOpacity>
           </View>
-          { item.type === 'book' && <Book /> }
+          { item.type === 'article' && <Article /> }
           { item.type === 'audio' && <Audio /> }
+          { item.type === 'book' && <Book /> }
           <Text style={styles.subtitle}>Deskripsi Singkat</Text>
           <Text style={styles.description}>{ item.description }</Text>
           <Text style={styles.subtitle}>Tagar</Text>
@@ -187,6 +200,7 @@ const styles = StyleSheet.create({
   },
   shareText: {
     marginLeft: 8,
+    fontSize: 16,
     fontWeight: '700',
     color: '#555',
   },
