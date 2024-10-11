@@ -10,9 +10,7 @@ import Pencarian from '@/views/Pencarian';
 import Riwayat from '@/views/Riwayat';
 import UbahInformasiAkun from '@/views/UbahInformasiAkun';
 import UbahPassword from '@/views/UbahPassword';
-import UmpanBalik from '@/views/UmpanBalik';
 import Tandai from '@/views/Tandai';
-import Tentang from '@/views/Tentang';
 import ArticleReader from '@/components/DetailItem/ArticleReader';
 import PDFReader from '@/components/DetailItem/PDFReader';
 import DrawerContent from './DrawerContent';
@@ -60,39 +58,6 @@ const screens = {
       options: {
         drawerIcon: () => <Icon name="history" size={25} color="black" />,
         searchButton: true,
-      }
-    },
-    {
-      name: 'Divider',
-      component: Etalase,
-      options: {
-        drawerItemStyle: {
-          marginHorizontal: -8,
-          marginVertical: 16,
-          height: 1,
-          backgroundColor: 'grey',
-        }
-      }
-    },
-    {
-      name: 'Umpan Balik',
-      component: UmpanBalik,
-      options: {
-        expand: true,
-        drawerIcon: () => (
-          <Icon name="message-processing-outline" size={25} color="black" />
-        )
-      }
-    },
-    {
-      name: 'Tentang Aplikasi',
-      component: Tentang,
-      options: {
-        expand: true,
-        drawerLabel: 'Tentang',
-        drawerIcon: () => (
-          <Icon name="information-outline" size={25} color="black" />
-        )
       }
     },
   ],

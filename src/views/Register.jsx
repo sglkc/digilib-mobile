@@ -104,22 +104,9 @@ export default function RegisterView({ navigation }) {
         />
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           <Text style={{ fontSize: 16 }}>
-            Dengan ini menyatakan Anda setuju, Anda menerima segala isi
+            Saya berjanji untuk tidak menyebarluaskan konten apapun dari
+            dalam aplikasi ini
           </Text>
-          <TextButton
-            styleText={styles.confirmBold}
-            onPress={() => navigation.navigate('Syarat')}
-          >
-            Syarat Penggunaan
-          </TextButton>
-          <Text style={{ fontSize: 16 }}> dan </Text>
-          <TextButton
-            styleText={styles.confirmBold}
-            onPress={() => navigation.navigate('Kebijakan')}
-          >
-            Kebijakan Privasi
-          </TextButton>
-          <Text style={{ fontSize: 16 }}>Jalan Rahmat</Text>
         </View>
       </View>
       { error && <Alert text={error} /> }
