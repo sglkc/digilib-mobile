@@ -31,7 +31,6 @@ function Item({ item, onBookmark }) {
   function toggleBookmark() {
     if (loading) return;
 
-    onBookmark && onBookmark();
     setLoading(true);
     Axios.request({
       url: '/bookmarks/' + item_id,
@@ -48,7 +47,10 @@ function Item({ item, onBookmark }) {
         })
           .catch(() => false);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        onBookmark && onBookmark();
+        setLoading(false);
+      });
   }
 
   function onPress() {

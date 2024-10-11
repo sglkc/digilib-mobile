@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Jalan Rahmat Academy",
-    "slug": "jracademy",
+    "name": "Digital Library",
+    "slug": "digilib",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -25,14 +25,14 @@
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.jalanrahmat.jracademy"
+      "package": "net.jp.seya.digilib"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "dbbbcd53-f596-4101-84bd-01f8d068ad8e"
+        "projectId": "39b701dd-c3a2-487f-b2da-ce3467bf515d"
       }
     }
   }

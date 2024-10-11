@@ -2,6 +2,8 @@ import { useState, useRef } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ItemScroller from '@/components/ItemScroller';
+import ItemSort from '@/components/ItemSort';
+import ItemType from '@/components/ItemType';
 import TextInput from '@/components/TextInput';
 import ViewContainer from '@/components/ViewContainer';
 import Axios from '@/func/Axios';
@@ -36,6 +38,8 @@ export default function PencarianView() {
           <Icon name="search" size={30} color="#333" />
         </Pressable>
       </View>
+      <ItemType />
+      <ItemSort style={{ marginHorizontal: 32 }} />
       <ItemScroller url={url} noBottom />
     </>
   );
@@ -47,7 +51,8 @@ const styles = StyleSheet.create({
   input: {
     container: {
       marginHorizontal: 32,
-      marginVertical: 16,
+      marginTop: 16,
+      marginBottom: 8,
       flexDirection: 'row',
     },
     box: {
