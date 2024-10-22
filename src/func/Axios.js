@@ -3,9 +3,6 @@ import { default as Axios } from 'axios';
 
 const axios = Axios.create({
   baseURL: 'http://192.168.132.185:5000/api',
-  headers: {
-    'X-Requested-With': 'jracademys',
-  }
 });
 
 axios.interceptors.request.use(
