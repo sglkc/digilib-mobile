@@ -19,7 +19,7 @@ export default function BookDetail() {
         styleButton={[styles.button, styles.buttonAlt]}
         styleText={styles.buttonAltText}
         text="Beli Buku"
-        onPress={() => Linking.openURL('https://jalanrahmat.id/')}
+        onPress={() => Linking.openURL('https://google.com/')}
       />
     </View>
   );

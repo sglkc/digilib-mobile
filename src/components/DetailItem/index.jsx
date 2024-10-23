@@ -58,7 +58,7 @@ export default function DetailItem({ item }) {
 
   const share = () => {
     Share.share({
-      message: 'https://digilib.jalanrahmat.id/item/' + item.item_id,
+      message: 'https://google.com/search?q=' + item.title,
     })
       .catch(() => false);
   };
